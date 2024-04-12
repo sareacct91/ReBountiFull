@@ -12,7 +12,7 @@ async function startApolloServer() {
   const { expressMiddleware } = require('@apollo/server/express4');
   // const { authMiddleware } = require('./utils/auth');
   const path = require('path');
-  // const db = require('./config/connection');
+  const db = require('./config/connection');
   // const routes = require('./routes');
 
   const app = express();
