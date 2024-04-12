@@ -24,23 +24,23 @@ const userSchema = new Schema(
       require: true,
     },
     address: addressSchema,
-    isVendor: Boolean,
-    isBuyer: Boolean,
+    isSupplier: Boolean,
+    isClient: Boolean,
     business_name: {
       type: String, 
-      required: function() { return this.isVendor; } 
+      required: function() { return this.isSupplier; } 
     },
     first_name: {
       type: String, 
-      required: function() { return this.isBuyer; } 
+      required: function() { return this.isClient; } 
     },
     last_name: {
       type: String, 
-      required: function() { return this.isBuyer; } 
+      required: function() { return this.isClient; } 
     },
     household_size: { 
       type: Number, 
-      required: function() { return this.isBuyer; } 
+      required: function() { return this.isClient; } 
     },
     cart: { 
       type: [foodItemSchema], 
@@ -57,7 +57,7 @@ const userSchema = new Schema(
 );
 
 userSchema.virtual('fullname').get(function() {
-  return !this.isVendor ? `${this.first_name} ${this.last_name}` : null;
+  return !this.isSupplier ? `${this.first_name} ${this.last_name}` : null;
 });
 
 userSchema.methods.isCorrectPw = async function(pw) {
