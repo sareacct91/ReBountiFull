@@ -32,11 +32,11 @@ const userSchema = new Schema(
     },
     first_name: {
       type: String, 
-      required: function() { return this.isBuyer ; } 
+      required: function() { return this.isBuyer; } 
     },
     last_name: {
       type: String, 
-      required: function() { return this.isBuyer ; } 
+      required: function() { return this.isBuyer; } 
     },
     household_size: { 
       type: Number, 
