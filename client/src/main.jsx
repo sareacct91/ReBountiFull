@@ -8,7 +8,7 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
-    errorElement: <h1 style={color: red}>Don't suck</h1>,
+    errorElement: <h1 style={{ color: red }}>Don't suck</h1>,
     children: [
     ],
   },
