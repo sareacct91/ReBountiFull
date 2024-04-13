@@ -16,7 +16,7 @@ const foodSchema = new Schema(
     },
     category: {
       type: String,
-      enum: ['meat','vegetable','fruit','seafood','dairy','egg','grain','nut'],
+      enum: ['meat','vegetable','fruit','seafood','dairy','egg','grain','nut','misc'],
     },
     image: {
       type: String,
@@ -25,7 +25,7 @@ const foodSchema = new Schema(
     vegetarian: Boolean,
     gluten_free: Boolean,
     dairy_free: Boolean,
-    nut: Boolean,
+    nut_free: Boolean,
   }
 );
 
