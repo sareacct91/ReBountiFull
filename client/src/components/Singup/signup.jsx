@@ -3,11 +3,10 @@ import logo from "../../assets/logo.png";
 import { Link } from "react-router-dom";
 
 export default function Signup() {
-
   return (
     <div className="flex flex-col items-center justify-center">
       <h1>Welcome!</h1>
-      <img src={ logo } />
+      <img src={logo} />
       <h2>Sign up below to help us rebountify the world one bite at a time</h2>
       <div className="flex items-center gap-16">
         <div>
@@ -26,5 +25,3 @@ export default function Signup() {
     </ div>
   );
 }
-
-
