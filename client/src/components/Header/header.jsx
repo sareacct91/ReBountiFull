@@ -21,13 +21,14 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="fixed top-0 flex w-full ">
-      <div className="flex cursor-pointer ">
+    <header className="fixed top-0 flex w-full mx-auto items-center justify-between flex-wrap">
+      <div className="flex cursor-pointer">
+        {/* logo */}
         <div onClick={refresh}>
-          <img src={logo} alt="Logo" />
+          <img src={logo} alt="Logo" className=" h-32 w-32" />
         </div>
-        <Nav />
       </div>
+      <Nav />
     </header>
   );
 }
