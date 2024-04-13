@@ -4,7 +4,6 @@ import { useState } from "react";
 export default function Nav() {
   // pages
   const pages = ["Cart", "Account", "Donate", "About Us"];
-
   const [showNavbar, setShowNavbar] = useState(false);
 
   const toggleNavbar = () => {
@@ -14,7 +13,7 @@ export default function Nav() {
   return (
     <>
       <nav className="top-0 flex w-1/3 justify-end">
-        {/* If showNavbar is true, render the navbar */}
+    
         <div className=" hidden w-full justify-between lg:flex">
           <ul className="flex flex-row">
             {pages.map((page) => (
@@ -35,6 +34,7 @@ export default function Nav() {
           </label>
         </div>
       </nav>
+      {/* If showNavbar is true, render the navbar */}
       {showNavbar && (
         <div className="flex basis-full flex-col items-center">
           {pages.map((page) => (
