@@ -10,18 +10,19 @@ export default function Signup() {
       <h2>Sign up below to help us rebountify the world one bite at a time</h2>
       <div className="flex items-center gap-16">
         <div>
-          <Link to={"/signup/supplier"}>
+          <Link to={'/signup/supplier'}>
             <button>I'm a Supplier</button>
           </Link>
           <p>I'd like some produce</p>
         </div>
         <div>
-          <Link to={"/signup/client"}>
+
             <button>I'm a Client</button>
           </Link>
           <p>I want to donate</p>
         </div>
       </div>
-    </div>
+
+    </ div>
   );
 }
