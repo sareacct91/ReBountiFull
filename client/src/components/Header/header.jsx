@@ -47,7 +47,7 @@ export default function Header() {
         backgroundAttachment: "fixed",
       }}
     >
-      <div className="cursor-pointer">
+      <div className=" w-1/6 cursor-pointer justify-center flex">
         {/* logo */}
         <div>
           <Link to="/">
