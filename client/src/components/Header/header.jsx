@@ -52,24 +52,28 @@ export default function Header() {
   }, []);
 
 return (
-    <header
-      className="sticky top-0 z-[20] mx-auto flex w-full flex-wrap items-center justify-between"
-      style={{
-        backgroundImage: background,
-        backgroundPosition: pos,
-        backgroundAttachment: "fixed",
-        backgroundSize: "cover",
-      }}
-    >
-      <div className=" w-1/6 cursor-pointer justify-center flex">
-        {/* logo */}
-        <div>
-          <Link to="/">
-            <img src={logo} alt="Logo" className="z-[50] h-32 w-32" />
-          </Link>
-        </div>
+  <header
+    className="sticky top-0 z-[20] mx-auto flex w-full flex-wrap items-center justify-between"
+    style={{
+      backgroundImage: background,
+      backgroundPosition: pos,
+      backgroundAttachment: "fixed",
+      backgroundSize: "cover",
+    }}
+  >
+    <div className=" flex w-1/6 justify-center">
+      {/* logo */}
+      <div>
+        <Link to="/">
+          <img
+            src={logo}
+            alt="Logo"
+            className="z-[50] h-32 w-32 cursor-pointer"
+          />
+        </Link>
       </div>
-      <Nav />
-    </header>
-  );
+    </div>
+    <Nav />
+  </header>
+);
 }
