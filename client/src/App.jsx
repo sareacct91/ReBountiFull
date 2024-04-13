@@ -5,11 +5,9 @@ import {
 } from '@apollo/client';
 import Page from './components/Page';
 import { useState } from 'react';
-import Header from "./components/Header";
-import Nav from "./components/Nav";
-import Footer from "./components/Footer";
-import Page from "./components/Page";
-import { useLocation } from "react-router-dom";
+import Header from  './components/Header/header'
+import Nav from "./components/Nav/nav";
+import Footer from "./components/Footer/footer";
 
 
 
@@ -25,15 +23,13 @@ const client = new ApolloClient({
 
 function App() {
   const [count, setCount] = useState(0);
-  const currentPage = useLocation().pathname;
 
   return (
     <ApolloProvider client={client}>
-      <Header>
-        <Nav currentPage={currentPage} />
-      </Header>
+      <Header />
+        <Nav/>
        <main>
-        <Page currentPage={currentPage} />
+        <Page/>
       </main>
       <Footer />
     </ApolloProvider>

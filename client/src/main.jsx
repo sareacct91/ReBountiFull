@@ -1,10 +1,10 @@
 import React from 'react'
-import ReactDOM from 'react-dom/client'
+import ReactDOM from 'react-dom'
 import App from './App.jsx'
 import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
-import Signup from './components/pages/signup.jsx'
+import Signup from './components/Singup/signup.jsx';
 
 
 const router = createBrowserRouter([
@@ -17,34 +17,34 @@ const router = createBrowserRouter([
         index: true,
         element: <h1>Need a default page</h1>
       }, {
-        path: '/aboutus',
+        path: 'aboutus',
         element:<></>
       }, {
-        path: '/login',
+        path: 'login',
         element:<></>
       }, {
-        path: '/signup',
+        path: 'signup',
         element: <Signup/>
       }, {
-        path: '/signup/client',
+        path: 'signup/client',
         element:<></>
       }, {
-        path: '/signup/supplier',
+        path: 'signup/supplier',
         element:<></>
       }, {
-        path: '/donate',
+        path: 'donate',
         element:<></>
       }, {
-        path: '/checkout',
+        path: 'checkout',
         element:<></>
       }, {
-        path: '/browse',
+        path: 'browse',
         element:<></>
       }, {
-        path: '/products',
+        path: 'products',
         element:<></>
       }, {
-        path: '/cart/:userId',
+        path: 'cart/:userId',
         element:<></>
       },
     ],

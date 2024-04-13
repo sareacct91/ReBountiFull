@@ -1,17 +1,14 @@
-import PageContent from '../PageContent';
-import { Outlet } from 'react-router-dom';
+import PageContent from "../PageContent";
+import { Outlet } from "react-router-dom";
 
-function Page({ currentPage }) {
-  currentPage = currentPage.substring(1);
-
+function Page() {
   
-
   return (
     <section>
       <PageContent>
-      <div>
-      <Outlet />
-      </div>
+        <div>
+          <Outlet />
+        </div>
       </PageContent>
     </section>
   );
