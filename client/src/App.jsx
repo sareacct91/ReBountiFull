@@ -3,9 +3,8 @@ import {
   InMemoryCache,
   ApolloProvider,
 } from '@apollo/client';
-
+import Page from './components/Page';
 import { useState } from 'react';
-import { Outlet } from 'react-router-dom';
 
 // temp solution until we decide on how to store the token
 const token = localStorage.getItem('id_token');
@@ -22,9 +21,15 @@ function App() {
 
   return (
     <ApolloProvider client={client}>
-      <Outlet />
+      <Header>
+        <Nav currentPage={currentPage} />
+      </Header>
+       <main>
+        <Page currentPage={currentPage} />
+      </main>
+      <Footer />
     </ApolloProvider>
   )
 }
-
 export default App
+
