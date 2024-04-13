@@ -1,7 +1,68 @@
 import { Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import HomeHero from "../../assets/background/home-hero.jpeg";
+import DonateHero from "../../assets/background/hero-donation.jpeg";
 import AboutUsHero from "../../assets/background/aboutus_hero.jpeg"
+import HomeContent from "./home-hero";
+
+// Define a map of background images for different paths
+const backgroundImages = {
+  "/": HomeHero,
+  "/donate": DonateHero,
+  "/aboutus": AboutusHero,
+};
+
+// Get an array of paths from backgroundImages
+const hasHero = Object.keys(backgroundImages);
+console.log("hasHero: ",hasHero);
+
+
+// Reusable HeroSection component
+const HeroSection = ({ background, children }) => (
+  <section
+    className="w-full"
+    style={{
+      backgroundImage: background,
+      backgroundPosition: "center",
+      backgroundAttachment: "fixed",
+      backgroundSize: "cover",
+    }}
+  >
+    {children}
+  </section>
+);
+
+// setting up the propTypes for the HeroSection 
+HeroSection.propTypes = {
+  // specifying each props
+  background: PropTypes.string,
+  children: PropTypes.node,
+};
+
+export default function Hero() {
+  const [background, setBackground] = useState(null);
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    // Set the background based on the pathname
+    setBackground(`url(${backgroundImages[pathname]})` || null);
+  }, [pathname]);
+  
+
+  // Render different content based on the path
+  if (hasHero.includes(pathname)) {
+    return (
+      <HeroSection background={background}>
+        {/* Render specific content for each path */}
+        {pathname === "/" && <HomeContent />}
+      </HeroSection>
+    );
+  } else {
+    return null; 
+  }
+}
+// This is where old code begins below
 
 export default function Hero() {
     const [background, setBackground] = useState(null);
