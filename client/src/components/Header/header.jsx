@@ -3,6 +3,8 @@ import Nav from "../Nav/nav";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import  Headerbackground  from "../../assets/background/header-background.png"
+import HomeHero from "../../assets/background/home-hero.jpeg"
+//import Hero from "../Hero/hero";
 
 export default function Header() {
   // setup the initial background value to null
@@ -14,9 +16,12 @@ export default function Header() {
 
   useEffect(() => {
     // if pathnames are following, set the background color to be transparent 
-    if (pathname === "/donate" || pathname === "/aboutus" || pathname === "/") {
-      setBackground(null); 
-    } 
+    // if (pathname === "/donate" || pathname === "/aboutus" || pathname === "/") {
+    //   setBackground(null); 
+    // } 
+    if (pathname === "/") {
+      setBackground(`url(${HomeHero})`);
+    }
     else {
       setBackground(`url(${Headerbackground})`);
     }
@@ -47,6 +52,7 @@ export default function Header() {
         backgroundImage: background,
         backgroundPosition: "center",
         backgroundAttachment: "fixed",
+        backgroundSize: "cover",
       }}
     >
       <div className=" w-1/6 cursor-pointer justify-center flex">
