@@ -10,7 +10,7 @@ import HomeContent from "./home-hero";
 const backgroundImages = {
   "/": HomeHero,
   "/donate": DonateHero,
-  "/aboutus": AboutusHero,
+  "/aboutus": AboutUsHero,
 };
 
 // Get an array of paths from backgroundImages
