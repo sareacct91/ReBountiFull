@@ -1,27 +1,26 @@
-const { User, Food } = require('../models');
-const { signToken, AuthenticationError } = require('../utils/auth');
-const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
+const { User, Food } = require("../models");
+const { signToken, AuthenticationError } = require("../utils/auth");
+const stripe = require("stripe")("sk_test_4eC39HqLyjWDarjtT1zdp7dc");
 
 const resolvers = {
-
   Mutation: {
     login: async (parent, { email, password }) => {
-        const user = await User.findOne({ email });
-  
-        if (!user) {
-          throw AuthenticationError;
-        }
-  
-        const correctPw = await user.isCorrectPw(password);
-  
-        if (!correctPw) {
-          throw AuthenticationError;
-        }
-  
-        const token = signToken(user);
-  
-        return { token, user };
-      },
+      const user = await User.findOne({ email });
+
+      if (!user) {
+        throw AuthenticationError;
+      }
+
+      const correctPw = await user.isCorrectPw(password);
+
+      if (!correctPw) {
+        throw AuthenticationError;
+      }
+
+      const token = signToken(user);
+
+      return { token, user };
+    },
 
     addUser: async (parent, args) => {
       const user = await User.create(args);
@@ -29,11 +28,13 @@ const resolvers = {
 
       return { token, user };
     },
-    addOrder: async (parent, { products }, context) => {
+    addOrder: async (parent, { foodId, amount }, context) => {
       if (context.user) {
-        const order = new Order({ products });
+        const foodItem = { foodId, amount };
 
-        await User.findByIdAndUpdate(context.user._id, { $push: { orders: order } });
+        await User.findByIdAndUpdate(context.user._id, {
+          $push: { cart: foodItem },
+        });
 
         return order;
       }
@@ -42,7 +43,9 @@ const resolvers = {
     },
     updateUser: async (parent, args, context) => {
       if (context.user) {
-        return await User.findByIdAndUpdate(context.user._id, args, { new: true });
+        return await User.findByIdAndUpdate(context.user._id, args, {
+          new: true,
+        });
       }
 
       throw AuthenticationError;
@@ -50,10 +53,13 @@ const resolvers = {
     updateProduct: async (parent, { _id, quantity }) => {
       const decrement = Math.abs(quantity) * -1;
 
-      return await Product.findByIdAndUpdate(_id, { $inc: { quantity: decrement } }, { new: true });
+      return await Product.findByIdAndUpdate(
+        _id,
+        { $inc: { quantity: decrement } },
+        { new: true }
+      );
     },
-   
-  }
+  },
 };
 
 module.exports = resolvers;
