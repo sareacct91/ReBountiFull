@@ -1,4 +1,4 @@
-import logo from "../../assets/logo.png";
+import logo from "../../assets/images/logo.png";
 import Nav from "../Nav/nav";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
@@ -12,6 +12,7 @@ export default function Header() {
   const [background, setBackground] = useState(null);
   // setup the initial scrolled value to 'false'
   const [scrolled, setScrolled] = useState(false);
+  const [pos, setPos] = useState("");
   const { pathname } = useLocation();
   console.log(pathname);
 
@@ -22,9 +23,11 @@ export default function Header() {
     // } 
     if (pathname === "/") {
       setBackground(`url(${HomeHero})`);
+      setPos("center");
     }
     else if (pathname === "/aboutus") {
       setBackground(`url(${AboutUsHero})`);
+      setPos("bottom");
     }
     else {
       setBackground(`url(${Headerbackground})`);
@@ -48,13 +51,12 @@ export default function Header() {
     };
   }, []);
 
-
-  return (
+return (
     <header
       className="sticky top-0 z-[20] mx-auto flex w-full flex-wrap items-center justify-between"
       style={{
         backgroundImage: background,
-        backgroundPosition: "center",
+        backgroundPosition: pos,
         backgroundAttachment: "fixed",
         backgroundSize: "cover",
       }}

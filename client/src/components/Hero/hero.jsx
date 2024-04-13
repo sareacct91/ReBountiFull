@@ -58,12 +58,12 @@ export default function Hero() {
         className="w-full"
         style={{
           backgroundImage: background,
-          backgroundPosition: "center",
+          backgroundPosition: "bottom",
           backgroundAttachment: "fixed",
           backgroundSize: "cover",
         }}
       >
-        <div className="w-1/2 p-6 bg-black/40 ml-2">
+        <div className="w-1/2 p-6 bg-black/40 ml-2 justify-center">
           <h1>Our Mission</h1>
           <p>
           At ReBountiFull (RBF), we are driven by the belief that good, clean, and safe food should not go to waste while people in our community go hungry. We empower grocery stores, restaurants, and individuals to donate surplus food, which we redistribute to those in need on a sliding scale that aligns with their household size. Rooted in integrity, service, and equity, we, as volunteers, are committed to reducing food waste and fighting hunger starting in the Bay Area. Through our efforts, we aim to halve food waste and alleviate hunger, envisioning a future where our model expands globally, supported by corporate partnerships for both food and monetary donations.
