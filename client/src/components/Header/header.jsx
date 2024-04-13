@@ -5,7 +5,8 @@ import { Link, useLocation } from "react-router-dom";
 import  Headerbackground  from "../../assets/background/header-background.png"
 
 export default function Header() {
-    const [background, setBackground] = useState(null);
+  // setup the initial background value to null
+  const [background, setBackground] = useState(null);
   // setup the initial scrolled value to 'false'
   const [scrolled, setScrolled] = useState(false);
   const { pathname } = useLocation();
@@ -15,7 +16,8 @@ export default function Header() {
     // if pathnames are following, set the background color to be transparent 
     if (pathname === "/donate" || pathname === "/aboutus" || pathname === "/") {
       setBackground(null); 
-    } else {
+    } 
+    else {
       setBackground(`url(${Headerbackground})`);
     }
   }, [pathname]);
