@@ -12,8 +12,8 @@ export default function Header() {
   console.log(pathname);
 
   useEffect(() => {
-    // Check the current pathname and set the background accordingly
-    if (pathname === "/donate" || pathname === "/aboutus") {
+    // if pathnames are following, set the background color to be transparent 
+    if (pathname === "/donate" || pathname === "/aboutus" || pathname === "/") {
       setBackground(null); 
     } else {
       setBackground(`url(${Headerbackground})`);
@@ -43,15 +43,15 @@ export default function Header() {
       className="sticky top-0 z-[20] mx-auto flex w-full flex-wrap items-center justify-between"
       style={{
         backgroundImage: background,
-        filter: "opacity(0.7)",
         backgroundPosition: "center",
+        backgroundAttachment: "fixed",
       }}
     >
       <div className="cursor-pointer">
         {/* logo */}
         <div>
           <Link to="/">
-            <img src={logo} alt="Logo" className="h-32 w-32" />
+            <img src={logo} alt="Logo" className="z-[50] h-32 w-32" />
           </Link>
         </div>
       </div>
