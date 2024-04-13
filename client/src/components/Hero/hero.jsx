@@ -19,8 +19,8 @@ export default function Hero() {
         return <></>
     }
 
-
-    return (
+    if (pathname == "/")    {
+        return (
       <section
         className="w-full"
         style={{
@@ -45,5 +45,8 @@ export default function Hero() {
           </div>
         </div>
       </section>
-    );
+        )
+    }
+    
+    
 }
