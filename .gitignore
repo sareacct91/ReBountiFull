@@ -402,3 +402,4 @@ FodyWeavers.xsd
 working folder
 .DS_store
 .env
+jsconfig.json
