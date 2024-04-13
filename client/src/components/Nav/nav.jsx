@@ -4,6 +4,8 @@ import { useState } from "react";
 export default function Nav() {
   // pages
   const pages = ["Cart", "Account", "Donate", "About Us"];
+  // assinging pathnames for each pages
+  const pathnames = ["cart", "account", "donate", "aboutus"];
   const [showNavbar, setShowNavbar] = useState(false);
 
   const toggleNavbar = () => {
@@ -13,12 +15,11 @@ export default function Nav() {
   return (
     <>
       <nav className="top-0 flex w-1/3 justify-end">
-    
         <div className=" hidden w-full justify-between lg:flex">
           <ul className="flex flex-row">
-            {pages.map((page) => (
+            {pages.map((page,i) => (
               <li className="mx-2" key={page}>
-                <NavLink to={`/${page}`}>{page}</NavLink>
+                <NavLink to={`/${pathnames[i]}`}>{page}</NavLink>
               </li>
             ))}
           </ul>
@@ -37,9 +38,9 @@ export default function Nav() {
       {/* If showNavbar is true, render the navbar */}
       {showNavbar && (
         <div className="flex basis-full flex-col items-center">
-          {pages.map((page) => (
+          {pages.map((page, i) => (
             <li className="mx-2 list-none" key={page}>
-              <NavLink to={`/${page}`}>{page}</NavLink>
+              <NavLink to={`/${pathnames[i]}`}>{page}</NavLink>
             </li>
           ))}
         </div>
