@@ -14,17 +14,18 @@ const foodSchema = new Schema(
       type: Number,
       require: true,
     },
-    calories: {
-      type: Number,
-      require: true,
-    },
     category: {
       type: String,
-      enum: ['Meat',],
+      enum: ['meat','vegetable','fruit','seafood','dairy','egg','grain','nut'],
+    },
+    image: {
+      type: String,
     },
     vegan: Boolean,
     vegetarian: Boolean,
     gluten_free: Boolean,
+    dairy_free: Boolean,
+    nut: Boolean,
   }
 );
 
