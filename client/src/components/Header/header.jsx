@@ -1,31 +1,38 @@
-import logo from '../../assets/logo.png';
-import Nav from '../Nav/nav';
+import logo from "../../assets/logo.png";
+import Nav from "../Nav/nav";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function Header() {
   // setup the initial scrolled value to 'false'
   const [scrolled, setScrolled] = useState(false);
 
-  const refresh = () => {
-    window.location.reload();
-  };
   useEffect(() => {
     const handleScroll = () => {
-      //window.pageTOffset returns the number of pixels that the document has been scrolled vertically from the top
+      //window.pageYOffset returns the number of pixels that the document has been scrolled vertically from the top
       const scrollTop =
         window.pageYOffset || document.documentElement.scrollTop;
       setScrolled(scrollTop > 0);
     };
 
     window.addEventListener("scroll", handleScroll);
+
+    // Cleanup function
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   return (
-    <header className="fixed top-0 flex w-full mx-auto items-center justify-between flex-wrap">
-      <div className="flex cursor-pointer">
+    <header
+      className="sticky top-0 z-[20] mx-auto flex w-full flex-wrap items-center justify-between"
+    >
+      <div className="cursor-pointer">
         {/* logo */}
-        <div onClick={refresh}>
-          <img src={logo} alt="Logo" className=" h-32 w-32" />
+        <div>
+          <Link to="/">
+            <img src={logo} alt="Logo" className="h-32 w-32 " />
+          </Link>
         </div>
       </div>
       <Nav />
