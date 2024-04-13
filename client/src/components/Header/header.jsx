@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import  Headerbackground  from "../../assets/background/header-background.png"
 import HomeHero from "../../assets/background/home-hero.jpeg"
+import AboutUsHero from "../../assets/background/aboutus_hero.jpeg"
 //import Hero from "../Hero/hero";
 
 export default function Header() {
@@ -21,6 +22,9 @@ export default function Header() {
     // } 
     if (pathname === "/") {
       setBackground(`url(${HomeHero})`);
+    }
+    else if (pathname === "/aboutus") {
+      setBackground(`url(${AboutUsHero})`);
     }
     else {
       setBackground(`url(${Headerbackground})`);

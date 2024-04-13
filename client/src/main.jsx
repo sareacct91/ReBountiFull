@@ -4,22 +4,23 @@ import App from './App.jsx'
 import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
-import Signup from './components/Singup/signup.jsx';
+import Signup from './components/Signup/signup.jsx';
 import Browse from './components/Browse/browse.jsx';
 import Login from './components/Login/login.jsx';
+import AboutUs from './components/AboutUS/aboutus.jsx';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
-    errorElement: <h1 style={{ color: 'red' }}>Don't suck</h1>,
+    errorElement: <h1 style={{ color: 'red' }}>Don't suck - Stephen prolly</h1>,
     children: [
       {
         index: true,
         element: <h1>Need a default page</h1>
       }, {
         path: 'aboutus',
-        element:<></>
+        element:<AboutUs />
       }, {
         path: 'login',
         element:<Login/>
