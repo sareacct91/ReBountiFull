@@ -3,9 +3,9 @@ import { useState } from "react";
 
 export default function Nav() {
   // pages
-  const pages = ["Cart", "Account", "Donate", "About Us"];
+  const pages = ["Cart", "Account", "Donate", "About Us", "Browse"];
   // assinging pathnames for each pages
-  const pathnames = ["cart", "account", "donate", "aboutus"];
+  const pathnames = ["cart", "account", "donate", "aboutus", "browse"];
   const [showNavbar, setShowNavbar] = useState(false);
 
   const toggleNavbar = () => {
