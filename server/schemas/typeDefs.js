@@ -56,13 +56,13 @@ const typeDefs = `
   }
 
   type Query {
-    helllo: String
+    user(email: String!): User
   }
 
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    addCartItem(foodId: ID!, amount: Int!): Cart
+    updateCartItem(foodId: ID!, amount: Int!): Cart
     updateUser(username: String, email: String, password: String):Auth
   }
 `;

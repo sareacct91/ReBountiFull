@@ -21,6 +21,10 @@ const addressSchema = new Schema({
         min: 10000,
         max: 99999,
     }
-});
+},
+{
+    _id: false,
+}
+);
 
 module.exports = addressSchema;
