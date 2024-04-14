@@ -17,10 +17,10 @@ const DonateContent = () => (
     <div className="w-full">
       {/* need to add path to these buttons don't forget */}
         <Link to="">
-          <button>Monetary Donation</button>
+        <button className="bg-blue-500 text-white font-bold text-lg">Monetary Donation</button>
         </Link>
         <Link to="">
-          <button className="mx-10">Register Now</button>
+          <button className="mx-10 bg-blue-500 text-white font-bold text-lg">Register Now</button>
         </Link>
       </div>
     </div>
