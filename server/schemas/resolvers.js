@@ -5,7 +5,10 @@ const { signToken, AuthenticationError } = require("../utils/auth");
 const resolvers = {
   Query: {
     user: async (_, { email }) => {
-      return User.find({ email });
+      console.log(email);
+      const user = await User.findOne({ email });
+      console.log(user);
+      return user;
     },
   },
   Mutation: {
