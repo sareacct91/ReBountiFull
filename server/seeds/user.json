@@ -65,22 +65,6 @@
     "household_size": 2
   },
   {
-    "username": "dani",
-    "email": "dani@email.com",
-    "password": "password12345",
-    "address": {
-        "street": "234 Main St",
-        "city": "San Francisco",
-        "state": "CA",
-        "zip": 94105
-      },
-    "isSupplier": false,
-    "isClient": true,
-    "first_name": "Dani",
-    "last_name": "Drury",
-    "household_size": 2
-  },
-  {
     "username": "sarah",
     "email": "sarah@email.com",
     "password": "password12345",
