@@ -26,6 +26,9 @@ const foodSchema = new Schema(
     gluten_free: Boolean,
     dairy_free: Boolean,
     nut_free: Boolean,
+  },
+  {
+    versionKey: false,
   }
 );
 
