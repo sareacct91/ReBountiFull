@@ -1,6 +1,5 @@
 const { Schema, model } = require("mongoose");
 const foodItemSchema = require("./FoodItemSchema");
-const User = require("./User");
 
 const cartSchema = new Schema({
   cart_id: {
@@ -9,14 +8,9 @@ const cartSchema = new Schema({
   },
   cart_owner: {
     type: Schema.Types.ObjectId,
-    ref: User,
+    ref: 'User',
   },
-  cart_items: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: foodItemSchema,
-    },
-  ],
+  cart_items: [foodItemSchema],
 });
 
 const Cart = model("Cart", cartSchema);
