@@ -17,6 +17,22 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Combined with flex-grow on the MAIN, the following makes footer stick to bottom of page */
+html {
+  height: 100vh;
+}
+
+body {
+  height: 100%;
+}
+
+#root {
+  height: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+}
+/* end attempt */
+
 .text-stroke {
  -webkit-text-stroke: 1px black;
 }
