@@ -17,7 +17,6 @@ const AboutUsContent = () => (
       and monetary donations.
     </p>
     <div className="w-full">
-      {/* need to add path to these buttons don't forget */}
         <Link to="/donate">
           <button>Download Impact Report</button>
         </Link>

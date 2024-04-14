@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 // hero content for the homepage
-const HeroContent = () => (
+const DonateContent = () => (
   <div className=" p-8 md:w-4/6 lg:w-1/2">
     <h1 className="text-stroke font-bold drop-shadow-lg">
       Make a Difference Today!
@@ -26,4 +26,4 @@ const HeroContent = () => (
     </div>
 );
 
-export default HeroContent;
+export default DonateContent;
