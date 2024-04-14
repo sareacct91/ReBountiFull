@@ -1,0 +1,111 @@
+[
+  {
+    "username": "sal",
+    "email": "sal@email.com",
+    "password": "password12345",
+    "address": {
+        "street": "123 Main St",
+        "city": "San Francisco",
+        "state": "CA",
+        "zip": 94105
+      },
+    "isSupplier": false,
+    "isClient": true,
+    "first_name": "Sal",
+    "last_name": "Fontaine",
+    "household_size": 5
+  },
+  {
+    "username": "sarun",
+    "email": "sarun@email.com",
+    "password": "password12345",
+    "address": {
+        "street": "345 Main St",
+        "city": "San Francisco",
+        "state": "CA",
+        "zip": 94105
+      },
+    "isSupplier": false,
+    "isClient": true,
+    "business_name": "",
+    "first_name": "Sarun",
+    "last_name": "Thunyapauksanon",
+    "household_size": 7
+  },
+  {
+    "username": "lucy",
+    "email": "lucy@email.com",
+    "password": "password12345",
+    "address": {
+        "street": "678 Main St",
+        "city": "San Francisco",
+        "state": "CA",
+        "zip": 94105
+      },
+    "isSupplier": false,
+    "isClient": true,
+    "first_name": "Lucy",
+    "last_name": "Kwon",
+    "household_size": 4
+  },
+  {
+    "username": "dani",
+    "email": "dani@email.com",
+    "password": "password12345",
+    "address": {
+        "street": "234 Main St",
+        "city": "San Francisco",
+        "state": "CA",
+        "zip": 94105
+      },
+    "isSupplier": false,
+    "isClient": true,
+    "first_name": "Dani",
+    "last_name": "Drury",
+    "household_size": 2
+  },
+  {
+    "username": "dani",
+    "email": "dani@email.com",
+    "password": "password12345",
+    "address": {
+        "street": "234 Main St",
+        "city": "San Francisco",
+        "state": "CA",
+        "zip": 94105
+      },
+    "isSupplier": false,
+    "isClient": true,
+    "first_name": "Dani",
+    "last_name": "Drury",
+    "household_size": 2
+  },
+  {
+    "username": "sarah",
+    "email": "sarah@email.com",
+    "password": "password12345",
+    "address": {
+      "street": "345 Main St",
+      "city": "San Francisco",
+      "state": "CA",
+      "zip": 94105
+    },
+    "isSupplier": true,
+    "isClient":false,
+    "business_name":"Green Eats, Inc."
+  },
+  {
+    "username": "stephen",
+    "email":"stephen@email.com",
+    "password":"password12345",
+    "address":{
+      "street":"567 Main St",
+      "city":"San Francisco",
+      "state":"CA",
+      "zip":94105
+    },
+    "isSupplier": true,
+    "isClient": false,
+    "business_name":"Healthy Living Enterprises"
+  }
+]
