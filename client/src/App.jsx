@@ -5,7 +5,7 @@ import {
 } from '@apollo/client';
 import Page from './components/Page';
 import { useState } from 'react';
-import Header from  './components/Header/header';
+import Header from './components/Header/header';
 import Footer from "./components/Footer/footer";
 import Hero from "./components/Hero/hero";
 
@@ -27,12 +27,12 @@ function App() {
 
   return (
     <ApolloProvider client={client}>
-      <Header />
-      <Hero />
-       <main>
-        <Page/>
-      </main>
-      <Footer />
+        <Header />
+        <Hero />
+        <main className='grow'>
+          <Page />
+        </main>
+        <Footer />
     </ApolloProvider>
   )
 }
