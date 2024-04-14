@@ -6,7 +6,7 @@ const foodItemSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'Food',
     },
-    amount: {
+    quantity: {
       type: Number,
       require: true,
     },

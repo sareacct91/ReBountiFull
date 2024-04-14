@@ -43,7 +43,8 @@ const userSchema = new Schema(
       required: function() { return this.isClient; } 
     },
     cart: { 
-      type: [foodItemSchema], 
+      type: Schema.Types.ObjectId,
+      ref: 'Cart'
     },
     history: { 
       type: [historySchema], 
