@@ -3,6 +3,11 @@ const { signToken, AuthenticationError } = require("../utils/auth");
 // const stripe = require("stripe")("sk_test_4eC39HqLyjWDarjtT1zdp7dc");
 
 const resolvers = {
+  Query: {
+    user: async (_, { email }) => {
+      return User.find({ email });
+    },
+  },
   Mutation: {
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });

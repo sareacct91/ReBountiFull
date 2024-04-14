@@ -51,7 +51,7 @@ const typeDefs = `
   }
 
   type Query {
-   
+    user(email: String!): User
   }
 
   type Mutation {
