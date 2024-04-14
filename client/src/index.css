@@ -3,9 +3,10 @@
 @tailwind utilities;
 
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+  font-family: "Josefin Sans", Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
@@ -15,6 +16,13 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.josefin-sans {
+  font-family: "Josefin Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
 }
 
 /* Combined with flex-grow on the MAIN, the following makes footer stick to bottom of page */
@@ -33,9 +41,10 @@ body {
 }
 /* end attempt */
 
-.text-stroke {
+/*This stroke below creates wierd lines for me regardless of font so far, but I do like the outline and think it'll be good for readability.
+/* .text-stroke {
  -webkit-text-stroke: 1px black;
-}
+} */
 
 
 a {
