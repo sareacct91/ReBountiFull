@@ -1,74 +1,44 @@
+import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import HomeHero from "../../assets/background/home-hero.jpeg";
-import AboutUsHero from "../../assets/background/aboutus_hero.jpeg"
+import Background from "../Background/background";
 import HomeContent from "./home-hero";
 import AboutUsContent from "./aboutus-hero";
+import DonateContent from "./donate-hero";
+import HomeHero from "../../assets/background/home-hero.jpeg";
+import AboutUsHero from "../../assets/background/aboutus_hero.jpeg";
+import DonateHero from "../../assets/background/donation.png";
 
-// Define a map of background images for different paths
-const backgroundImages = {
+const backgrounds = {
   "/": HomeHero,
-  // "/donate": DonateHero,
   "/aboutus": AboutUsHero,
+  "/donate": DonateHero,
 };
 
-const pointOfView = {
+const positions = {
   "/": "center",
-  // "/donate": "",
   "/aboutus": "bottom",
+  "/donate": "bottom",
 };
 
-// Get an array of paths from backgroundImages
-const hasHero = Object.keys(backgroundImages);
-console.log("hasHero: ",hasHero);
-
-
-// Reusable HeroSection component
-const HeroSection = ({ background, pos , children }) => (
-  <section
-    className="w-full"
-    style={{
-      backgroundImage: background,
-      backgroundPosition: pos,
-      backgroundAttachment: "fixed",
-      backgroundSize: "cover",
-    }}
-  >
-    {children}
-  </section>
-);
-
-// setting up the propTypes for the HeroSection 
-HeroSection.propTypes = {
-  // specifying each props
-  background: PropTypes.string,
-  children: PropTypes.node,
-  pos: PropTypes.string,
-};
-
-export default function Hero() {
-  const [background, setBackground] = useState(null);
-  const [pos, setPos] = useState("");
+const Hero = () => {
   const { pathname } = useLocation();
+  const [background, setBackground] = useState(HomeHero);
+  const [position, setPosition] = useState("center");
 
   useEffect(() => {
-    // Set the background based on the pathname
-    setBackground(`url(${backgroundImages[pathname]})` || null);
-    setPos(pointOfView[pathname] || "");
+    setBackground(backgrounds[pathname] || HomeHero);
+    setPosition(positions[pathname] || "center");
   }, [pathname]);
-  
 
-  // Render different content based on the path
-  if (hasHero.includes(pathname)) {
-    return (
-      <HeroSection background={background} pos={pos}>
-        {/* Render specific content for each path */}
-        {pathname === "/" && <HomeContent />}
-        {pathname === "/aboutus" && <AboutUsContent />}
-      </HeroSection>
-    );
-  } else {
-    return null; 
-  }
-}
+  const hasHero = Object.keys(backgrounds).includes(pathname);
+
+  return hasHero ? (
+    <Background imageUrl={background} position={position}>
+      {pathname === "/" && <HomeContent />}
+      {pathname === "/aboutus" && <AboutUsContent />}
+      {pathname === "/donate" && <DonateContent />}
+    </Background>
+  ) : null;
+};
+
+export default Hero;

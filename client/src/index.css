@@ -17,6 +17,11 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.text-stroke {
+ -webkit-text-stroke: 1px black;
+}
+
+
 a {
   font-weight: 500;
   color: #646cff;
