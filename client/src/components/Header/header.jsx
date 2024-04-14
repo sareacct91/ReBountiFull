@@ -5,7 +5,8 @@ import { Link, useLocation } from "react-router-dom";
 import  Headerbackground  from "../../assets/background/header-background.png"
 import HomeHero from "../../assets/background/home-hero.jpeg"
 import AboutUsHero from "../../assets/background/aboutus_hero.jpeg"
-//import Hero from "../Hero/hero";
+import DonateHero from "../../assets/background/donation.png";
+
 
 export default function Header() {
   // setup the initial background value to null
@@ -28,9 +29,13 @@ export default function Header() {
     else if (pathname === "/aboutus") {
       setBackground(`url(${AboutUsHero})`);
       setPos("bottom");
+    } else if (pathname === "/donate") {
+      setBackground(`url(${DonateHero})`);
+      setPos("bottom");
     }
     else {
       setBackground(`url(${Headerbackground})`);
+      setPos("center");
     }
   }, [pathname]);
 

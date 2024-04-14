@@ -2,20 +2,22 @@ import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import HomeHero from "../../assets/background/home-hero.jpeg";
-import AboutUsHero from "../../assets/background/aboutus_hero.jpeg"
+import AboutUsHero from "../../assets/background/aboutus_hero.jpeg";
+import DonateHero from "../../assets/background/donation.png";
 import HomeContent from "./home-hero";
 import AboutUsContent from "./aboutus-hero";
+import DonateContent from "./donate-hero";
 
 // Define a map of background images for different paths
 const backgroundImages = {
   "/": HomeHero,
-  // "/donate": DonateHero,
+  "/donate": DonateHero,
   "/aboutus": AboutUsHero,
 };
 
 const pointOfView = {
   "/": "center",
-  // "/donate": "",
+  "/donate": "bottom",
   "/aboutus": "bottom",
 };
 
@@ -66,6 +68,7 @@ export default function Hero() {
         {/* Render specific content for each path */}
         {pathname === "/" && <HomeContent />}
         {pathname === "/aboutus" && <AboutUsContent />}
+        {pathname === "/donate" && <DonateContent />}
       </HeroSection>
     );
   } else {
