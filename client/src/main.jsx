@@ -4,6 +4,7 @@ import App from './App.jsx'
 import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
+import LandingPage from './components/LandingPage/landingpage.jsx'
 import Signup from './components/Signup/signup.jsx';
 import Browse from './components/Browse/browse.jsx';
 import Login from './components/Login/login.jsx';
@@ -17,7 +18,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <h1>Need a default page</h1>
+        element: <h1>funny message</h1>
       }, {
         path: 'aboutus',
         element:<AboutUs />
@@ -35,7 +36,7 @@ const router = createBrowserRouter([
         element:<></>
       }, {
         path: 'donate',
-        element:<></>
+        element:<LandingPage />
       }, {
         path: 'checkout',
         element:<></>
