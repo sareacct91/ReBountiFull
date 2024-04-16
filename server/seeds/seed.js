@@ -19,7 +19,7 @@ connection.once('open', async () => {
 
     console.log('Food & User Data seeded!');
   } catch (err) {
-    console.log("Failed");
+    console.log("Failed: ", err);
   }
 
   process.exit(0);
