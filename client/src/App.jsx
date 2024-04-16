@@ -23,7 +23,7 @@ function App() {
     <ApolloProvider client={client}>
         <Header />
         <Hero />
-        <main className='grow'>
+        <main className='flex grow'>
           <Page />
         </main>
         <Footer />
