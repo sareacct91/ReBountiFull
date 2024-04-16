@@ -78,10 +78,10 @@ const resolvers = {
     },
     updateCartItem: async (parent, { foodId, amount }, context) => {
       if (context.user) {
-        const foodItem = { foodId, amount };
         const user = await User.findById(context.user._id);
-        const cartItemIndex = user.cart.findIndex(
-          (item) => item.foodId === foodId
+        const cart = await queryCartQL(CartQueries.queryCart,{ id: user._id });
+        const cartItemIndex = cart.updateItem.items.findIndex(
+          (item) => item.id === foodId
         );
 
         if (cartItemIndex !== -1) {
@@ -101,7 +101,7 @@ const resolvers = {
         throw new AuthenticationError("User not authenticated.");
       }
     },
-    
+
     // addCartItem: async (parent, { foodId, amount }, context) => {
 
     //   if (context.user) {

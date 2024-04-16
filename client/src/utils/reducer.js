@@ -13,7 +13,7 @@ export const reducer = (state, action) => {
     case UPDATE_CART_ITEM:
         return {
           ...state,
-          cart: [...action.cart],
+          cart: [action.updatedCart]
         };
     default:
       return state;

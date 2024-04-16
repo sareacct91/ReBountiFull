@@ -30,7 +30,7 @@ async function queryCartQL(fnQuery, variables) {
       throw new Error('graphQL error');
     }
 
-    return data;
+    return data.data;
   } catch (err) {
     console.log(err);
     return null;
