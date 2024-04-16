@@ -1,15 +1,9 @@
-import PageContent from "../PageContent";
 import { Outlet } from "react-router-dom";
 
-function Page() {
-  
+function Page() {  
   return (
     <section>
-      <PageContent>
-        <div>
-          <Outlet />
-        </div>
-      </PageContent>
+      <Outlet />
     </section>
   );
 }
