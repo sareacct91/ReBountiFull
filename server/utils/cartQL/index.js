@@ -19,6 +19,7 @@ async function queryCartQL(fnQuery, variables) {
     });
 
     if (!response.ok) {
+      console.log(await response.json())
       throw new Error('bad fetch');
     }
 
@@ -43,14 +44,31 @@ const argsAdd = {
     _id: "12948612847",
     name: "mango",
     price: 450,
+  },quantity: 10
+};
+const argsAdd2 = { 
+  user: { cart: args.id},
+  food: {
+    _id: "12948612849",
+    name: "taco",
+    price: 450,
   }
 };
+
 
 ;(async function () {
   const cart = await queryCartQL(CartQueries.queryCart, args); 
   console.log(require("util").inspect(cart, { depth: null }));
   console.log("\n")
-  const updatedCart = await queryCartQL(CartMutation.addItem, argsAdd);
+  let updatedCart = await queryCartQL(CartMutation.addCartItem, argsAdd);
+  console.log(require("util").inspect(updatedCart, { depth: null }));
+  updatedCart = await queryCartQL(CartMutation.addCartItem, argsAdd2);
+  console.log(require("util").inspect(updatedCart, { depth: null }));
+  updatedCart = await queryCartQL(CartMutation.updateCartItem, argsAdd);
+  console.log(require("util").inspect(updatedCart, { depth: null }));
+  updatedCart = await queryCartQL(CartMutation.removeCartItem, argsAdd);
+  console.log(require("util").inspect(updatedCart, { depth: null }));
+  updatedCart = await queryCartQL(CartMutation.cartCheckout, argsAdd);
   console.log(require("util").inspect(updatedCart, { depth: null }));
 })()
 
