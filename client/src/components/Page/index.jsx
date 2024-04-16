@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 
+
 function Page() {  
   return (
     <section>
