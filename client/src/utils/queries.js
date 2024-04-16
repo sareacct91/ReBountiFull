@@ -16,3 +16,35 @@ export const QUERY_USER = gql`
     }
   }
 `;
+
+export const QUERY_CART = gql`
+  query getCart($getCartId: ID) {
+    cart(getCartId:$getCartId)  {
+        id
+          isEmpty
+          totalItems
+          items {
+            id
+            name
+            quantity
+            unitTotal {
+              amount
+              formatted
+          }
+            lineTotal {
+              amount
+              formatted
+          }
+            images
+          }
+          grandTotal {
+            amount
+            formatted
+          }
+        }
+      }
+    }
+  }
+`;
+
+
