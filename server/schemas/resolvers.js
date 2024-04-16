@@ -88,18 +88,18 @@ const resolvers = {
 
       throw AuthenticationError;
     },
-    addCartItem: async (parent, { foodId, amount }, context) => {
+    // addCartItem: async (parent, { foodId, amount }, context) => {
 
-      if (context.user) {
-        const foodItem = { foodId, amount };
+    //   if (context.user) {
+    //     const foodItem = { foodId, amount };
 
-        return User.findByIdAndUpdate(context.user._id, {
-          $push: { cart: foodItem },
-        });
-      }
+    //     return User.findByIdAndUpdate(context.user._id, {
+    //       $push: { cart: foodItem },
+    //     });
+    //   }
 
-      throw AuthenticationError;
-    },
+    //   throw AuthenticationError;
+    // },
 
     // updateProduct: async (parent, { _id, quantity }) => {
     //   const decrement = Math.abs(quantity) * -1;
