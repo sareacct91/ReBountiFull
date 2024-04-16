@@ -1,16 +1,20 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model } = require("mongoose");
 
 const foodItemSchema = new Schema(
   {
-    food: {
+    id: {
       type: Schema.Types.ObjectId,
-      ref: 'Food',
+      ref: "Food",
     },
     quantity: {
       type: Number,
       require: true,
     },
-  }, {
+    lineTotal: {
+      type: Number,
+    },
+  },
+  {
     toJSON: {
       virtuals: true,
       getters: true,
