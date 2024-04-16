@@ -4,10 +4,11 @@ module.exports = {
       mutation {
         addItem(
           input: {
-            cartId: "${a.user.cart}"
+            cartId: "${a.user._id}"
             id: "${a.food._id}"
             name: "${a.food.name}"
             price: ${a.food.price}
+            quantity: ${a.quantity || 1}
           }
         ) {
           id
@@ -40,7 +41,7 @@ module.exports = {
       mutation {
         removeItem(
           input: {
-            cartId: "${a.user.cart}"
+            cartId: "${a.user._id}"
             id: "${a.food._id}"
           }
         ) {
@@ -69,12 +70,13 @@ module.exports = {
       }
     `;
   },
+
   updateCartItem(a) {
     return `
       mutation {
         updateItem(
           input: {
-            cartId: "${a.user.cart}"
+            cartId: "${a.user._id}"
             id: "${a.food._id}"
             quantity: ${a.quantity}
           }
@@ -104,12 +106,13 @@ module.exports = {
       }
     `;
   },
+
   cartCheckout(a) {
     return `
   mutation {
     checkout(
       input: {
-        cartId: "${a.user.cart}"
+        cartId: "${a.user._id}"
         email: "bob@bob.com"
         shipping: {
           name: "Bob"
