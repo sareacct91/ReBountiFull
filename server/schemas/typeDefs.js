@@ -37,7 +37,7 @@ const typeDefs = `
     first_name: String
     last_name: String
     household_size: Int
-    cart: String!
+    cart: Cart!
     history: [History!]!
   }    
 
