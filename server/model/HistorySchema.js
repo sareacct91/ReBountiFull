@@ -11,7 +11,7 @@ const historySchema = new Schema(
       get: (v) => v.toLocaleString(),
     },
     food_item: [foodItemSchema], 
-    amount_paid: {
+    grand_total: {
       type: Number,
     }
   }, {

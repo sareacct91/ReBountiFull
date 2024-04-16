@@ -43,8 +43,8 @@ const userSchema = new Schema(
       required: function() { return this.isClient; } 
     },
     cart: { 
-      type: Schema.Types.ObjectId,
-      ref: 'Cart'
+      type: String,
+      required: true,
     },
     history: { 
       type: [historySchema], 
