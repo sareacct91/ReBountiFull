@@ -109,36 +109,36 @@ module.exports = {
 
   cartCheckout(a) {
     return `
-  mutation {
-    checkout(
-      input: {
-        cartId: "${a.user._id}"
-        email: "bob@bob.com"
-        shipping: {
-          name: "Bob"
-          line1: "123 Anywhere Lane"
-          city: "Brooklyn"
-          postalCode: "95255"
-          country: "USA"
-        }
-        }
-    ) {
-      id
-      items {
-        id
-        name
-        quantity
-        lineTotal {
-          amount
-          formatted
+      mutation {
+        checkout(
+          input: {
+            cartId: "${a.id}"
+            email: "bob@bob.com"
+            shipping: {
+              name: "Bob"
+              line1: "123 Anywhere Lane"
+              city: "Brooklyn"
+              postalCode: "95255"
+              country: "USA"
+            }
+          }
+        ) {
+          id
+          items {
+            id
+            name
+            quantity
+            lineTotal {
+              amount
+              formatted
+            }
+          }
+          grandTotal {
+            amount
+            formatted
+          }
         }
       }
-      grandTotal {
-        amount
-        formatted
-      }
-  }
-}
-  `;
+    `;
   },
 };

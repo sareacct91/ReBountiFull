@@ -1,11 +1,13 @@
 module.exports = {
-  queryCart(a) {
+  queryCart({ id }) {
     return `
       query {
-        cart(id: "${a.user._id}" ) {
+        cart(id: "${id}" ) {
           id
           isEmpty
           totalItems
+          totalUniqueItems
+          abandoned
           items {
             id
             name

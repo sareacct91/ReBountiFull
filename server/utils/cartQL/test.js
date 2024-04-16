@@ -1,9 +1,9 @@
 const { CartQueries, CartMutation, queryCartQL} = require('./index');
 
-const args = { user: { _id: "565jsskcjsd833271" }};
+const args = { id: "565jsskcjsd833271" };
 
 const argsAddMango = { 
-  user: { _id: args.user._id},
+  user: { _id: args.id},
   food: {
     _id: "12948612847",
     name: "mango",
@@ -13,7 +13,7 @@ const argsAddMango = {
 };
 
 const argsAddTaco = { 
-  user: { _id: args.user._id},
+  user: { _id: args.id},
   food: {
     _id: "12948612849",
     name: "taco",
@@ -23,7 +23,7 @@ const argsAddTaco = {
 };
 
 const argsUpdateMango = { 
-  user: { _id: args.user._id},
+  user: { _id: args.id},
   food: {
     _id: "12948612847",
     name: "mango",
