@@ -17,7 +17,13 @@ export function shuffleArray(array) {
 
 // Function to select 20 random items from the shuffled list
 export function selectRandomItems(items) {
-  const shuffledItems = shuffleArray(items);
-  return shuffledItems.slice(0, 20);
+  const keys = Object.keys(items);
+  const shuffledKeys = shuffleArray(keys);
+  const selectedItems = {};
+  for (let i = 0; i < Math.min(20, shuffledKeys.length); i++) {
+    const key = shuffledKeys[i];
+    selectedItems[key] = items[key];
+  }
+  return selectedItems;
 }
 
