@@ -48,8 +48,9 @@ body {
 
 
 a {
-  font-weight: 500;
-  color: #646cff;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: white;
   text-decoration: inherit;
 }
 a:hover {

@@ -14,11 +14,11 @@ export default function Nav() {
 
   return (
     <>
-      <nav className="top-0 flex w-1/3 justify-end">
-        <div className=" hidden w-full justify-between lg:flex">
+      <nav className="top-0 flex justify-end">
+        <div className=" hidden w-full justify-between me-3 lg:flex">
           <ul className="flex flex-row">
             {pages.map((page,i) => (
-              <li className="mx-2" key={page}>
+              <li className="mx-2 text-white" key={page}>
                 <NavLink to={`/${pathnames[i]}`}>{page}</NavLink>
               </li>
             ))}
@@ -37,7 +37,7 @@ export default function Nav() {
       </nav>
       {/* If showNavbar is true, render the navbar */}
       {showNavbar && (
-        <div className="flex basis-full flex-col items-center">
+        <div className="flex basis-full flex-col items-center lg:hidden">
           {pages.map((page, i) => (
             <li className="mx-2 list-none" key={page}>
               <NavLink to={`/${pathnames[i]}`}>{page}</NavLink>
