@@ -7,7 +7,7 @@ export default function LandingPage() {
           <h2 className="text-black text-4xl pt-10">How it works</h2>
           <div>
             <h3 className="text-black text-2xl pt-5">Collecting Donations</h3>
-            <img src="" alt="FreePik icon1" />
+            <img src="src/assets/images/give_money.png" alt="Image of someone donating money" />
             <ol className="text-black">
               {/* How do I make bullet points black?  */}
               <li>Food donations from grocery stores and restaurants are collected by ReBountiFull volunteers</li>
@@ -16,7 +16,7 @@ export default function LandingPage() {
           </div>
           <div>
             <h3 className="text-black text-2xl pt-5">Stocking the Food</h3>
-            <img src="" alt="FreePik icon2" />
+            <img src="src/assets/images/give_food.png" alt="Image of hands giving food" />
             <ol className="text-black">
               {/* How do I make bullet points black?  */}
               <li>Surplus food collected is made available on the ReBountiFull site at discounted prices</li>
@@ -25,7 +25,7 @@ export default function LandingPage() {
           </div>
           <div>
             <h3 className="text-black text-2xl pt-5">Less Waste, Less Hunger</h3>
-            <img src="" alt="FreePik icon3" />
+            <img src="src/assets/images/give_help.png" alt="Image of many hands touching in a team-huddle" />
             <ol className="text-black">
               {/* How do I make bullet points black?  */}
               <li>Less waste from grocery stores and restaurants</li>
