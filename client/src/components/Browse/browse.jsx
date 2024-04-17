@@ -1,6 +1,8 @@
 import { useQuery } from "@apollo/client";
 import { QUERY_ALL_FOOD } from "../../utils/queries";
 import  GroceryItem  from "./GroceryItem/grocery.jsx";
+// import { selectRandomItems } from "../../utils/helpers.js";
+
 
 
 export default function Browse() {
@@ -9,7 +11,7 @@ export default function Browse() {
     if (loading) return <p>Loading...</p>
     
     const { getAllFood } = data;
-    console.log("data :",data);
+    // const randomFoodItems = selectRandomItems(getAllFood);
 
     return (
       <div className="grid items-center justify-center bg-white">

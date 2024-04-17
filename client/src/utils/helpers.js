@@ -17,6 +17,7 @@ export function shuffleArray(array) {
 
 // Function to select 20 random items from the shuffled list
 export function selectRandomItems(items) {
-  return items.slice(0, 20);
+  const shuffledItems = shuffleArray(items);
+  return shuffledItems.slice(0, 20);
 }
 

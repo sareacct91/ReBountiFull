@@ -102,11 +102,11 @@ button:focus-visible {
 
 
 /* for the Hamburger */
-input[type = "checkbox"] {
+/* input[type = "checkbox"] {
   -webkit-appearance: none;
   display: none;
   visibility: hidden;
-}
+} */
 
 .bar {
   display: block;
