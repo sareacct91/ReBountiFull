@@ -7,7 +7,7 @@ const DonateContent = () => (
     <h1 className="text-stroke font-bold drop-shadow-lg">
       Make a Difference Today!
     </h1>
-    <p className="my-10 rounded-lg bg-zinc-900 bg-opacity-70 p-3 lg:p-10 text-2xl">
+    <p className="my-10 rounded-lg bg-zinc-900 bg-opacity-70 text-2xl p-3 lg:p-10 lg:w-1/2">
       At ReBountiFull, we believe in
       <span className=" text-orange font-semibold">
         &nbsp;the power of collective action
