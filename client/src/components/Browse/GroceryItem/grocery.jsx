@@ -4,8 +4,6 @@ import { pluralize } from "../../../utils/helpers";
 export default function GroceryItem(food) {
   const { image, name, price, inventory } = food;
 
-
-
   return (
     <div className="m-3">
       <div className=" grid w-fit place-items-center text-center">
