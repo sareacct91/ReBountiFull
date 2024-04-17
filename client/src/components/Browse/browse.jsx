@@ -35,19 +35,19 @@ if (loading) return (
       <div className="mx-2 grid w-full">
         <p className="text-4xl text-black">Browse products</p>
         <input
-          className="h-10 w-full rounded-2xl border border-zinc-800 bg-white p-5 text-black"
+          className="h-10 w-full mt-6 rounded-2xl border border-zinc-800 bg-white p-5 text-black"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="search products..."
           type="search"
         />
       </div>
-      <Category/>
       <div className="grow-1 flex flex-row flex-wrap text-black">
         {filteredItems.map((food) => (
           <GroceryItem key={food._id} {...food} />
         ))}
       </div>
+      <Category />
       {!query && <RandomProducts />}
     </div>
   );

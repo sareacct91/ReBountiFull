@@ -12,11 +12,11 @@ export default function RandomProducts() {
   const randomFoodItems = selectRandomItems(getAllFood);
 
   return (
-    <div className="bg-white p-10">
+    <div className="bg-white">
+      <p className="col-span-full mb-10 text-2xl font-semibold text-gray-800">
+        Featured Selection
+      </p>
       <div className="grid items-center justify-center bg-white">
-        <p className="mb-4 text-2xl font-semibold text-gray-800">
-          Featured Selection
-        </p>
         <div className="grid w-fit place-items-center sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5">
           {Object.values(randomFoodItems).map((food) => (
             <GroceryItem key={food._id} {...food} />

@@ -13,8 +13,8 @@ export default function Category() {
   ];
 
   return (
-    <div className="mx-2 my-12 grid grid-cols-4 gap-4">
-      <div className="col-span-full text-4xl text-black">
+    <div className="mx-2 my-12 grid grow grid-cols-4 gap-4 max-sm:grid-cols-2">
+      <div className="col-span-full text-2xl text-black">
         <p>Browse by Category</p>
       </div>
       {categoryData.map((category, index) => (
@@ -22,7 +22,7 @@ export default function Category() {
           <img
             src={category.source}
             alt={category.name}
-            className="mb-2 h-20 w-20 rounded-full object-cover"
+            className="mb-2 h-32 w-32 rounded-full object-cover max-sm:w-28 max-sm:h-28"
           />
           <p className="text-gray-700">{category.name}</p>
         </div>
