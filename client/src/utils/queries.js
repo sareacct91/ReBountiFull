@@ -56,7 +56,7 @@ export const QUERY_FOOD = gql`
 
 // querying food items by its category name 
 export const QUERY_FOOD_BY_CATEGORY = gql`
-  query getFoodByCategory($category: String) {
+  query GetFoodByCategory($category: String!) {
     getFoodByCategory(category: $category) {
       _id
       name
@@ -72,7 +72,6 @@ export const QUERY_FOOD_BY_CATEGORY = gql`
     }
   }
 `;
-
 export const QUERY_CART = gql`
   query getCart {
     cart {
