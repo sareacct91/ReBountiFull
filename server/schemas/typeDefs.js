@@ -143,6 +143,7 @@ const typeDefs = `
     updateCartItem(food:FoodInput!): Cart
     addCartItem(food:FoodInput!): Cart
     removeCartItem(food:FoodInput!): Cart 
+    cartCheckout:Order
   }
 `;
 

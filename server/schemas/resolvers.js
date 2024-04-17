@@ -1,7 +1,8 @@
 const { GraphQLScalarType, Kind } =  require('graphql');
 const { User, Food } = require("../model");
 const { signToken, AuthenticationError } = require("../utils/auth");
-const  { queryCartQL, CartQueries, CartMutation } = require("../utils/cartQL")
+const  { queryCartQL, CartQueries, CartMutation } = require("../utils/cartQL");
+const { cartCheckout } = require('../utils/cartQL/mutations');
 // const stripe = require("stripe")("sk_test_4eC39HqLyjWDarjtT1zdp7dc");
 
 
@@ -128,7 +129,6 @@ const resolvers = {
       if (!result){
         throw new Error('error fetching cart');
       }
-      console.log(result)
       return result.addItem
     },
     removeCartItem: async (parent, {food},context)=>{
@@ -145,6 +145,21 @@ const resolvers = {
       }
       console.log(result)
       return result.removeItem
+    },
+    cartCheckout: async (parent,_,context)=>{
+      if (!context.user?._id) {
+        throw AuthenticationError
+      }
+      const variables={
+        id:context.user._id
+      }
+
+      const result=await queryCartQL(CartMutation.cartCheckout, variables);
+      if (!result){
+        throw new Error('error fetching cart');
+      }
+      console.log(result);
+      return result.checkout
     },
   },
 };

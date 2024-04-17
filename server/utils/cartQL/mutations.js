@@ -145,6 +145,7 @@ module.exports = {
             amount
             formatted
           }
+          createdAt
         }
       }
     `;
