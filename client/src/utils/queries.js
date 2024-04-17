@@ -61,8 +61,6 @@ export const QUERY_CART = gql`
           }
         }
       }
-    }
-  }
 `;
 
 

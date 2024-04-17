@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 export default function Signup() {
   return (
-    <div className="flex flex-col items-center justify-center bg-white text-black">
+    <div className="flex flex-col items-center justify-center grow bg-white text-black">
       <h1>Welcome!</h1>
       <img src={logo} />
       <h2 className="text-black text-2xl">Sign up below to help us rebountify the world one bite at a time</h2>
