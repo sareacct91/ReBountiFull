@@ -41,13 +41,10 @@ if (loading) return (
         />
       </div>
       <div className="grow-1 flex flex-row flex-wrap text-black">
-        {filteredItems.map(({ _id, name, image, inventory, price }) => (
+        {filteredItems.map((food) => (
           <GroceryItem
-            key={_id}
-            name={name}
-            image={image}
-            inventory={inventory}
-            price={price}
+            key={food._id}
+            {...food}
           />
         ))}
       </div>
