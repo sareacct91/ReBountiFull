@@ -17,6 +17,24 @@ export const QUERY_USER = gql`
   }
 `;
 
+// query to get all of the food in the food collection 
+export const QUERY_ALL_FOOD = gql`
+  {
+    getAllFood {
+      _id
+      name
+      price
+      inventory
+      category
+      image
+      vegan
+      vegetarian
+      gluten_free
+      dairy_free
+      nut_free
+    }
+  }
+`;
 export const QUERY_CART = gql`
   query getCart {
     cart {

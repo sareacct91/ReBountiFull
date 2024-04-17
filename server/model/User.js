@@ -44,8 +44,6 @@ const userSchema = new Schema(
     },
     cart: { 
       type: Schema.Types.ObjectId,
-      default: new Types.ObjectId,
-      required: true,
     },
     history: { 
       type: [historySchema], 

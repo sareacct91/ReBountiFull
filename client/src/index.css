@@ -101,13 +101,6 @@ button:focus-visible {
 }
 
 
-/* Need to add the visibility checkbox classname for the Hamburger */
-/* input[type = "checkbox"] {
-  -webkit-appearance: none;
-  display: none;
-  visibility: hidden;
-} */
-
 .bar {
   display: block;
   position: relative;

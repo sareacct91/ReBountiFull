@@ -36,8 +36,8 @@ const typeDefs = `
     business_name: String
     first_name: String
     last_name: String
+    cart: Cart
     household_size: Int
-    cart: Cart!
     history: [History!]!
   }    
 
@@ -65,7 +65,7 @@ const typeDefs = `
     vegetarian: Boolean!
     gluten_free: Boolean!
     dairy_free: Boolean!
-    nut: Boolean!
+    nut_free: Boolean!
   } 
 
   input FoodInput {
@@ -134,6 +134,7 @@ const typeDefs = `
   type Query {
     user: User!
     getCart: Cart!
+    getAllFood: [Food!]!
   }
 
   type Mutation {

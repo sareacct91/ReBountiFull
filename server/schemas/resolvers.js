@@ -61,6 +61,7 @@ const resolvers = {
         console.error(err);
       }
     },
+
     getCart: async (_, __, context) => {
       if (!context.user?._id) {
         throw AuthenticationError
@@ -73,6 +74,9 @@ const resolvers = {
       const cart = await queryCartQL(CartQueries.queryCart, variables);
       return cart.cart;
     },
+    getAllFood: async () => {
+      return await Food.find();
+    }
   },
 
   Mutation: {
@@ -96,6 +100,7 @@ const resolvers = {
 
       return { token, user };
     },
+
     addUser: async (parent, { userInput }) => {
       console.log(userInput)
       const user = await User.create(userInput);
@@ -112,6 +117,7 @@ const resolvers = {
 
       throw AuthenticationError;
     },
+
     updateCartItem: async (_, { food }, context) => {
       if (!context.user?._id) {
         throw AuthenticationError

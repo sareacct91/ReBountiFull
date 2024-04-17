@@ -28,7 +28,7 @@ export default function Nav() {
         {/* hamburger */}
         <div className="hamburger mr-10 lg:hidden">
           <label className="bar" htmlFor="check">
-            <input type="checkbox" id="check" onChange={toggleNavbar} />
+            <input className="hidden" type="checkbox" id="check" onChange={toggleNavbar} />
             <span className="top"></span>
             <span className="middle"></span>
             <span className="bottom"></span>
