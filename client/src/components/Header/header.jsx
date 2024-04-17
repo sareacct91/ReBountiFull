@@ -32,14 +32,14 @@ const Header = () => {
 
   return (
     <Background imageUrl={background} position={position}>
-      <header className="sticky top-0 z-[20] mx-auto flex w-full flex-wrap items-center justify-between">
-        <div className="flex w-1/6 justify-center">
+      <header className="sticky top-0 z-[20] flex w-full flex-wrap items-center justify-between">
+        <div className="flex justify-center">
           <div>
             <Link to="/">
               <img
                 src={logo}
                 alt="Logo"
-                className="z-[50] h-32 w-32 cursor-pointer"
+                className="z-[50] h-32 w-32 lg:h-48 lg:w-48 cursor-pointer"
               />
             </Link>
           </div>
