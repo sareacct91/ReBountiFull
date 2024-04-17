@@ -9,6 +9,7 @@ module.exports = {
             name: "${a.food.name}"
             price: ${a.food.price}
             quantity: ${a.food.quantity || 1}
+            images: ["${a.food.image}"]
           }
         ) {
           id
