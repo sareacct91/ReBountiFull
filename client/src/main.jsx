@@ -34,13 +34,13 @@ const router = createBrowserRouter([
         element: <Signup/>
       }, {
         path: 'signup/client',
-        element:<Client />
+        element:<Client/>
       }, {
         path: 'signup/supplier',
         element:<Supplier />
       }, {
         path: 'donate',
-        element:<LandingPage />
+        element:<LandingPage/>
       }, {
         path: 'checkout',
         element:<></>
