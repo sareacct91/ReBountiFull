@@ -19,6 +19,7 @@ async function queryCartQL(fnQuery, variables) {
     });
 
     if (!response.ok) {
+      console.log(await response.json())
       throw new Error('bad fetch');
     }
 
@@ -29,30 +30,13 @@ async function queryCartQL(fnQuery, variables) {
       throw new Error('graphQL error');
     }
 
-    return data;
+    return data.data;
   } catch (err) {
     console.log(err);
     return null;
   }
 }
 
-const args = { id: "565jkcjsd833271" };
-const argsAdd = { 
-  user: { cart: args.id},
-  food: {
-    _id: "12948612847",
-    name: "mango",
-    price: 450,
-  }
-};
-
-;(async function () {
-  const cart = await queryCartQL(CartQueries.queryCart, args); 
-  console.log(require("util").inspect(cart, { depth: null }));
-  console.log("\n")
-  const updatedCart = await queryCartQL(CartMutation.addItem, argsAdd);
-  console.log(require("util").inspect(updatedCart, { depth: null }));
-})()
 
 module.exports = {
   CartQueries,

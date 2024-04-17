@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, Types } = require('mongoose');
 const bcrypt = require('bcrypt');
 const addressSchema = require('./AddressSchema');
 const historySchema = require('./HistorySchema');
@@ -44,7 +44,8 @@ const userSchema = new Schema(
     },
     cart: { 
       type: Schema.Types.ObjectId,
-      ref: 'Cart'
+      default: new Types.ObjectId,
+      required: true,
     },
     history: { 
       type: [historySchema], 

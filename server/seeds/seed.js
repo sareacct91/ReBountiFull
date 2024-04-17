@@ -16,10 +16,11 @@ connection.once('open', async () => {
 
     await Food.insertMany(foodData);
     await User.insertMany(userData);
+
+    console.log('Food & User Data seeded!');
   } catch (err) {
-    console.log("Failed");
+    console.log("Failed: ", err);
   }
 
-  console.log('Food & User Data seeded!');
   process.exit(0);
 });
