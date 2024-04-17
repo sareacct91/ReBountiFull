@@ -1,5 +1,6 @@
 import { useQuery } from "@apollo/client";
 import { QUERY_ALL_FOOD } from "../../utils/queries";
+import  GroceryItem  from "./GroceryItem/grocery.jsx";
 
 
 export default function Browse() {
@@ -13,11 +14,10 @@ export default function Browse() {
     return (
       <div>
         {getAllFood.map((food) => (
-          <div key={food._id}>
-            <p>Name: {food.name}</p>
-            <p>Price: {food.price}</p>
-            <img src={food.image} alt={food.name}></img>
-          </div>
+          <GroceryItem 
+          key={food._id}
+          {...food}
+          />
         ))}
       </div>
     );
