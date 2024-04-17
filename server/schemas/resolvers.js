@@ -33,23 +33,26 @@ const dateScalar = new GraphQLScalarType({
 const resolvers = {
   Date: dateScalar,
   Query: {
-    user: async (_, { email }, context) => {
+    user: async (...[,,context]) => {
       try {
-        let user = await User.findOne({ email });
+        if (!context.user?._id) {
+          throw AuthenticationError
+        }
+
+        let user = await User.findById( context.user._id);
 
         if (!user) {
-          throw new Error(`No user found with email ${email}`);
+          throw AuthenticationError
         }
 
         user = user.toJSON();
         let cart = await queryCartQL(CartQueries.queryCart, { id: user._id }); 
-        user.cart = cart.cart;
 
-        if (!user.cart) {
+        if (!cart?.cart) {
           throw new Error('error fetching cart');
         }
 
-        console.log(user)
+        user.cart = cart.cart;
         return user;
 
       } catch(err) {
