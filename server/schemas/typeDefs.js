@@ -68,6 +68,14 @@ const typeDefs = `
     nut: Boolean!
   } 
 
+  input FoodInput {
+    _id: ID!
+    name: String
+    price: Float
+    image: String
+    quantity: Int
+  } 
+
   type Auth {
     token: ID!
     user: User!
@@ -132,9 +140,10 @@ const typeDefs = `
     addUser(userInput: UserInput!): Auth
     updateUser(username: String, email: String, password: String):Auth
     login(email: String!, password: String!): Auth
-    updateCartItem(cartId: ID!, foodId: ID!, quantity: Int!): Cart
-    addCartItem(cartId: ID!, foodId: ID!, quantity: Int!): Cart
-    removeCartItem(cartId: ID!, foodId: ID!, quantity: Int!): Cart 
+    updateCartItem(food:FoodInput!): Cart
+    addCartItem(food:FoodInput!): Cart
+    removeCartItem(food:FoodInput!): Cart 
+    cartCheckout:Order
   }
 `;
 
