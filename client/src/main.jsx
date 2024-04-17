@@ -9,6 +9,8 @@ import Signup from './components/Signup/signup.jsx';
 import Browse from './components/Browse/browse.jsx';
 import Login from './components/Login/login.jsx';
 import AboutUs from './components/AboutUS/aboutus.jsx';
+import Client from './components/Signup/client.jsx';
+import Supplier from './components/Signup/supplier.jsx';
 
 const router = createBrowserRouter([
   {
@@ -30,10 +32,10 @@ const router = createBrowserRouter([
         element: <Signup/>
       }, {
         path: 'signup/client',
-        element:<></>
+        element:<Client />
       }, {
         path: 'signup/supplier',
-        element:<></>
+        element:<Supplier />
       }, {
         path: 'donate',
         element:<LandingPage />
