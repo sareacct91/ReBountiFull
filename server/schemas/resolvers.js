@@ -1,7 +1,8 @@
 const { GraphQLScalarType, Kind } =  require('graphql');
 const { User, Food } = require("../model");
 const { signToken, AuthenticationError } = require("../utils/auth");
-const  { queryCartQL, CartQueries, CartMutation } = require("../utils/cartQL")
+const  { queryCartQL, CartQueries, CartMutation } = require("../utils/cartQL");
+const { cartCheckout } = require('../utils/cartQL/mutations');
 // const stripe = require("stripe")("sk_test_4eC39HqLyjWDarjtT1zdp7dc");
 
 
@@ -33,21 +34,22 @@ const dateScalar = new GraphQLScalarType({
 const resolvers = {
   Date: dateScalar,
   Query: {
-    user: async (...[,,context]) => {
+    user: async (_, __, context) => {
       try {
         if (!context.user?._id) {
           throw AuthenticationError
         }
 
-        let user = await User.findById( context.user._id);
+        let p1 =  User.findById( context.user._id);
+        let p2 =  queryCartQL(CartQueries.queryCart, { id: context.user._id }); 
+
+        let [user, cart] = await Promise.all([p1, p2]); 
 
         if (!user) {
           throw AuthenticationError
         }
 
         user = user.toJSON();
-        let cart = await queryCartQL(CartQueries.queryCart, { id: user._id }); 
-
         if (!cart?.cart) {
           throw new Error('error fetching cart');
         }
@@ -59,23 +61,38 @@ const resolvers = {
         console.error(err);
       }
     },
-    getCart: async (_, args) => {
-      const cart = await queryCartQL(CartQueries.queryCart, args);
-      return cart;
+
+    getCart: async (_, __, context) => {
+      if (!context.user?._id) {
+        throw AuthenticationError
+      }
+
+      const variables = {
+        id: context.user._id
+      }
+
+      const cart = await queryCartQL(CartQueries.queryCart, variables);
+      return cart.cart;
     },
+    getAllFood: async () => {
+      return await Food.find();
+    }
   },
 
   Mutation: {
     login: async (parent, { email, password }) => {
+      console.log(email,password)
       const user = await User.findOne({ email });
 
       if (!user) {
+        console.log('notfound');
         throw AuthenticationError;
       }
 
       const correctPw = await user.isCorrectPw(password);
 
       if (!correctPw) {
+        console.log('badpwd');
         throw AuthenticationError;
       }
 
@@ -83,6 +100,7 @@ const resolvers = {
 
       return { token, user };
     },
+
     addUser: async (parent, { userInput }) => {
       console.log(userInput)
       const user = await User.create(userInput);
@@ -99,54 +117,65 @@ const resolvers = {
 
       throw AuthenticationError;
     },
-    updateCartItem: async (parent, { foodId, amount }, context) => {
-      if (context.user) {
-        const user = await User.findById(context.user._id);
-        const cart = await queryCartQL(CartQueries.queryCart,{ id: user._id });
-        const cartItemIndex = cart.updateItem.items.findIndex(
-          (item) => item.id === foodId
-        );
 
-        if (cartItemIndex !== -1) {
-          user.cart[cartItemIndex].quantity = amount;
-
-          return User.findByIdAndUpdate(
-            context.user._id,
-            {
-              $set: { cart: user.cart },
-            },
-            { new: true }
-          );
-        } else {
-          throw new Error("Food item not found in the cart.");
-        }
-      } else {
-        throw new AuthenticationError("User not authenticated.");
+    updateCartItem: async (_, { food }, context) => {
+      if (!context.user?._id) {
+        throw AuthenticationError
       }
+      const variables={
+        food, 
+        id:context.user._id
+      }
+      const result=await queryCartQL(CartMutation.updateCartItem, variables);
+      if (!result){
+        throw new Error('error fetching cart');
+      }
+      return result.updateItem
     },
+    addCartItem: async (_, {food},context)=>{
+      if (!context.user?._id) {
+        throw AuthenticationError
+      }
+      const variables={
+        food, 
+        id:context.user._id
+      }
+      const result=await queryCartQL(CartMutation.addCartItem, variables);
+      if (!result){
+        throw new Error('error fetching cart');
+      }
+      return result.addItem
+    },
+    removeCartItem: async (_, {food},context)=>{
+      if (!context.user?._id) {
+        throw AuthenticationError
+      }
+      const variables={
+        food, 
+        id:context.user._id
+      }
+      const result=await queryCartQL(CartMutation.removeCartItem, variables);
+      if (!result){
+        throw new Error('error fetching cart');
+      }
+      console.log(result)
+      return result.removeItem
+    },
+    cartCheckout: async (_, __ ,context)=>{
+      if (!context.user?._id) {
+        throw AuthenticationError
+      }
+      const variables={
+        id:context.user._id
+      }
 
-    // addCartItem: async (parent, { foodId, amount }, context) => {
-
-    //   if (context.user) {
-    //     const foodItem = { foodId, amount };
-
-    //     return User.findByIdAndUpdate(context.user._id, {
-    //       $push: { cart: foodItem },
-    //     });
-    //   }
-
-    //   throw AuthenticationError;
-    // },
-
-    // updateProduct: async (parent, { _id, quantity }) => {
-    //   const decrement = Math.abs(quantity) * -1;
-
-    //   return await Product.findByIdAndUpdate(
-    //     _id,
-    //     { $inc: { quantity: decrement } },
-    //     { new: true }
-    //   );
-    // },
+      const result=await queryCartQL(CartMutation.cartCheckout, variables);
+      if (!result){
+        throw new Error('error fetching cart');
+      }
+      console.log(result);
+      return result.checkout
+    },
   },
 };
 

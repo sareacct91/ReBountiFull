@@ -36,8 +36,8 @@ const typeDefs = `
     business_name: String
     first_name: String
     last_name: String
+    cart: Cart
     household_size: Int
-    cart: Cart!
     history: [History!]!
   }    
 
@@ -65,7 +65,15 @@ const typeDefs = `
     vegetarian: Boolean!
     gluten_free: Boolean!
     dairy_free: Boolean!
-    nut: Boolean!
+    nut_free: Boolean!
+  } 
+
+  input FoodInput {
+    _id: ID!
+    name: String
+    price: Float
+    image: String
+    quantity: Int
   } 
 
   type Auth {
@@ -124,17 +132,19 @@ const typeDefs = `
   }
 
   type Query {
-    user(email: String!): User!
-    getCart(id: ID!): Cart!
+    user: User!
+    getCart: Cart!
+    getAllFood: [Food!]!
   }
 
   type Mutation {
     addUser(userInput: UserInput!): Auth
     updateUser(username: String, email: String, password: String):Auth
     login(email: String!, password: String!): Auth
-    updateCartItem(cartId: ID!, foodId: ID!, quantity: Int!): Cart
-    addCartItem(cartId: ID!, foodId: ID!, quantity: Int!): Cart
-    removeCartItem(cartId: ID!, foodId: ID!, quantity: Int!): Cart 
+    updateCartItem(food:FoodInput!): Cart
+    addCartItem(food:FoodInput!): Cart
+    removeCartItem(food:FoodInput!): Cart 
+    cartCheckout:Order
   }
 `;
 
