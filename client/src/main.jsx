@@ -11,6 +11,8 @@ import Login from './components/Login/login.jsx';
 import AboutUs from './components/AboutUS/aboutus.jsx';
 import Client from './components/Signup/client.jsx';
 import Supplier from './components/Signup/supplier.jsx';
+import Cart from './components/Cart/cart.jsx'
+
 
 const router = createBrowserRouter([
   {
@@ -50,7 +52,7 @@ const router = createBrowserRouter([
         element:<></>
       }, {
         path: 'cart/:userId',
-        element:<></>
+        element:<Cart />
       },
     ],
   },

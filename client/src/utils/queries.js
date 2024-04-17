@@ -36,31 +36,32 @@ export const QUERY_ALL_FOOD = gql`
   }
 `;
 export const QUERY_CART = gql`
-  query getCart {
-    cart {
-        id
-          isEmpty
-          totalItems
-          items {
-            id
-            name
-            quantity
-            unitTotal {
-              amount
-              formatted
-          }
-            lineTotal {
-              amount
-              formatted
-          }
-            images
-          }
-          grandTotal {
-            amount
-            formatted
-          }
-        }
+  query GetCart {
+    getCart {
+      id
+      totalItems
+      totalUniqueItems
+      abandoned
+      grandTotal {
+        amount
+        formatted
       }
+      items {
+        id
+        name
+        images
+        unitTotal {
+          amount
+          formatted
+        }
+        lineTotal {
+          amount
+          formatted
+        }
+        quantity
+      }
+    }
+  }
 `;
 
 
