@@ -12,13 +12,12 @@ export default function Browse() {
     console.log("data :",data);
 
     return (
-      <div>
-        {getAllFood.map((food) => (
-          <GroceryItem 
-          key={food._id}
-          {...food}
-          />
-        ))}
+      <div className="grid items-center justify-center">
+        <div className="grid w-fit place-items-center sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5">
+          {getAllFood.map((food) => (
+            <GroceryItem key={food._id} {...food} />
+          ))}
+        </div>
       </div>
     );
 
