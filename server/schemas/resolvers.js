@@ -38,9 +38,18 @@ const resolvers = {
       return user;
     },
     getCart: async (_, args) => {
-      const cart = await queryCartQL(CartQueries.queryCart, args); 
-      return cart;
+      try {
+        const cart = await queryCartQL(CartQueries.queryCart, args);
+        console.log(cart);
+        return cart;
+      } catch (error) {
+        console.error("Error fetching cart:", error);
+        throw new Error("Failed to fetch cart");
+      }
     },
+    getAllFood: async () => {
+      return await Food.find();
+    }
   },
 
   Mutation: {
@@ -62,7 +71,12 @@ const resolvers = {
       return { token, user };
     },
     addUser: async (parent, args) => {
-      const user = await User.create(args);
+      const newUser = {
+        ...args,
+        cart: args._id,
+      };
+
+      const user = await User.create(newUser);
       const token = signToken(user);
 
       return { token, user };
@@ -77,7 +91,6 @@ const resolvers = {
       throw AuthenticationError;
     },
     updateCartItem: async (parent, { foodId, amount }, context) => {
-
       if (context.user) {
         const foodItem = { foodId, amount };
 
