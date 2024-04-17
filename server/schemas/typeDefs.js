@@ -132,8 +132,8 @@ const typeDefs = `
   }
 
   type Query {
-    user(email: String!): User!
-    getCart(id: ID!): Cart!
+    user: User!
+    getCart: Cart!
   }
 
   type Mutation {
