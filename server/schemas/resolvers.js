@@ -99,54 +99,8 @@ const resolvers = {
 
       throw AuthenticationError;
     },
-    updateCartItem: async (parent, { foodId, amount }, context) => {
-      if (context.user) {
-        const user = await User.findById(context.user._id);
-        const cart = await queryCartQL(CartQueries.queryCart,{ id: user._id });
-        const cartItemIndex = cart.updateItem.items.findIndex(
-          (item) => item.id === foodId
-        );
-
-        if (cartItemIndex !== -1) {
-          user.cart[cartItemIndex].quantity = amount;
-
-          return User.findByIdAndUpdate(
-            context.user._id,
-            {
-              $set: { cart: user.cart },
-            },
-            { new: true }
-          );
-        } else {
-          throw new Error("Food item not found in the cart.");
-        }
-      } else {
-        throw new AuthenticationError("User not authenticated.");
-      }
-    },
-
-    // addCartItem: async (parent, { foodId, amount }, context) => {
-
-    //   if (context.user) {
-    //     const foodItem = { foodId, amount };
-
-    //     return User.findByIdAndUpdate(context.user._id, {
-    //       $push: { cart: foodItem },
-    //     });
-    //   }
-
-    //   throw AuthenticationError;
-    // },
-
-    // updateProduct: async (parent, { _id, quantity }) => {
-    //   const decrement = Math.abs(quantity) * -1;
-
-    //   return await Product.findByIdAndUpdate(
-    //     _id,
-    //     { $inc: { quantity: decrement } },
-    //     { new: true }
-    //   );
-    // },
+    updateCartItem: async (parent, { foodId, qunatity }, context) => {
+    }
   },
 };
 

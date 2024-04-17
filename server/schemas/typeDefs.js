@@ -132,7 +132,7 @@ const typeDefs = `
     addUser(userInput: UserInput!): Auth
     updateUser(username: String, email: String, password: String):Auth
     login(email: String!, password: String!): Auth
-    updateCartItem(cartId: ID!, foodId: ID!, quantity: Int!): Cart
+    updateCartItem(foodId: ID!, quantity: Int!): Cart
     addCartItem(cartId: ID!, foodId: ID!, quantity: Int!): Cart
     removeCartItem(cartId: ID!, foodId: ID!, quantity: Int!): Cart 
   }
