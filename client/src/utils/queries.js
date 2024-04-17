@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const QUERY_USER = gql`
-  query user($email: String!) {
-    user(email: $email) {
+  query user {
+    user {
       _id
       username
       email
@@ -18,8 +18,8 @@ export const QUERY_USER = gql`
 `;
 
 export const QUERY_CART = gql`
-  query getCart($getCartId: ID) {
-    cart(getCartId:$getCartId)  {
+  query getCart {
+    cart {
         id
           isEmpty
           totalItems

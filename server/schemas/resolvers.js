@@ -34,21 +34,22 @@ const dateScalar = new GraphQLScalarType({
 const resolvers = {
   Date: dateScalar,
   Query: {
-    user: async (...[,,context]) => {
+    user: async (_, __, context) => {
       try {
         if (!context.user?._id) {
           throw AuthenticationError
         }
 
-        let user = await User.findById( context.user._id);
+        let p1 =  User.findById( context.user._id);
+        let p2 =  queryCartQL(CartQueries.queryCart, { id: context.user._id }); 
+
+        let [user, cart] = await Promise.all([p1, p2]); 
 
         if (!user) {
           throw AuthenticationError
         }
 
         user = user.toJSON();
-        let cart = await queryCartQL(CartQueries.queryCart, { id: user._id }); 
-
         if (!cart?.cart) {
           throw new Error('error fetching cart');
         }
@@ -60,9 +61,17 @@ const resolvers = {
         console.error(err);
       }
     },
-    getCart: async (_, args) => {
-      const cart = await queryCartQL(CartQueries.queryCart, args);
-      return cart;
+    getCart: async (_, __, context) => {
+      if (!context.user?._id) {
+        throw AuthenticationError
+      }
+
+      const variables = {
+        id: context.user._id
+      }
+
+      const cart = await queryCartQL(CartQueries.queryCart, variables);
+      return cart.cart;
     },
   },
 
@@ -103,7 +112,7 @@ const resolvers = {
 
       throw AuthenticationError;
     },
-    updateCartItem: async (parent, { food }, context) => {
+    updateCartItem: async (_, { food }, context) => {
       if (!context.user?._id) {
         throw AuthenticationError
       }
@@ -117,7 +126,7 @@ const resolvers = {
       }
       return result.updateItem
     },
-    addCartItem: async (parent, {food},context)=>{
+    addCartItem: async (_, {food},context)=>{
       if (!context.user?._id) {
         throw AuthenticationError
       }
@@ -131,7 +140,7 @@ const resolvers = {
       }
       return result.addItem
     },
-    removeCartItem: async (parent, {food},context)=>{
+    removeCartItem: async (_, {food},context)=>{
       if (!context.user?._id) {
         throw AuthenticationError
       }
@@ -146,7 +155,7 @@ const resolvers = {
       console.log(result)
       return result.removeItem
     },
-    cartCheckout: async (parent,_,context)=>{
+    cartCheckout: async (_, __ ,context)=>{
       if (!context.user?._id) {
         throw AuthenticationError
       }
