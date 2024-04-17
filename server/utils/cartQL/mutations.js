@@ -4,16 +4,18 @@ module.exports = {
       mutation {
         addItem(
           input: {
-            cartId: "${a.user._id}"
+            cartId: "${a.id}"
             id: "${a.food._id}"
             name: "${a.food.name}"
             price: ${a.food.price}
-            quantity: ${a.quantity || 1}
+            quantity: ${a.food.quantity || 1}
           }
         ) {
           id
           isEmpty
           totalItems
+          totalUniqueItems
+          abandoned
           items {
             id
             name
@@ -41,13 +43,15 @@ module.exports = {
       mutation {
         removeItem(
           input: {
-            cartId: "${a.user._id}"
+            cartId: "${a.id}"
             id: "${a.food._id}"
           }
         ) {
           id
           isEmpty
           totalItems
+          totalUniqueItems
+          abandoned
           items {
             id
             name
@@ -77,13 +81,17 @@ module.exports = {
         updateItem(
           input: {
             cartId: "${a.id}"
-            id: "${a.foodId}"
-            quantity: ${a.quantity}
+            id: "${a.food._id}"
+            name: "${a.food.name}"
+            price: ${a.food.price}
+            quantity: ${a.food.quantity || 1}
           }
         ) {
           id
           isEmpty
           totalItems
+          totalUniqueItems
+          abandoned
           items {
             id
             name

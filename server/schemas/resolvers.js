@@ -67,15 +67,18 @@ const resolvers = {
 
   Mutation: {
     login: async (parent, { email, password }) => {
+      console.log(email,password)
       const user = await User.findOne({ email });
 
       if (!user) {
+        console.log('notfound');
         throw AuthenticationError;
       }
 
       const correctPw = await user.isCorrectPw(password);
 
       if (!correctPw) {
+        console.log('badpwd');
         throw AuthenticationError;
       }
 
@@ -99,13 +102,12 @@ const resolvers = {
 
       throw AuthenticationError;
     },
-    updateCartItem: async (parent, { foodId, quantity }, context) => {
+    updateCartItem: async (parent, { food }, context) => {
       if (!context.user?._id) {
         throw AuthenticationError
       }
       const variables={
-        foodId, 
-        quantity,
+        food, 
         id:context.user._id
       }
       const result=await queryCartQL(CartMutation.updateCartItem, variables);
@@ -114,7 +116,36 @@ const resolvers = {
       }
       return result.updateItem
     },
-    addCartItem: async (parent, {})
+    addCartItem: async (parent, {food},context)=>{
+      if (!context.user?._id) {
+        throw AuthenticationError
+      }
+      const variables={
+        food, 
+        id:context.user._id
+      }
+      const result=await queryCartQL(CartMutation.addCartItem, variables);
+      if (!result){
+        throw new Error('error fetching cart');
+      }
+      console.log(result)
+      return result.addItem
+    },
+    removeCartItem: async (parent, {food},context)=>{
+      if (!context.user?._id) {
+        throw AuthenticationError
+      }
+      const variables={
+        food, 
+        id:context.user._id
+      }
+      const result=await queryCartQL(CartMutation.removeCartItem, variables);
+      if (!result){
+        throw new Error('error fetching cart');
+      }
+      console.log(result)
+      return result.removeItem
+    },
   },
 };
 

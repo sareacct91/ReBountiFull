@@ -70,10 +70,10 @@ const typeDefs = `
 
   input FoodInput {
     _id: ID!
-    name: String!
-    price: Float!
+    name: String
+    price: Float
     image: String
-    quantity: Int!
+    quantity: Int
   } 
 
   type Auth {
@@ -140,7 +140,7 @@ const typeDefs = `
     addUser(userInput: UserInput!): Auth
     updateUser(username: String, email: String, password: String):Auth
     login(email: String!, password: String!): Auth
-    updateCartItem(food:foodInput!): Cart
+    updateCartItem(food:FoodInput!): Cart
     addCartItem(food:FoodInput!): Cart
     removeCartItem(food:FoodInput!): Cart 
   }
