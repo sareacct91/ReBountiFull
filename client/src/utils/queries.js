@@ -54,6 +54,25 @@ export const QUERY_FOOD = gql`
   }
 `;
 
+// querying food items by its category name 
+export const QUERY_FOOD_BY_CATEGORY = gql`
+  query getFoodByCategory($category: String) {
+    getFoodByCategory(category: $category) {
+      _id
+      name
+      price
+      inventory
+      category
+      image
+      vegan
+      vegetarian
+      gluten_free
+      dairy_free
+      nut_free
+    }
+  }
+`;
+
 export const QUERY_CART = gql`
   query getCart {
     cart {
