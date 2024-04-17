@@ -135,6 +135,7 @@ const typeDefs = `
     user: User!
     getCart: Cart!
     getAllFood: [Food!]!
+    getFood(name: String!): Food!
   }
 
   type Mutation {
