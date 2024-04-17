@@ -1,10 +1,9 @@
+// import React from "react";
 import { Link } from "react-router-dom";
 import { pluralize } from "../../../utils/helpers";
 
 export default function GroceryItem(food) {
   const { image, name, price, inventory } = food;
-
-
 
   return (
     <div className="m-3">
