@@ -41,6 +41,19 @@ const typeDefs = `
     history: [History!]!
   }    
 
+  input UserInput {
+    username: String!
+    email: String! 
+    password: String!
+    address: AddressInput!
+    isSupplier: Boolean!
+    isClient: Boolean!
+    business_name: String
+    first_name: String
+    last_name: String
+    household_size: Int
+  }    
+
   type Food {
     _id: ID!
     name: String!
@@ -55,25 +68,31 @@ const typeDefs = `
     nut_free: Boolean!
   } 
 
+  input FoodInput {
+    _id: ID!
+    name: String
+    price: Float
+    image: String
+    quantity: Int
+  } 
+
   type Auth {
     token: ID!
     user: User!
   }
 
   type Cart {
-    id: ID
-    totalItems: Int
-    totaluniqueItems: Int
-    items: [CartItem!]!
-    subTotal: Money!
-    taxTotal: Money!
+    id: ID!
+    totalItems: Int!
+    totalUniqueItems: Int!
+    items: [CartItem]!
     grandTotal: Money!
-    abandoned: Boolean
+    abandoned: Boolean!
   }
   
   type CartItem {
     id: ID!
-    name: String
+    name: String!
     images: [String]
     unitTotal: Money!
     lineTotal: Money!
@@ -82,15 +101,7 @@ const typeDefs = `
 
   type Money {
     amount: Int
-    currency: Currency!
-    formatted: String!
-  }
-
-  type Currency {
-    symbol: String
-    thousandsSeparator: String
-    decimalSeparator: String
-    decimalDigits: Int
+    formatted: String
   }
 
   type Order {
@@ -121,19 +132,22 @@ const typeDefs = `
   }
 
   type Query {
-    user(email: String!): User!
-    getCart(id: ID!): Cart!
+    user: User!
+    getCart: Cart!
     getAllFood: [Food!]!
   }
 
   type Mutation {
-    addUser(username: String!, email: String!, password: String!, address: AddressInput!, business_name: String, first_name:String, last_name:String, household_size:Int ): Auth
+    addUser(userInput: UserInput!): Auth
     updateUser(username: String, email: String, password: String):Auth
     login(email: String!, password: String!): Auth
-    updateCartItem(cartId: ID!, foodId: ID!, quantity: Int!): Cart
-    addCartItem(cartId: ID!, foodId: ID!, quantity: Int!): Cart
-    removeCartItem(cartId: ID!, foodId: ID!, quantity: Int!): Cart 
+    updateCartItem(food:FoodInput!): Cart
+    addCartItem(food:FoodInput!): Cart
+    removeCartItem(food:FoodInput!): Cart 
+    cartCheckout:Order
   }
 `;
+
+// addUser(username: String!, email: String!, password: String!, address: AddressInput!, business_name: String, first_name:String, last_name:String, household_size:Int ): Auth
 
 module.exports = typeDefs;
