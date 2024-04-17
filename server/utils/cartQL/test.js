@@ -23,12 +23,8 @@ const argsAddTaco = {
 };
 
 const argsUpdateMango = { 
-  user: { _id: args.id},
-  food: {
-    _id: "12948612847",
-    name: "mango",
-    price: 450,
-  },
+  id: args.id,
+  foodId: '12948612847',
   quantity: 7,
 };
 

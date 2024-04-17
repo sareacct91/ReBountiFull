@@ -76,8 +76,8 @@ module.exports = {
       mutation {
         updateItem(
           input: {
-            cartId: "${a.user._id}"
-            id: "${a.food._id}"
+            cartId: "${a.id}"
+            id: "${a.foodId}"
             quantity: ${a.quantity}
           }
         ) {

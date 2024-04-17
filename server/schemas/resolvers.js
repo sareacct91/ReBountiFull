@@ -99,8 +99,22 @@ const resolvers = {
 
       throw AuthenticationError;
     },
-    updateCartItem: async (parent, { foodId, qunatity }, context) => {
-    }
+    updateCartItem: async (parent, { foodId, quantity }, context) => {
+      if (!context.user?._id) {
+        throw AuthenticationError
+      }
+      const variables={
+        foodId, 
+        quantity,
+        id:context.user._id
+      }
+      const result=await queryCartQL(CartMutation.updateCartItem, variables);
+      if (!result){
+        throw new Error('error fetching cart');
+      }
+      return result.updateItem
+    },
+    addCartItem: async (parent, {})
   },
 };
 
