@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { pluralize } from "../../../utils/helpers";
+import { pluralize, } from "../../../utils/helpers";
 
 export default function GroceryItem(food) {
   const { image, name, price, inventory } = food;
@@ -17,10 +17,12 @@ export default function GroceryItem(food) {
           <p className=" text-gray-600">
             {inventory}&nbsp;{pluralize("item", inventory)}&nbsp;in&nbsp;stock
           </p>
-          <div className="flex flex-row justify-between max-w-fit items-center">
+          <div className="flex max-w-fit flex-row items-center justify-between">
             <span className="text-lg font-bold text-green-600">${price}</span>
             <Link>
-              <button className="w-20 p-2 text-sm ml-10 bg-orange text-white">Add Item</button>
+              <button className="bg-orange ml-10 w-20 p-2 text-sm text-white hover:border-gray-300 hover:bg-green-600 focus:border-black">
+                Add Item
+              </button>
             </Link>
           </div>
         </div>
