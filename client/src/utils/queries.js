@@ -35,6 +35,25 @@ export const QUERY_ALL_FOOD = gql`
     }
   }
 `;
+// querying one food item 
+export const QUERY_FOOD = gql`
+  query GetFood($name: String) {
+    getFood(name: $name) {
+      _id
+      name
+      price
+      inventory
+      category
+      image
+      vegan
+      vegetarian
+      gluten_free
+      dairy_free
+      nut_free
+    }
+  }
+`;
+
 export const QUERY_CART = gql`
   query GetCart {
     getCart {

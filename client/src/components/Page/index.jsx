@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 
 function Page() {  
   return (
-    <section className="grow flex">
+    <section className="">
       <Outlet />
     </section>
   );
