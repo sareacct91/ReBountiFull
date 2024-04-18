@@ -25,9 +25,9 @@ export default function Supplier() {
           </div>
           <label for="company">How'd you hear about us?</label>
           <input type="text" name="source" placeholder="Ex: Facebook" />
-          <br/>
+          <br />
           <label for="freeform">What is driving you to give?</label>
-          <br/>
+          <br />
           <textarea
             id="freeform"
             name="freeform"
