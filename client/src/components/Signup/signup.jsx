@@ -5,21 +5,19 @@ import { Link } from "react-router-dom";
 export default function Signup() {
   return (
     <div className="flex flex-col items-center justify-center grow bg-white text-black">
-      <h1>Welcome!</h1>
+      <h1 className="pt-20">Welcome!</h1>
       <img src={logo} />
-      <h2 className="text-black text-2xl">Sign up below to help us rebountify the world one bite at a time</h2>
+      <h2 className="text-black text-2xl pb-10">Sign up below to help us rebountify the world one bite at a time</h2>
       <div className="flex items-center gap-16">
-        <div>
+        <div className="flex flex-col items-center pb-10">
           <Link to={'/signup/supplier'}>
-            <button>I'm a Supplier</button>
+            <button className="bg-blue-600">I have food to give</button>
           </Link>
-          <p>I'd like some produce</p>
         </div>
-        <div>
+        <div className="flex flex-col items-center pb-10">
           <Link to={'/signup/client'}>
-            <button>I'm a Client</button>
+            <button className="bg-blue-600">I would like some food</button>
           </Link>
-          <p>I want to donate</p>
         </div>
       </div>
     </ div>

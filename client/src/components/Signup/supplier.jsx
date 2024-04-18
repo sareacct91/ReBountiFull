@@ -5,15 +5,11 @@ export default function Supplier() {
         <h1>Create your account to become a partner</h1>
         <form>
           <label for="name">Name:</label>
-          <input
-            type="text"
-            name="name"
-            placeholder="First & Last Name"
-          ></input>
-          <br></br>
+          <input type="text" name="name" placeholder="First & Last Name" />
+          <br />
           <label for="company">Company:</label>
           <input type="text" name="company" placeholder="Company Name" />
-          <br></br>
+          <br />
           <label for="supplier-giving">How would you like to give?</label>
           <select name="types_of_giving">
             <option value="onetime_food">One time food donation</option>
@@ -29,11 +25,16 @@ export default function Supplier() {
           </div>
           <label for="company">How'd you hear about us?</label>
           <input type="text" name="source" placeholder="Ex: Facebook" />
-          <br></br>
+          <br />
           <label for="freeform">What is driving you to give?</label>
-          <br></br>
-          <textarea id="freeform" name="freeform" rows="4" cols="50" placeholder="Enter text here">
-          </textarea>
+          <br />
+          <textarea
+            id="freeform"
+            name="freeform"
+            rows="4"
+            cols="50"
+            placeholder="Enter text here"
+          ></textarea>
         </form>
       </div>
     </>

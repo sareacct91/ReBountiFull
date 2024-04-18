@@ -103,15 +103,20 @@ export const QUERY_FOOD_BY_PREFERENCE = gql`
 `;
 
 export const QUERY_CART = gql`
-  query getCart {
-    cart {
+  query GetCart {
+    getCart {
       id
-      isEmpty
       totalItems
+      totalUniqueItems
+      abandoned
+      grandTotal {
+        amount
+        formatted
+      }
       items {
         id
         name
-        quantity
+        images
         unitTotal {
           amount
           formatted
@@ -120,11 +125,7 @@ export const QUERY_CART = gql`
           amount
           formatted
         }
-        images
-      }
-      grandTotal {
-        amount
-        formatted
+        quantity
       }
     }
   }
