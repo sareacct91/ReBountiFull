@@ -1,6 +1,6 @@
 import * as categories from "../../../assets/category/index.js";
 import { useQuery } from "@apollo/client";
-import { useMemo, useState, useEffect } from "react";
+import { useMemo, useState } from "react";
 import { QUERY_FOOD_BY_CATEGORY } from "../../../utils/queries.js";
 import GroceryItem from "../GroceryItem/grocery.jsx";
 
@@ -9,12 +9,6 @@ export default function Category() {
   const { loading, data } = useQuery(QUERY_FOOD_BY_CATEGORY, {
     variables: { category: query },
   });
-
-  useEffect(() => {
-    if (query) {
-      console.log("Fetching data for query:", query);
-    }
-  }, [query]);
 
   const categoryData = [
     { name: "vegetable", source: categories.vegetable },
@@ -33,12 +27,13 @@ export default function Category() {
     console.log(data);
     console.log("data.getFoodByCategory: ", data.getFoodByCategory);
     return data.getFoodByCategory;
-  }, [data,query]);
+  }, [data, query]);
 
   const handleQuery = (categoryName) => {
     setQuery(categoryName);
     console.log("query :", categoryName);
   };
+  const categoryName = query;
 
   return (
     <>
@@ -51,7 +46,6 @@ export default function Category() {
           <div
             key={index}
             className="flex flex-col items-center"
-            value={category.name}
             onClick={() => handleQuery(category.name)}
           >
             <img
@@ -64,6 +58,9 @@ export default function Category() {
         ))}
       </div>
       <div className="grow-1 flex flex-row flex-wrap text-black">
+        {/* {featuredItems && <p>{featuredItems[0]}</p>} */}
+        {categoryName && <p>{categoryName}</p>}
+
         {featuredItems.map((food) => (
           <GroceryItem key={food._id} {...food} />
         ))}
