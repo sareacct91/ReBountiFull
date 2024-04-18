@@ -20,7 +20,7 @@ export function selectRandomItems(items) {
   const keys = Object.keys(items);
   const shuffledKeys = shuffleArray(keys);
   const selectedItems = {};
-  for (let i = 0; i < Math.min(20, shuffledKeys.length); i++) {
+  for (let i = 0; i < Math.min(10, shuffledKeys.length); i++) {
     const key = shuffledKeys[i];
     selectedItems[key] = items[key];
   }

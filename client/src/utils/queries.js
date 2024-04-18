@@ -17,7 +17,7 @@ export const QUERY_USER = gql`
   }
 `;
 
-// query to get all of the food in the food collection 
+// query to get all of the food in the food collection
 export const QUERY_ALL_FOOD = gql`
   {
     getAllFood {
@@ -35,7 +35,7 @@ export const QUERY_ALL_FOOD = gql`
     }
   }
 `;
-// querying one food item 
+// querying one food item
 export const QUERY_FOOD = gql`
   query GetFood($name: String) {
     getFood(name: $name) {
@@ -54,7 +54,7 @@ export const QUERY_FOOD = gql`
   }
 `;
 
-// querying food items by its category name 
+// querying food items by its category name
 export const QUERY_FOOD_BY_CATEGORY = gql`
   query GetFoodByCategory($category: String!) {
     getFoodByCategory(category: $category) {
@@ -72,6 +72,36 @@ export const QUERY_FOOD_BY_CATEGORY = gql`
     }
   }
 `;
+export const QUERY_FOOD_BY_PREFERENCE = gql`
+  query getFoodByPreference(
+    $vegan: Boolean
+    $vegetarian: Boolean
+    $glutenFree: Boolean
+    $dairyFree: Boolean
+    $nutFree: Boolean
+  ) {
+    getFoodByPreference(
+      vegan: $vegan
+      vegetarian: $vegetarian
+      glutenFree: $glutenFree
+      dairyFree: $dairyFree
+      nutFree: $nutFree
+    ) {
+      _id
+      name
+      price
+      inventory
+      category
+      image
+      vegan
+      vegetarian
+      gluten_free
+      dairy_free
+      nut_free
+    }
+  }
+`;
+
 export const QUERY_CART = gql`
   query GetCart {
     getCart {
@@ -100,5 +130,3 @@ export const QUERY_CART = gql`
     }
   }
 `;
-
-

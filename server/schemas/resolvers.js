@@ -90,6 +90,27 @@ const resolvers = {
         throw new Error("Failed to retrieve food items by category");
       }
     },
+    // fitering food items based on the preference 
+    getFoodByPreference: async (_,
+      { vegan, vegetarian, glutenFree, dairyFree, nutFree }
+    ) => {
+      try {
+        const filter = {};
+        // variable example = { "dairyFree" : false }
+        if (vegan !== undefined) filter.vegan = vegan;
+        if (vegetarian !== undefined) filter.vegetarian = vegetarian;
+        if (glutenFree !== undefined) filter.gluten_free = glutenFree;
+        if (dairyFree !== undefined) filter.dairy_free = dairyFree;
+        if (nutFree !== undefined) filter.nut_free = nutFree;
+
+        console.log("filtering...: ",filter);
+        // Query food items based on the filter
+        const foodItems = await Food.find(filter);
+        return foodItems;
+      } catch (error) {
+        throw new Error("Failed to retrieve food items by preference");
+      }
+    },
   },
 
   Mutation: {
