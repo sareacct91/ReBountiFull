@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import {  QUERY_ALL_FOOD } from "../../utils/queries";
 import GroceryItem from "./GroceryItem/grocery.jsx";
 import RandomProducts from "./GroceryItem/randomgrocery.jsx";
+import Category from "./Category/category.jsx";
 
 export default function Browse() {
   const { loading, data } = useQuery(QUERY_ALL_FOOD);
@@ -31,23 +32,22 @@ if (loading) return (
   
   return (
     <div className="bg-white p-10">
-      <div className="mx-2">
+      <div className="mx-2 grid w-full">
         <p className="text-4xl text-black">Browse products</p>
         <input
-          className="h-10 w-full rounded-2xl border border-zinc-800 bg-white p-5 text-black"
+          className="mt-6 h-10 w-full rounded-2xl border border-zinc-800 bg-white p-5 text-black"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
+          placeholder="search products..."
           type="search"
         />
       </div>
       <div className="grow-1 flex flex-row flex-wrap text-black">
         {filteredItems.map((food) => (
-          <GroceryItem
-            key={food._id}
-            {...food}
-          />
+          <GroceryItem key={food._id} {...food} />
         ))}
       </div>
+      <Category />
       {!query && <RandomProducts />}
     </div>
   );
