@@ -37,13 +37,18 @@ git clone https://github.com/sareacct91/ReBountiFull
 2. **Install Dependencies:** Navigate to the project directory and install dependencies using npm:
 ```
 cd RebountiFull
-npm install
+npm run install
 ```
 3. **Configure Environment Variables:** Create a `.env` file in the root directory and configure necessary environment variables such as database connection strings, API keys, and authentication settings.
 
-4. **Run the Application:** Start the application locally using npm:
+4. **Seed the database:** Seed the local database using npm:
+```
+npm run seed
+```
+
+5. **Run the Application:** Start the application locally using npm:
 ```
 npm start
 ```
 
-5. **Access the Application:** Open your web browser and navigate to `http://localhost:3000` to access the ReBountiFull Care application.
+6. **Access the Application:** Open your web browser and navigate to `http://localhost:3000` to access the ReBountiFull Care application.
