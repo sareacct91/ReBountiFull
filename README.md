@@ -15,4 +15,5 @@ ReBountiFull is a digital platform designed to connect restaurants with excess f
 
 ## Overview
 
-FoodBridge aims to address two critical issues: food waste in restaurants and food insecurity among families in need. The platform allows restaurants to list surplus food items, and digital food banks can register to receive notifications about available food for distribution. A sophisticated matching algorithm ensures efficient and timely redistribution, minimizing food waste and supporting communities in need.
+ReBountiFull aims to address two critical issues: food waste in restaurants and food insecurity among families in need. The platform allows restaurants to list surplus food items, and digital food banks can register to receive notifications about available food for distribution. A sophisticated matching algorithm ensures efficient and timely redistribution, minimizing food waste and supporting communities in need.
+
