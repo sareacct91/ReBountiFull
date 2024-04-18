@@ -37,11 +37,11 @@ export default function Category() {
 
   return (
     <>
-      <div className="mx-2 my-12 grid grow grid-cols-4 gap-4 max-sm:grid-cols-2">
+      <div className="mx-2 my-12 grid grid-cols-5 gap-4 max-sm:grid-cols-2">
         <div className="col-span-full text-2xl text-black">
           <p>Browse by Category</p>
         </div>
-        {/* rendering categories */}
+        {/* Rendering categories */}
         {categoryData.map((category, index) => (
           <div
             key={index}
@@ -56,16 +56,21 @@ export default function Category() {
             <p className="text-gray-700">{category.name}</p>
           </div>
         ))}
-      </div>
-      <div className="grow-1 flex flex-row flex-wrap text-black">
-        {/* {featuredItems && <p>{featuredItems[0]}</p>} */}
-        {categoryName && <p>{categoryName}</p>}
+        <div className="col-span-full">
+          {/* Render the category name */}
+          <p className="text-2xl text-black">{categoryName}</p>
+        </div>
+        <div className="grid col-span-full place-items-center">
+          <div className="col-span-full grid w-fit flex-row flex-wrap place-items-center text-black sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5">
+            {/* Render grocery items */}
+            {featuredItems.map((food) => (
+              <GroceryItem key={food._id} {...food} />
+            ))}
+          </div>
+        </div>
 
-        {featuredItems.map((food) => (
-          <GroceryItem key={food._id} {...food} />
-        ))}
+        {loading && <p>Loading...</p>}
       </div>
-      {loading && <p>Loading...</p>}
     </>
   );
 }
