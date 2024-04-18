@@ -52,7 +52,7 @@ export default function Preference() {
             <img
               src={preference.source}
               alt={preference.name}
-              className="mb-2 h-44 w-32 cursor-pointer rounded-lg object-cover hover:border-4 hover:border-orange max-sm:h-28 max-sm:w-28"
+              className="mb-2 h-48 w-44 cursor-pointer rounded-lg object-cover hover:border-4 hover:border-orange max-sm:h-28 max-sm:w-28"
             />
             <p className="text-gray-700">{preference.name}</p>
           </div>
