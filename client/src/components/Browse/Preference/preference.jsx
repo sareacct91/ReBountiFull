@@ -37,14 +37,7 @@ export default function Preference() {
   };
 
   // Filter out items that match the selected preferences
-  const filteredItems = data.getFoodByPreference.filter((food) => {
-    // iterate over each key and value in the food's preference field
-    return Object.entries(selectedPreference).every(([key, value]) => {
-        // if the value is 'false', switch to 'true' , 
-        // if the value is 'true', stay
-      return !value || food[key];
-    });
-  });
+  const filteredItems = data.getFoodByPreference
 
   return (
     <div>
