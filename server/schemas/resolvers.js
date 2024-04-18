@@ -76,19 +76,8 @@ const resolvers = {
       return await Food.find();
     },
     getFood: async (_, { name }) => {
-      // Search for the food item by name ignoring case
+      // Search for the food item by name regardless of the case
       return await Food.findOne({ name: { $regex: new RegExp(name, "i") } });
-    },
-    getFoodByCategory: async (_, { category }) => {
-      try {
-        // Search for food items by category, ignoring case
-        const foodItems = await Food.find({
-          category: { $regex: new RegExp(category, "i") },
-        });
-        return foodItems;
-      } catch (error) {
-        throw new Error("Failed to retrieve food items by category");
-      }
     },
   },
 

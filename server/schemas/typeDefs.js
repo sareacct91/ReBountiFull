@@ -136,7 +136,6 @@ const typeDefs = `
     getCart: Cart!
     getAllFood: [Food!]!
     getFood(name: String!): Food!
-    getFoodByCategory(category: String!): [Food!]!
   }
 
   type Mutation {
