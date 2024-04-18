@@ -11,15 +11,13 @@ export default function Signup() {
       <div className="flex items-center gap-16">
         <div className="flex flex-col items-center pb-10">
           <Link to={'/signup/supplier'}>
-            <button className="bg-blue-600">I'm a Supplier</button>
+            <button className="bg-blue-600">I have food to give</button>
           </Link>
-          <p>I'd like to partner</p>
         </div>
         <div className="flex flex-col items-center pb-10">
           <Link to={'/signup/client'}>
-            <button className="bg-blue-600">I'm a Client</button>
+            <button className="bg-blue-600">I would like some food</button>
           </Link>
-          <p>I'd like to shop</p>
         </div>
       </div>
     </ div>
