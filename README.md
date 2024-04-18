@@ -6,8 +6,8 @@ ReBountiFull is a digital platform designed to connect restaurants and grocers w
 ## Table of Contents
 
 1. [Overview](#overview)
-2. [Key Features](#key_features)
-3. [Installation](#installation)
+2. [Key Features](#key-features)
+3. [Getting Started](#getting-started)
 4. [Usage](#usage)
 5. [Contributing](#contributing)
 6. [Questions](#questions)
@@ -26,3 +26,24 @@ ReBountiFull aims to address two critical issues: food waste in restaurants and 
 * User-Friendly Interface: Intuitive interface for restaurants, food banks, and volunteers to navigate listings, matches, and deliveries.
 * Community Engagement: Encourages community participation through volunteer opportunities for food pickup and delivery.
 
+## Getting Started
+
+To get started with ReBountiFull, follow these steps:
+
+1. **Clone the Repository:** Clone the ReBountiFull repository to your local machine using Git:
+```
+git clone https://github.com/sareacct91/ReBountiFull
+```
+2. **Install Dependencies:** Navigate to the project directory and install dependencies using npm:
+```
+cd RebountiFull
+npm install
+```
+3. **Configure Environment Variables:** Create a `.env` file in the root directory and configure necessary environment variables such as database connection strings, API keys, and authentication settings.
+
+4. **Run the Application:** Start the application locally using npm:
+```
+npm start
+```
+
+5. **Access the Application:** Open your web browser and navigate to `http://localhost:3000` to access the ReBountiFull Care application.
