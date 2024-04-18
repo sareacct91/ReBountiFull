@@ -2,21 +2,31 @@ import { useMutation, useQuery } from "@apollo/client";
 import { QUERY_CART } from "../../utils/queries";
 import ShoppingBagImg from "../../assets/images/shopping_bag.png";
 import CartItem from "./cartItem";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Cart() {
-  const { loading, error, data } = useQuery(QUERY_CART);
   const [rangeValue, setRangeValue] = useState(0);
+  const { loading, error, data } = useQuery(QUERY_CART, {
+    onCompleted: (data) => setRangeValue(data.getCart.grandTotal.amount)
+  });
 
-  if (loading) return <p>Loading...</p>;
-  if (error) {
-    alert(error);
+  if (loading || error) {
+    return (
+      <div className="grid w-full place-items-center bg-white text-black">
+        <h1 className="flex flex-row">
+          My Cart
+          <img src={ShoppingBagImg} alt="Shopping bag icon" />
+        </h1>
+        <h2 className="text-4xl">
+          {loading ? "loading..." : "Error loading cart"}
+        </h2>
+      </div>
+    );
   }
 
   const { getCart } = data;
   // console.log(getCart);
-  console.log(rangeValue)
-
+  // console.log(rangeValue)
 
   return (
     <>
@@ -41,19 +51,19 @@ export default function Cart() {
               {getCart.grandTotal.formatted}
             </p>
             <p className="flex w-full justify-between">
-              <span className="underline">What you pay:</span>
-              ${(rangeValue / 100).toFixed(2)}
+              <span className="underline">What you pay:</span>$
+              {(rangeValue / 100).toFixed(2)}
             </p>
-            <input className="w-full " 
-              type="range" 
+            <input
+              className="w-full"
+              type="range"
               min="0"
               max={getCart.grandTotal.amount}
-              onChange={e => setRangeValue(e.target.value)} 
-              defaultValue={getCart.grandTotal.amount}
+              onChange={(e) => setRangeValue(e.target.value)}
               value={rangeValue}
             />
           </div>
-         <div className="flex w-full justify-center lg:justify-end">
+          <div className="flex w-full justify-center lg:justify-end">
             <button className="bg-blue-600 text-white">check out</button>
           </div>
         </div>
@@ -84,7 +94,7 @@ export default function Cart() {
               {getCart.grandTotal.formatted}
             </p>
           </div>
-         <div className="flex w-full justify-end">
+          <div className="flex w-full justify-end">
             <button>check out</button>
           </div>
         </div>
