@@ -137,6 +137,13 @@ const typeDefs = `
     getAllFood: [Food!]!
     getFood(name: String!): Food!
     getFoodByCategory(category: String!): [Food!]!
+    getFoodByPreference(
+    vegan: Boolean
+    vegetarian: Boolean
+    glutenFree: Boolean
+    dairyFree: Boolean
+    nutFree: Boolean
+  ): [Food!]!
   }
 
   type Mutation {

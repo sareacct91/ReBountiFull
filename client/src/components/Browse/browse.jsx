@@ -5,6 +5,7 @@ import { QUERY_ALL_FOOD } from "../../utils/queries";
 import GroceryItem from "./GroceryItem/grocery.jsx";
 import RandomProducts from "./GroceryItem/randomgrocery.jsx";
 import Category from "./Category/category.jsx";
+import Preference from "./Preference/preference.jsx";
 
 export default function Browse() {
   const { loading, data } = useQuery(QUERY_ALL_FOOD);
@@ -50,6 +51,7 @@ export default function Browse() {
             <p className="text-4xl text-black">No items found</p>
           </div>
           <Category />
+          <Preference />
           <RandomProducts />
         </div>
       </div>
@@ -73,6 +75,7 @@ export default function Browse() {
         ))}
       </div>
       <Category />
+      <Preference />
       {!query && <RandomProducts />}
     </div>
   );
