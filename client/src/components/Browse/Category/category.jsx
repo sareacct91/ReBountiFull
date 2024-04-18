@@ -38,7 +38,7 @@ export default function Category() {
   return (
     <>
       <div className="mx-2 my-12 grid grid-cols-5 gap-4 max-sm:grid-cols-2">
-        <div className="col-span-full text-2xl text-black">
+        <div className="col-span-full text-2xl my-6 text-black">
           <p>Browse by Category</p>
         </div>
         {/* Rendering categories */}
@@ -56,19 +56,19 @@ export default function Category() {
             <p className="text-gray-700">{category.name}</p>
           </div>
         ))}
-        <div className="col-span-full">
+
+        <div className="col-span-full my-6">
           {/* Render the category name */}
           <p className="text-2xl text-black">{categoryName}</p>
         </div>
-        <div className="grid col-span-full place-items-center">
+        <div className="grid col-span-full place-items-center border-b-2 border-black mb-10 pb-20">
           <div className="col-span-full grid w-fit flex-row flex-wrap place-items-center text-black sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5">
-            {/* Render grocery items */}
+            {/* Render grocery items based on the category*/}
             {featuredItems.map((food) => (
               <GroceryItem key={food._id} {...food} />
             ))}
           </div>
         </div>
-
         {loading && <p>Loading...</p>}
       </div>
     </>
