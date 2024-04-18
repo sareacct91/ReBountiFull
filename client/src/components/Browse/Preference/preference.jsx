@@ -1,40 +1,50 @@
-import * as preferences from "../../../assets/preference/index.js";
+import * as preferences from "../../../assets/preference/index.js"
 import { useQuery } from "@apollo/client";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { QUERY_FOOD_BY_PREFERENCE } from "../../../utils/queries.js";
 import GroceryItem from "../GroceryItem/grocery.jsx";
 
-export default function Preference() {
-  const [query, setQuery] = useState("");
-  const { loading, data } = useQuery(QUERY_FOOD_BY_PREFERENCE, {
-    variables: {
-      vegan: preferences.vegan, // Pass your preferences as variables
-      vegetarian: preferences.vegetarian,
-      glutenFree: preferences.glutenFree,
-      dairyFree: preferences.dairyFree,
-      nutFree: preferences.nutFree,
-    },
-  });
-
-  const preferenceData = [
-    { name: "dairyFree", source: preferences.dairyFree },
-    { name: "glutenFree", source: preferences.glutenFree },
-    { name: "nutFree", source: preferences.nutFree },
-    { name: "vegan", source: preferences.vegan },
-    { name: "vegetarian", source: preferences.vegetarian },
+const preferenceData = [
+    { name: "dairyFree", source: preferences.dairyFree, value: { dairyFree: true } },
+    { name: "glutenFree", source: preferences.glutenFree, value: { glutenFree: true } },
+    { name: "nutFree", source: preferences.nutFree, value: { nutFree: true } },
+    { name: "vegan", source: preferences.vegan, value: { vegan: true } },
+    { name: "vegetarian", source: preferences.vegetarian, value: { vegetarian: true } },
   ];
 
-  //   const filteredItems = useMemo(() => {
-  //     // Handle case where data is not yet available or the query is not entered
-  //     if (!data || !query) return [];
-  //     return data.getFoodByPreference.filter((item) => {
-  //       return item.name.toLowerCase().includes(query.toLowerCase());
-  //     });
-  //   }, [data, query]);
+
+export default function Preference() {
+  // default value is false for every preference field
+  const [selectedPreference, setSelectedPreference] = useState({
+    vegan: false,
+    vegetarian: false,
+    glutenFree: false,
+    dairyFree: false,
+    nutFree: false,
+  });
+
+  const { loading, data } = useQuery(QUERY_FOOD_BY_PREFERENCE, {
+    variables: selectedPreference,
+  });
+
 
   if (loading) {
     return <p>Loading...</p>;
   }
+
+  const handleQuery = (preference) => {
+    setSelectedPreference(preference);
+  };
+
+  // Filter out items that match the selected preferences
+  const filteredItems = data.getFoodByPreference.filter((food) => {
+    // iterate over each key and value in the food's preference field
+    return Object.entries(selectedPreference).every(([key, value]) => {
+        // if the value is 'false', switch to 'true' , 
+        // if the value is 'true', stay
+      return !value || food[key];
+    });
+  });
 
   return (
     <div>
@@ -47,7 +57,7 @@ export default function Preference() {
           <div
             key={index}
             className="flex flex-col items-center"
-            // onClick={() => handleQuery(category.name)}
+            onClick={() => handleQuery(preference.value)}
           >
             <img
               src={preference.source}
@@ -57,6 +67,19 @@ export default function Preference() {
             <p className="text-gray-700">{preference.name}</p>
           </div>
         ))}
+
+        <div className="col-span-full my-6">
+          {/* Render the category name */}
+          <p className="text-2xl text-black"></p>
+        </div>
+        <div className="col-span-full mb-10 grid place-items-center border-b-2 border-black pb-20">
+          <div className="col-span-full grid w-fit flex-row flex-wrap place-items-center text-black sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5">
+            {/* Render grocery items based on the category*/}
+            {filteredItems.map((food) => (
+              <GroceryItem key={food._id} {...food} />
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
