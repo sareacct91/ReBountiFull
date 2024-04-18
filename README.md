@@ -10,7 +10,7 @@ ReBountiFull is a digital platform designed to connect restaurants and grocers w
 3. [Getting Started](#getting-started)
 4. [Usage](#usage)
 5. [Contributing](#contributing)
-6. [Questions](#questions)
+6. [Support](#support)
 7. [License](#license)
 
 ## Overview
@@ -51,4 +51,25 @@ npm run seed
 npm start
 ```
 
-6. **Access the Application:** Open your web browser and navigate to `http://localhost:3000` to access the ReBountiFull Care application.
+6. **Access the Application:** Open your web browser and navigate to `http://localhost:3000` to access the ReBountiFull application.
+
+## Contributing
+
+We welcome contributions from the community to enhance and improve ReBountiFull. To contribute, please follow these guidelines:
+
+- Fork the repository and create a new branch for your feature or bug fix.
+- Ensure your code adheres to the coding standards and conventions used in the project.
+- Submit a pull request with a clear description of your changes and the problem they solve.
+
+## Support
+
+If you encounter any issues or have any questions or suggestions, please don't hesitate to reach out to our support team at support@rebountifull.com. We're here to help!
+
+## License
+
+PropertyPlus Care is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.
+
+## Application Repository
+https://github.com/sareacct91/ReBountiFull
+
+## Application Deployed to Heroku
