@@ -52,7 +52,7 @@ export default function Login() {
         {/* todo: Link to reset password? */} 
         <button className="bg-blue-600" type="submit">Enter</button>
       </form>
-      <div className="flex flex-col font-semibold text-black max-w-xl my-10 p-5 rounded-lg bg-blue-300/40 border-double border-8 border-white">
+      <div className="flex flex-col font-semibold text-black max-w-xl my-10 p-5 rounded-lg bg-blue-300/40 border-double border-8 border-blue-500">
       <p className="">
         ReBountiFull helpled my family when we didn't know where our next meal was coming from. It made a world of difference for my growing children.
         <br />
