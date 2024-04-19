@@ -1,44 +1,20 @@
 import RangeSliderTest from "./test/test";
 // import "./test.css"
 
-import "./inputSlider.css"
-
-import { useMutation, useQuery } from "@apollo/client";
-import { QUERY_CART } from "../../utils/queries";
+import "./RangeSlider/inputSlider.css"
+import RangeSlider from "./RangeSlider";
 import ShoppingBagImg from "../../assets/images/shopping_bag.png";
 import CartItem from "./cartItem";
-import { useEffect, useState } from "react";
+
+import { useState } from "react";
+import { useMutation, useQuery } from "@apollo/client";
+import { QUERY_CART } from "../../utils/queries";
 
 export default function Cart() {
   const [sliderValue, setSliderValue] = useState(0);
-  const [sliderStyle, setSliderStyle] = useState({
-    background: `linear-gradient(to right,
-      blue 0%,
-      green 50%,
-      orange 100%,
-      white 100%, white 100%)`,
-  });
-
   const { loading, error, data } = useQuery(QUERY_CART, {
     onCompleted: (data) => setSliderValue(data.getCart.grandTotal.amount)
   });
-
-  useEffect(() => {
-    if (data?.getCart) {
-      const { getCart: cart } = data;
-      const max = cart.grandTotal.amount;
-      const percentage = ((sliderValue / max) * 100).toFixed(2);
-      const updatedStyle = {
-        background: `linear-gradient(to right,
-          blue 0%,
-          green ${percentage / 2}%,
-          orange ${percentage}%,
-          white ${percentage}%, white 100%)`,
-      };
-      // console.log(updatedStyle)
-      setSliderStyle({ ...updatedStyle });
-    }
-  }, [sliderValue, data])
 
   if (loading || error) {
     console.log(error);
@@ -56,9 +32,7 @@ export default function Cart() {
   }
 
   const { getCart } = data;
-  console.log(sliderStyle)
   // console.log(getCart);
-  // console.log(rangeValue)
 
   return (
     <>
@@ -86,15 +60,7 @@ export default function Cart() {
               <span className="underline">What you pay:</span>$
               {(sliderValue / 100).toFixed(2)}
             </p>
-            <input
-              className="w-full"
-              type="range"
-              min="0"
-              max={getCart.grandTotal.amount}
-              onChange={(e) => setSliderValue(e.target.value)}
-              value={sliderValue}
-              style={sliderStyle}
-            />
+            <RangeSlider value={sliderValue} setValue={setSliderValue} MAX={getCart.grandTotal.amount} />
             {/* <RangeSliderTest /> */}
           </div>
           <div className="flex w-full justify-center lg:justify-end">
