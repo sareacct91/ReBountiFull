@@ -7,7 +7,6 @@ module.exports = {
           isEmpty
           totalItems
           totalUniqueItems
-          abandoned
           items {
             id
             name

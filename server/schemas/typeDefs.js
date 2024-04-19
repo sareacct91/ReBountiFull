@@ -87,9 +87,8 @@ const typeDefs = `
     totalUniqueItems: Int!
     items: [CartItem]!
     grandTotal: Money!
-    abandoned: Boolean!
   }
-  
+
   type CartItem {
     id: ID!
     name: String!
@@ -104,31 +103,35 @@ const typeDefs = `
     formatted: String
   }
 
-  type Order {
+  input CartInput {
     id: ID!
-    cartId: ID!
-    items: [OrderItem!]!
-    grandTotal: Money!
     totalItems: Int!
     totalUniqueItems: Int!
-    status: OrderStatus!
-    createdAt: Date!
-    updatedAt: Date!
+    items: [CartItemInput]!
+    grandTotal: MoneyInput!
   }
 
-  type OrderItem {
+  input CartItemInput {
     id: ID!
-    name: String
+    name: String!
     images: [String]
-    unitTotal: Money!
-    lineTotal: Money!
+    unitTotal: MoneyInput!
+    lineTotal: MoneyInput!
     quantity: Int!
-    createdAt: Date!
-    updatedAt: Date!
   }
-  enum OrderStatus {
-    UNPAID
-    PAID
+
+  input MoneyInput {
+    amount: Int
+    formatted: String
+  }
+
+  input OrderInput {
+    cart: CartInput!
+    payment_amount: Int!
+  }
+
+  type Checkout {
+    session: ID
   }
 
   type Query {
@@ -138,12 +141,13 @@ const typeDefs = `
     getFood(name: String!): Food!
     getFoodByCategory(category: String!): [Food!]!
     getFoodByPreference(
-    vegan: Boolean
-    vegetarian: Boolean
-    glutenFree: Boolean
-    dairyFree: Boolean
-    nutFree: Boolean
-  ): [Food!]!
+      vegan: Boolean
+      vegetarian: Boolean
+      glutenFree: Boolean
+      dairyFree: Boolean
+      nutFree: Boolean
+    ): [Food!]!
+    cartCheckout(order: OrderInput!): Checkout!
   }
 
   type Mutation {
@@ -154,10 +158,7 @@ const typeDefs = `
     updateCartItem(food:FoodInput!): Cart
     addCartItem(food:FoodInput!): Cart
     removeCartItem(food:FoodInput!): Cart 
-    cartCheckout:Order
   }
 `;
-
-// addUser(username: String!, email: String!, password: String!, address: AddressInput!, business_name: String, first_name:String, last_name:String, household_size:Int ): Auth
 
 module.exports = typeDefs;
