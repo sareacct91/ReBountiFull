@@ -1,5 +1,6 @@
 const { Schema } = require("mongoose");
 const cartItemSchema = require("./cartItemSchema");
+const moneySchema = require("./moneySchema");
 
 const cartSchema = new Schema(
   {
@@ -9,7 +10,7 @@ const cartSchema = new Schema(
     },
     totalItems: Number,
     totalUniqueItems: Number,
-    grandTotal: Number,
+    grandTotal: moneySchema,
     items: [cartItemSchema],
   },
   {

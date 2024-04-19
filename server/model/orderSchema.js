@@ -3,7 +3,6 @@ const cartSchema = require('./cartSchema');
 
 const orderSchema = new Schema(
   {
-    _id: Schema.Types.ObjectId,
     date: {
       type: Date,
       require: true,
