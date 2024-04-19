@@ -1,0 +1,92 @@
+input[type=range] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+input[type=rage] {
+  color: red;
+}
+
+input[type=range]:focus {
+  outline: none;
+}
+input[type=range]::-webkit-slider-runnable-track {
+  height: 5px;
+  cursor: pointer;
+  box-shadow: 0px 0px 8px #066100;
+  /* background: linear-gradient(to right, #42b0f4 0%, #10572f 50%, #f99017 100%); */
+  border-radius: 50px;
+  border: 1px solid #1ad501aa;
+}
+input[type=range]::-webkit-slider-thumb {
+  box-shadow: 0px 0px 10px #00aa00;
+  border: 1px solid #83e584;
+  height: 23px;
+  width: 23px;
+  border-radius: 23px;
+  background: linear-gradient(to right, #42b0f4 0%, #10572f 50%, #f99017 100%);
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -9px;
+}
+input[type=range]:focus::-webkit-slider-runnable-track {
+  /* background: linear-gradient(to right, #42b0f4 0%, #10572f 50%, #f99017 100%); */
+}
+
+/* firefox */
+input[type=range]::-moz-range-track {
+  width: 100%;
+  height: 8px;
+  cursor: pointer;
+  box-shadow: 0px 0px 9px #066100;
+  border-radius: 50px;
+  border: 1px solid #18D501;
+}
+input[type=range]::-moz-range-thumb {
+  box-shadow: 3px 3px 3px #00AA00;
+  border: 2px solid #83E584;
+  height: 23px;
+  width: 23px;
+  border-radius: 23px;
+  background: linear-gradient(to right, #42b0f4, #10572f, #f99017);;
+  cursor: pointer;
+}
+input[type=range]::-ms-track {
+  width: 100%;
+  height: 8px;
+  cursor: pointer;
+  background: transparent;
+  border-color: transparent;
+  color: transparent;
+}
+input[type=range]::-ms-fill-lower {
+  background: linear-gradient(to right, #42b0f4 0%, #10572f 50%, #f99017 100%);
+  border: 1px solid #18D501;
+  border-radius: 100px;
+  box-shadow: 0px 0px 9px #066100;
+}
+input[type=range]::-ms-fill-upper {
+  background: linear-gradient(to right, #42b0f4, #10572f, #f99017);;
+  border: 1px solid #18D501;
+  border-radius: 100px;
+  box-shadow: 0px 0px 9px #066100;
+}
+input[type=range]::-ms-thumb {
+  margin-top: 1px;
+  box-shadow: 3px 3px 3px #00AA00;
+  border: 2px solid #83E584;
+  height: 23px;
+  width: 23px;
+  border-radius: 23px;
+  background: linear-gradient(to right, #42b0f4, #10572f, #f99017);;
+  cursor: pointer;
+  cursor: pointer;
+}
+input[type=range]:focus::-ms-fill-lower {
+  background: linear-gradient(to right, #42b0f4 0%, #10572f 50%, #f99017 100%);
+}
+input[type=range]:focus::-ms-fill-upper {
+  background: linear-gradient(to right, #42b0f4 0%, #10572f 50%, #f99017 100%);
+}
