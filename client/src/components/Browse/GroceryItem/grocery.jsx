@@ -80,15 +80,25 @@ export default function GroceryItem(grocery) {
             <span className="text-lg font-bold text-green-600">
               ${formatPrice(price)}
             </span>
-            <Link>
+              {inventory > 0 ? (
+              <Link>
+                <button
+                  type="button"
+                  className="ml-10 w-20 bg-orange p-2 text-sm text-white hover:border-gray-300 hover:bg-green-600 focus:border-black"
+                  onClick={handleButtonSubmit}
+                >
+                  Add Item
+                </button>
+              </Link>
+            ) : (
               <button
                 type="button"
-                className="ml-10 w-20 bg-orange p-2 text-sm text-white hover:border-gray-300 hover:bg-green-600 focus:border-black"
-                onClick={handleButtonSubmit}
+                className="ml-10 w-20 bg-orange p-2 text-sm text-white cursor-not-allowed opacity-50"
+                disabled
               >
-                Add Item
+                Out of Stock
               </button>
-            </Link>
+            )}
           </div>
         </div>
       </div>
