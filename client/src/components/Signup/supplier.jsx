@@ -1,41 +1,77 @@
 export default function Supplier() {
   return (
     <>
-      <div>
+      <div className="bg-white p-10 text-black">
         <h1>Create your account to become a partner</h1>
-        <form>
-          <label for="name">Name:</label>
-          <input type="text" name="name" placeholder="First & Last Name" />
+        <form className="flex max-w-lg flex-col">
+          <label className="mr-3" for="name">
+            Name:
+          </label>
+          <input
+            className="rounded-md border-2 bg-white px-2 text-black"
+            type="text"
+            name="name"
+            placeholder="First & Last Name"
+          />
+          <br />
+          <label for="email">Email:</label>
+          <input
+            className="rounded-md border-2 bg-white px-2 text-black"
+            type="text"
+            name="email"
+            placeholder="Email@email.com"
+          />
+          <br />
+          <label for="password">Password:</label>
+          <input
+            className="rounded-md border-2 bg-white px-2 text-black"
+            type="text"
+            name="password"
+            placeholder="********"
+          />
+          <p className="ml-1 text-sm">
+            Please create a password of at least 8 characters.
+          </p>
           <br />
           <label for="company">Company:</label>
-          <input type="text" name="company" placeholder="Company Name" />
+          <input
+            className="rounded-md border-2 bg-white px-2 text-black"
+            type="text"
+            name="company"
+            placeholder="Company Name"
+          />
           <br />
           <label for="supplier-giving">How would you like to give?</label>
-          <select name="types_of_giving">
+          <select
+            className="rounded-md border-2 bg-white px-2 text-black"
+            name="types_of_giving"
+          >
             <option value="onetime_food">One time food donation</option>
             <option value="recurring_food">Recurring food donation</option>
             <option value="onetime_money">One time monetary gift</option>
             <option value="recurring_money">Recurring monetary gift</option>
           </select>
-          <div>
-            <input type="checkbox" id="exampleCheck" />
-            <label className="ml-3" for="exampleCheck">
-              I want to remain anonymous
-            </label>
-          </div>
+
+          <br />
           <label for="company">How'd you hear about us?</label>
-          <input type="text" name="source" placeholder="Ex: Facebook" />
+          <input
+            className="rounded-md border-2 bg-white px-2 text-black"
+            type="text"
+            name="source"
+            placeholder="Ex: Facebook"
+          />
           <br />
           <label for="freeform">What is driving you to give?</label>
-          <br />
           <textarea
-            id="freeform"
+            className="rounded-md border-2 bg-white px-2 text-black"
             name="freeform"
             rows="4"
             cols="50"
             placeholder="Enter text here"
           ></textarea>
         </form>
+        <br />
+        <button className="bg-blue-600 text-white">Done</button>
       </div>
     </>
   );
