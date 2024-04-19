@@ -3,6 +3,8 @@
 
 ReBountiFull is a digital platform designed to connect restaurants and grocers with excess food to digital food banks, facilitating the redistribution of surplus food to families in need. This README file provides an overview of the project, how to set it up, and key features.
 
+![image](/screenshot.png)
+
 ## Table of Contents
 
 1. [Overview](#overview)
@@ -39,7 +41,10 @@ git clone https://github.com/sareacct91/ReBountiFull
 cd RebountiFull
 npm run install
 ```
-3. **Configure Environment Variables:** Create a `.env` file in the root directory and configure necessary environment variables such as database connection strings, API keys, and authentication settings.
+3. **Configure Environment Variables:** Create a `.env` file in the server directory and configure a session secret:
+```
+SECRET=<your secret goes here>
+```
 
 4. **Seed the database:** Seed the local database using npm:
 ```
