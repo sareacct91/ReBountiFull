@@ -9,6 +9,7 @@ import Auth from "../../../utils/auth";
 export default function GroceryItem(grocery) {
   const { _id, image, name, price, inventory } = grocery;
   const [foodId, setFoodId] = useState("");
+  const [quantity, setQuantity] = useState(1);
   const [addCartItem, { error }] = useMutation(ADD_CART_ITEM);
   const [updateInventory, { error: updateError }] =
     useMutation(UPDATE_INVENTORY);
@@ -23,7 +24,7 @@ export default function GroceryItem(grocery) {
             name: grocery.name,
             price: parseFloat(grocery.price),
             image: grocery.image,
-            quantity: 1,
+            quantity: quantity,
           },
         },
       });
@@ -31,7 +32,7 @@ export default function GroceryItem(grocery) {
       console.log("grocery_id", grocery._id);
       const newId = _id;
       setFoodId(newId);
-      console.log("deconstructed id: ",_id, newId);
+      console.log("deconstructed id: ", _id, newId);
       console.log("food id for the second time!!", foodId);
       await updateInventoryNum(newId);
     } catch (err) {
@@ -44,10 +45,10 @@ export default function GroceryItem(grocery) {
       const { data: updateData } = await updateInventory({
         variables: {
           inventoryId: newId,
-          inventory: inventory - 1,
+          inventory: inventory - quantity,
         },
       });
-      console.log("updateData: ",updateData);
+      console.log("updateData: ", updateData);
       setFoodId("");
     } catch (err) {
       console.error(err);
@@ -57,6 +58,11 @@ export default function GroceryItem(grocery) {
   // Convert cents to dollars and format to 2 decimal places
   const formatPrice = (priceInCents) => {
     return (priceInCents / 100).toFixed(2);
+  };
+
+  // function to handle the quantity selector 
+  const handleChange = (e) => {
+    setQuantity(parseInt(e.target.value));
   };
 
   if (error) {
@@ -76,24 +82,37 @@ export default function GroceryItem(grocery) {
           <p className=" text-gray-600">
             {inventory}&nbsp;{pluralize("item", inventory)}&nbsp;in&nbsp;stock
           </p>
-          <div className="flex max-w-fit flex-row items-center justify-between">
+          <div className="flex max-w-fit flex-col items-center justify-between">
             <span className="text-lg font-bold text-green-600">
               ${formatPrice(price)}
             </span>
-              {inventory > 0 ? (
-              <Link>
-                <button
-                  type="button"
-                  className="ml-10 w-20 bg-orange p-2 text-sm text-white hover:border-gray-300 hover:bg-green-600 focus:border-black"
-                  onClick={handleButtonSubmit}
-                >
-                  Add Item
-                </button>
+            {inventory > 0 ? (
+              <Link to={Auth.loggedIn() ? "" : "/login"}>
+                <div className="flex flex-row">
+                  <select
+                    className="rounded-lg border border-gray-700 bg-transparent font-normal text-black p-2"
+                    onChange={handleChange}
+                    value={quantity}
+                  >
+                    {[...Array(Math.floor(inventory / 3))].map((_, i) => (
+                      <option key={i + 1} value={i + 1}>
+                        {i + 1}
+                      </option>
+                    ))}
+                  </select>
+                  <button
+                    type="button"
+                    className="ml-1 w-20 bg-orange p-2 text-sm text-white hover:border-gray-300 hover:bg-green-600 focus:border-black"
+                    onClick={handleButtonSubmit}
+                  >
+                    Add Item
+                  </button>
+                </div>
               </Link>
             ) : (
               <button
                 type="button"
-                className="ml-10 w-20 bg-orange p-2 text-sm text-white cursor-not-allowed opacity-50"
+                className="ml-10 w-20 cursor-not-allowed bg-orange p-2 text-sm text-white opacity-50"
                 disabled
               >
                 Out of Stock
