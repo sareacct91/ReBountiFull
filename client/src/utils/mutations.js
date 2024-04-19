@@ -50,4 +50,30 @@ export const ADD_USER = gql`
   }
 `;
 
-
+export const REMOVE_CART_ITEM = gql` 
+  mutation RemoveCartItem($food: FoodInput!) {
+    removeCartItem(food: $food) {
+      id
+      grandTotal {
+        amount
+        formatted
+      }
+      items {
+        id
+        name
+        images
+        unitTotal {
+          amount
+          formatted
+        }
+        lineTotal {
+          amount
+          formatted
+        }
+        quantity
+      }
+      totalItems
+      totalUniqueItems
+    }
+  }
+`;

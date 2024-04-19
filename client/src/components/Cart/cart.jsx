@@ -1,52 +1,70 @@
-import { useMutation, useQuery } from "@apollo/client";
-import { useParams } from "react-router-dom";
-import { QUERY_CART } from "../../utils/queries";
+import RangeSliderTest from "./test/test";
+// import "./test.css"
+
+import "./RangeSlider/inputSlider.css"
+import RangeSlider from "./RangeSlider";
 import ShoppingBagImg from "../../assets/images/shopping_bag.png";
+import CartItem from "./cartItem";
+
+import { useState } from "react";
+import { useMutation, useQuery } from "@apollo/client";
+import { QUERY_CART } from "../../utils/queries";
 
 export default function Cart() {
-  const { userId } = useParams();
-  const { loading, error, data } = useQuery(QUERY_CART);
+  const [sliderValue, setSliderValue] = useState(0);
+  const { loading, error, data } = useQuery(QUERY_CART, {
+    onCompleted: (data) => setSliderValue(data.getCart.grandTotal.amount)
+  });
 
-  if (loading) return <p>Loading...</p>;
-
-  const { getCart } = data;
-  console.log(getCart);
-
-  const testList = getCart.items.map((e) => (
-    <div key={e.id} className="m-2 grid-cols-4">
-      <div className="flex flex-row justify-between">
-        <img src={e.images[0]} alt={e.name} className="rounded-xl" />
-        <div className="flex flex-col items-center justify-center w-1/2">
-          <p className="ml-20 ">{e.name}</p>
-          <p className="ml-20 w-full flex items-start justify-evenly"><span className="">quantity</span>{e.quantity}</p>
-          <p className="ml-20 w-full flex items-start justify-evenly"><span>each</span>{e.unitTotal.formatted}</p>
-          <p className="ml-20 w-full flex items-start justify-evenly"><span>total</span>{e.lineTotal.formatted}</p>
-        </div>
-      </div>
-    </div>
-  ));
-
-  return (
-    <>
-      <div className="grid w-full place-items-center">
+  if (loading || error) {
+    console.log(error);
+    return (
+      <div className="grid w-full place-items-center bg-white text-black">
         <h1 className="flex flex-row">
           My Cart
           <img src={ShoppingBagImg} alt="Shopping bag icon" />
         </h1>
-        <div className="grid h-5/6 w-1/2 place-items-center rounded-xl border border-black p-10">
-          <div className="w-full ">{testList}</div>
-          <div className="w-full">
-            <p className="w-full flex justify-evenly">
-              <span>item(s) total:</span>
+        <h2 className="text-4xl">
+          {loading ? "loading..." : "Error loading cart"}
+        </h2>
+      </div>
+    );
+  }
+
+  const { getCart } = data;
+  // console.log(getCart);
+
+  return (
+    <>
+      <div className="grid w-full place-items-center bg-white text-black">
+        <h1 className="flex flex-row">
+          My Cart
+          <img src={ShoppingBagImg} alt="Shopping bag icon" />
+        </h1>
+        <div className="w-5/6 rounded-xl border border-black lg:w-1/2 lg:p-10">
+          <div className="flex w-full flex-col gap-2">
+            {getCart.items.map((item) => (
+              <CartItem key={item.id} item={item} />
+            ))}
+          </div>
+          <div className="m-auto w-1/2 p-5 lg:w-3/4">
+            <p className="flex w-full justify-between">
+              <span className="underline">item(s) total:</span>
               {getCart.totalItems} items
             </p>
-            <p className="w-full flex justify-evenly">
-              <span>Grand Total:</span>
+            <p className="flex w-full justify-between">
+              <span className="underline">Grand Total:</span>
               {getCart.grandTotal.formatted}
             </p>
+            <p className="flex w-full justify-between">
+              <span className="underline">What you pay:</span>$
+              {(sliderValue / 100).toFixed(2)}
+            </p>
+            <RangeSlider value={sliderValue} setValue={setSliderValue} MAX={getCart.grandTotal.amount} />
+            {/* <RangeSliderTest /> */}
           </div>
-         <div className="flex w-full justify-end">
-            <button>check out</button>
+          <div className="flex w-full justify-center lg:justify-end">
+            <button className="bg-blue-600 text-white">check out</button>
           </div>
         </div>
       </div>
