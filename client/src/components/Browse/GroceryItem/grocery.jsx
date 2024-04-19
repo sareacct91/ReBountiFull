@@ -10,7 +10,6 @@ import Auth from "../../../utils/auth";
 export default function GroceryItem(food) {
   const { image, name, price, inventory } = food;
   const [addCartItem, { error }] = useMutation(ADD_CART_ITEM);
-  
 
   const handleButtonSubmit = async (event) => {
     event.preventDefault();
@@ -35,8 +34,13 @@ export default function GroceryItem(food) {
     }
   };
 
-  if(error) {
-    return <p>Something went wrong...</p>
+  // Convert cents to dollars and format to 2 decimal places
+  const formatPrice = (priceInCents) => {
+    return (priceInCents / 100).toFixed(2);
+  };
+
+  if (error) {
+    return <p>Something went wrong...</p>;
   }
 
   return (
@@ -53,7 +57,9 @@ export default function GroceryItem(food) {
             {inventory}&nbsp;{pluralize("item", inventory)}&nbsp;in&nbsp;stock
           </p>
           <div className="flex max-w-fit flex-row items-center justify-between">
-            <span className="text-lg font-bold text-green-600">${price}</span>
+            <span className="text-lg font-bold text-green-600">
+              ${formatPrice(price)}
+            </span>
             <Link>
               <button
                 type="button"
