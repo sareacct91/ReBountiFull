@@ -1,35 +1,54 @@
 // import React from "react";
 import { Link } from "react-router-dom";
 import { pluralize } from "../../../utils/helpers";
-import { ADD_CART_ITEM } from "../../../utils/mutations";
-import { useMutation, useQuery } from "@apollo/client";
+import { ADD_CART_ITEM, UPDATE_INVENTORY } from "../../../utils/mutations";
+import { useMutation } from "@apollo/client";
 import { useState } from "react";
-import { QUERY_FOOD } from "../../../utils/queries";
 import Auth from "../../../utils/auth";
 
-export default function GroceryItem(food) {
-  const { image, name, price, inventory } = food;
+export default function GroceryItem(grocery) {
+  const { _id, image, name, price, inventory } = grocery;
+  const [foodId, setFoodId] = useState("");
   const [addCartItem, { error }] = useMutation(ADD_CART_ITEM);
-  const { loading, data: getFood } = useQuery(QUERY_FOOD, {
-    variables: { name: food.name } 
-  });
+  const [updateInventory, { error: updateError }] =
+    useMutation(UPDATE_INVENTORY);
 
-  const handleButtonSubmit = async (event) => {
-    event.preventDefault();
+  const handleButtonSubmit = async () => {
+    console.log(grocery);
     try {
       const { data } = await addCartItem({
         variables: {
           food: {
-            _id: food._id,
-            name: food.name,
-            price: parseFloat(food.price),
-            image: food.image,
+            _id: grocery._id,
+            name: grocery.name,
+            price: parseFloat(grocery.price),
+            image: grocery.image,
             quantity: 1,
           },
         },
       });
-      console.log(data);
-      console.log("targeted food: ", getFood);
+      console.log(data.addCartItem);
+      console.log("grocery_id", grocery._id);
+      const newId = _id;
+      setFoodId(newId);
+      console.log("deconstructed id: ",_id, newId);
+      console.log("food id for the second time!!", foodId);
+      await updateInventoryNum(newId);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const updateInventoryNum = async (newId) => {
+    try {
+      const { data: updateData } = await updateInventory({
+        variables: {
+          inventoryId: newId,
+          inventory: inventory - 1,
+        },
+      });
+      console.log("updateData: ",updateData);
+      setFoodId("");
     } catch (err) {
       console.error(err);
     }

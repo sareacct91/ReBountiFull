@@ -105,3 +105,22 @@ export const REMOVE_CART_ITEM = gql`
     }
   }
 `;
+
+// updating the inventory item
+export const UPDATE_INVENTORY = gql`
+  mutation UpdateInventory($inventoryId: ID!, $inventory: Int!) {
+    updateInventory(inventoryId: $inventoryId, inventory: $inventory) {
+      _id
+      name
+      price
+      inventory
+      category
+      image
+      vegan
+      vegetarian
+      gluten_free
+      dairy_free
+      nut_free
+    }
+  }
+`;

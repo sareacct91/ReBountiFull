@@ -60,7 +60,11 @@ export default function Cart() {
               <span className="underline">What you pay:</span>$
               {(sliderValue / 100).toFixed(2)}
             </p>
-            <RangeSlider value={sliderValue} setValue={setSliderValue} MAX={getCart.grandTotal.amount} />
+            <RangeSlider
+              value={sliderValue}
+              setValue={setSliderValue}
+              MAX={getCart.grandTotal.amount}
+            />
             {/* <RangeSliderTest /> */}
           </div>
           <div className="flex w-full justify-center lg:justify-end">

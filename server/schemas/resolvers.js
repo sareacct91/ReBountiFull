@@ -178,6 +178,7 @@ const resolvers = {
       if (!result) {
         throw new Error("error fetching cart");
       }
+      console.log("RESULT: ITEM:PLEASE WORK", result);
       return result.addItem;
     },
     removeCartItem: async (_, { food }, context) => {
@@ -195,19 +196,19 @@ const resolvers = {
       console.log(result);
       return result.removeItem;
     },
-    // updating inventory number of a food item 
-    updateInventory: async (_, { id, inventory }) => {
+    // updating inventory number of a food item
+    updateInventory: async (_, { inventoryId, inventory }) => {
       try {
         // Find the food item by ID and update its inventory
         const updatedFood = await Food.findOneAndUpdate(
-          id,
-          { $set: { inventory} },
+          { _id: inventoryId },
+          { $set: { inventory } },
           { new: true }
         );
         return updatedFood;
       } catch (error) {
         console.error("error!: ", error);
-        // throw new Error("Failed to update inventory");
+        throw new Error("Failed to update inventory");
       }
     },
     cartCheckout: async (_, __, context) => {
