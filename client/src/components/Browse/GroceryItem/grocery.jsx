@@ -62,7 +62,12 @@ export default function GroceryItem(grocery) {
 
   // function to handle the quantity selector 
   const handleChange = (e) => {
-    setQuantity(parseInt(e.target.value));
+    const q = parseInt(e.target.value);
+    if ( q >= 0)  {
+      setQuantity(q)
+    } else {
+      setQuantity(0)
+    }
   };
 
   if (error) {
@@ -86,7 +91,7 @@ export default function GroceryItem(grocery) {
             <span className="text-lg font-bold text-green-600">
               ${formatPrice(price)}
             </span>
-            {inventory > 0 ? (
+            {inventory > 0 && quantity >= 0? (
               <Link to={Auth.loggedIn() ? "" : "/login"}>
                 <div className="flex flex-row">
                   <select
@@ -94,7 +99,8 @@ export default function GroceryItem(grocery) {
                     onChange={handleChange}
                     value={quantity}
                   >
-                    {[...Array(Math.floor(inventory / 3))].map((_, i) => (
+                    {/* limiting the max number of quantity that users can add */}
+                    {[...Array(Math.min(inventory, 10))].map((_, i) => (
                       <option key={i + 1} value={i + 1}>
                         {i + 1}
                       </option>
