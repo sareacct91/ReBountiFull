@@ -43,6 +43,8 @@ export default function Supplier() {
             placeholder="Enter text here"
           ></textarea>
         </form>
+        <br />
+        <button className="bg-blue-600 text-white">Done</button>
       </div>
     </>
   );
