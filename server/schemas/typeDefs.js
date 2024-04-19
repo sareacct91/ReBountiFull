@@ -87,7 +87,6 @@ const typeDefs = `
     totalUniqueItems: Int!
     items: [CartItem]!
     grandTotal: Money!
-    abandoned: Boolean!
   }
 
   type CartItem {
@@ -110,7 +109,6 @@ const typeDefs = `
     totalUniqueItems: Int!
     items: [CartItemInput]!
     grandTotal: MoneyInput!
-    payment_amount: Int!
   }
 
   input CartItemInput {
@@ -125,6 +123,11 @@ const typeDefs = `
   input MoneyInput {
     amount: Int
     formatted: String
+  }
+
+  input OrderInput {
+    cart: CartInput!
+    payment_amount: Int!
   }
 
   type Checkout {
@@ -144,7 +147,7 @@ const typeDefs = `
       dairyFree: Boolean
       nutFree: Boolean
     ): [Food!]!
-    cartCheckout(cart: CartInput!): Checkout!
+    cartCheckout(order: OrderInput!): Checkout!
   }
 
   type Mutation {
