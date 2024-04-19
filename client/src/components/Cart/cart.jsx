@@ -22,16 +22,16 @@ export default function Cart() {
     }
   }, [data])
 
-  if (loading || error) {
+  if (loading || error || (data && !data?.getCart.totalItems)) {
     console.log(error);
     return (
-      <div className="grid w-full place-items-center bg-white text-black">
+      <div className="grid h-full min-h-[calc(100vh-192px-40px)] w-full auto-rows-min place-items-center bg-white text-black">
         <h1 className="flex flex-row">
           My Cart
           <img src={ShoppingBagImg} alt="Shopping bag icon" />
         </h1>
-        <h2 className="text-4xl">
-          {loading ? "loading..." : "Error loading cart"}
+        <h2 className="text-8xl">
+          {loading ? "loading..." : error ? "Error loading cart" : "Cart is empty"}
         </h2>
       </div>
     );
@@ -42,7 +42,7 @@ export default function Cart() {
 
   return (
     <>
-      <div className="grid h-full min-h-[calc(100vh-192px-40px)] w-full  auto-rows-min place-items-center bg-white text-black">
+      <div className="grid h-full min-h-[calc(100vh-192px-40px)] w-full auto-rows-min place-items-center bg-white text-black">
         <h1 className="flex h-min flex-row">
           My Cart
           <img src={ShoppingBagImg} alt="Shopping bag icon" />
