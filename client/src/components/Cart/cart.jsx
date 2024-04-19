@@ -6,7 +6,7 @@ import RangeSlider from "./RangeSlider";
 import ShoppingBagImg from "../../assets/images/shopping_bag.png";
 import CartItem from "./cartItem";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import { QUERY_CART } from "../../utils/queries";
 
@@ -15,6 +15,12 @@ export default function Cart() {
   const { loading, error, data } = useQuery(QUERY_CART, {
     onCompleted: (data) => setSliderValue(data.getCart.grandTotal.amount)
   });
+
+  useEffect(() => {
+    if (data) {
+      setSliderValue(data.getCart.grandTotal.amount)
+    }
+  }, [data])
 
   if (loading || error) {
     console.log(error);
