@@ -4,12 +4,15 @@ import { pluralize } from "../../../utils/helpers";
 import { ADD_CART_ITEM } from "../../../utils/mutations";
 import { useMutation, useQuery } from "@apollo/client";
 import { useState } from "react";
-// import { QUERY_FOOD } from "../../../utils/queries";
+import { QUERY_FOOD } from "../../../utils/queries";
 import Auth from "../../../utils/auth";
 
 export default function GroceryItem(food) {
   const { image, name, price, inventory } = food;
   const [addCartItem, { error }] = useMutation(ADD_CART_ITEM);
+  const { loading, data: getFood } = useQuery(QUERY_FOOD, {
+    variables: { name: food.name } 
+  });
 
   const handleButtonSubmit = async (event) => {
     event.preventDefault();
@@ -26,9 +29,7 @@ export default function GroceryItem(food) {
         },
       });
       console.log(data);
-      const updatedFood = { ...food };
-      updatedFood.inventory -= 1;
-      console.log(`added ${data} to your cart!`);
+      console.log("targeted food: ", getFood);
     } catch (err) {
       console.error(err);
     }

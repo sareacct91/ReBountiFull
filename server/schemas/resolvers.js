@@ -90,8 +90,9 @@ const resolvers = {
         throw new Error("Failed to retrieve food items by category");
       }
     },
-    // fitering food items based on the preference 
-    getFoodByPreference: async (_,
+    // fitering food items based on the preference
+    getFoodByPreference: async (
+      _,
       { vegan, vegetarian, glutenFree, dairyFree, nutFree }
     ) => {
       try {
@@ -103,7 +104,7 @@ const resolvers = {
         if (dairyFree !== undefined) filter.dairy_free = dairyFree;
         if (nutFree !== undefined) filter.nut_free = nutFree;
 
-        console.log("filtering...: ",filter);
+        console.log("filtering...: ", filter);
         // Query food items based on the filter
         const foodItems = await Food.find(filter);
         return foodItems;
@@ -194,6 +195,21 @@ const resolvers = {
       }
       console.log(result);
       return result.removeItem;
+    },
+    // updating inventory number of a food item 
+    updateInventory: async (_, { id, inventory }) => {
+      try {
+        // Find the food item by ID and update its inventory
+        const updatedFood = await Food.findByIdAndUpdate(
+          id,
+          { inventory },
+          { new: true }
+        );
+        return updatedFood;
+      } catch (error) {
+        console.error("error!: ", error);
+        throw new Error("Failed to update inventory");
+      }
     },
     cartCheckout: async (_, __, context) => {
       if (!context.user?._id) {
