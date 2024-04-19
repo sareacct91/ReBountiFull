@@ -3,12 +3,12 @@ import { REMOVE_CART_ITEM } from "../../utils/mutations"
 import PropTypes from "prop-types";
 
 export default function CartItem({item}) {
-  const [removeCartItem] = useMutation(REMOVE_CART_ITEM);
+  const [removeCartItem, {loading}] = useMutation(REMOVE_CART_ITEM);
 
   async function clickedRemoveItem() {
     try {
       console.log(item.id)
-      const {data: removeItem} = await removeCartItem({ 
+      await removeCartItem({ 
         variables: { 
           food: {
             _id: item.id
@@ -23,7 +23,7 @@ export default function CartItem({item}) {
 
   return (
     <>
-      <div className="flex flex-col items-center justify-between border-b border-black p-5 lg:flex-row lg:rounded-xl lg:border">
+      <div className={`${ loading ? "opacity-50 " : ""}flex flex-col items-center justify-between border-b border-black p-5 lg:flex-row lg:rounded-xl lg:border`}>
         <img src={item.images[0]} alt={item.name} className="rounded-xl" />
         <div className="flex w-3/4 flex-col items-center sm:justify-center lg:w-1/2">
           <p>{item.name}</p>
