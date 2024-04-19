@@ -118,7 +118,7 @@ export default function GroceryItem(grocery) {
             ) : (
               <button
                 type="button"
-                className="ml-10 w-20 cursor-not-allowed bg-orange p-2 text-sm text-white opacity-50"
+                className="cursor-not-allowed bg-orange p-2 text-sm text-white opacity-50"
                 disabled
               >
                 Out of Stock

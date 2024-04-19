@@ -1,25 +1,30 @@
-import { useMutation } from "@apollo/client"
-import { REMOVE_CART_ITEM } from "../../utils/mutations"
+import { useMutation } from "@apollo/client";
+import { REMOVE_CART_ITEM } from "../../utils/mutations";
 import PropTypes from "prop-types";
+import { useState } from "react";
 
-export default function CartItem({item}) {
-  const [removeCartItem] = useMutation(REMOVE_CART_ITEM);
+export default function CartItem({ item }) {
+  const [itemQuantity, setItemQuantity] = useState(item.quantity);
+  const [removeCartItem, {loading}] = useMutation(REMOVE_CART_ITEM);
 
   async function clickedRemoveItem() {
     try {
-      console.log(item.id)
-      const {data: removeItem} = await removeCartItem({ 
-        variables: { 
+      const { data: removeItem } = await removeCartItem({
+        variables: {
           food: {
-            _id: item.id
-          }
-        }
-      }); 
-
+            _id: item.id,
+          },
+        },
+      });
+      console.log("removed data: ", removeItem);
     } catch (err) {
-      console.error(err); 
+      console.error(err);
     }
   }
+  const handleChange = (e) => {
+    const q = parseInt(e.target.value);
+    setItemQuantity(q);
+  };
 
   return (
     <>
@@ -27,27 +32,39 @@ export default function CartItem({item}) {
         <img src={item.images[0]} alt={item.name} className="rounded-xl" />
         <div className="flex w-3/4 flex-col items-center sm:justify-center lg:w-1/2">
           <p>{item.name}</p>
-          <p className="min-w-60 lg:min-w-40 flex w-1/2 justify-between lg:w-full lg:items-start">
+          <div className="flex w-1/2 min-w-60 justify-between lg:w-full lg:min-w-40 lg:items-start">
             <span>quantity</span>
-            {item.quantity}
-          </p>
-          <p className="min-w-60 lg:min-w-40 flex w-1/2 justify-between lg:w-full lg:items-start">
+            <select
+              className="rounded-lg border border-gray-700 bg-transparent p-2 font-normal text-black"
+              value={itemQuantity}
+              onChange={handleChange}
+            >
+              {[...Array(Math.max(1, item.quantity))].map((_, i) => (
+                <option key={i + 1} value={i + 1}>
+                  {i + 1}
+                </option>
+              ))}
+            </select>
+          </div>
+          <p className="flex w-1/2 min-w-60 justify-between lg:w-full lg:min-w-40 lg:items-start">
             <span>each</span>
             {item.unitTotal.formatted}
           </p>
-          <p className="min-w-60 lg:min-w-40 flex w-1/2 justify-between lg:w-full lg:items-start">
+          <p className="flex w-1/2 min-w-60 justify-between lg:w-full lg:min-w-40 lg:items-start">
             <span>total</span>
             {item.lineTotal.formatted}
           </p>
-          <button 
-            className="self-end text-blue-400 underline" 
-            onClick={clickedRemoveItem}>
+          <button
+            className="self-end text-blue-400 underline"
+            disabled={loading}
+            onClick={clickedRemoveItem}
+          >
             remove
-          </button> 
+          </button>
         </div>
       </div>
     </>
-  )
+  );
 }
 
 CartItem.propTypes = {
@@ -58,31 +75,11 @@ CartItem.propTypes = {
     images: PropTypes.arrayOf(PropTypes.string).isRequired,
     unitTotal: PropTypes.shape({
       formatted: PropTypes.string.isRequired,
-      amount: PropTypes.number
+      amount: PropTypes.number,
     }).isRequired,
     lineTotal: PropTypes.shape({
       formatted: PropTypes.string.isRequired,
-      amount: PropTypes.number
-    }).isRequired
-  }).isRequired
+      amount: PropTypes.number,
+    }).isRequired,
+  }).isRequired,
 };
-
-
-
-// export default function CartItem({item}) {
-//   return (
-//     <>
-//       <div className="m-2 grid-cols-4">
-//         <div className="flex flex-row justify-between">
-//           <img src={item.images[0]} alt={item.name} className="rounded-xl" />
-//           <div className="flex w-1/2 flex-col items-center justify-center">
-//             <p className="ml-20 ">{item.name}</p>
-//             <p className="ml-20 flex w-full items-start justify-evenly"><span className="">quantity</span>{item.quantity}</p>
-//             <p className="ml-20 flex w-full items-start justify-evenly"><span>each</span>{item.unitTotal.formatted}</p>
-//             <p className="ml-20 flex w-full items-start justify-evenly"><span>total</span>{item.lineTotal.formatted}</p>
-//           </div>
-//         </div>
-//       </div>
-//     </>
-//   )
-// }

@@ -5,7 +5,6 @@ import "./RangeSlider/inputSlider.css"
 import RangeSlider from "./RangeSlider";
 import ShoppingBagImg from "../../assets/images/shopping_bag.png";
 import CartItem from "./cartItem";
-
 import { useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import { QUERY_CART } from "../../utils/queries";
