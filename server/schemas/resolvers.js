@@ -152,7 +152,6 @@ const resolvers = {
 
       throw AuthenticationError;
     },
-
     updateCartItem: async (_, { food }, context) => {
       if (!context.user?._id) {
         throw AuthenticationError;
@@ -200,15 +199,15 @@ const resolvers = {
     updateInventory: async (_, { id, inventory }) => {
       try {
         // Find the food item by ID and update its inventory
-        const updatedFood = await Food.findByIdAndUpdate(
+        const updatedFood = await Food.findOneAndUpdate(
           id,
-          { inventory },
+          { $set: { inventory} },
           { new: true }
         );
         return updatedFood;
       } catch (error) {
         console.error("error!: ", error);
-        throw new Error("Failed to update inventory");
+        // throw new Error("Failed to update inventory");
       }
     },
     cartCheckout: async (_, __, context) => {
