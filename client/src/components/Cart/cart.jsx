@@ -32,12 +32,12 @@ export default function Cart() {
   }
 
   const { getCart } = data;
-  // console.log(getCart);
+  console.log(getCart);
 
   return (
     <>
-      <div className="grid w-full place-items-center bg-white text-black">
-        <h1 className="flex flex-row">
+      <div className="grid h-full min-h-[calc(100vh-192px-40px)] w-full  auto-rows-min place-items-center bg-white text-black">
+        <h1 className="flex h-min flex-row">
           My Cart
           <img src={ShoppingBagImg} alt="Shopping bag icon" />
         </h1>
