@@ -108,7 +108,6 @@ export const QUERY_CART = gql`
       id
       totalItems
       totalUniqueItems
-      abandoned
       grandTotal {
         amount
         formatted
@@ -127,6 +126,14 @@ export const QUERY_CART = gql`
         }
         quantity
       }
+    }
+  }
+`;
+
+export const CART_CHECKOUT = gql`
+  query CartCheckout($order: OrderInput!) {
+    cartCheckout(order: $order) {
+      session
     }
   }
 `;
