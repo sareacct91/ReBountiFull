@@ -62,6 +62,7 @@ export const ADD_CART_ITEM = gql`
         id
         name
         images
+        metadata
         unitTotal {
           amount
           formatted
@@ -90,6 +91,7 @@ export const REMOVE_CART_ITEM = gql`
         id
         name
         images
+        metadata 
         unitTotal {
           amount
           formatted

@@ -31,7 +31,7 @@ export default function Cart() {
   }
 
   const { getCart } = data;
-  // console.log(getCart);
+ console.log(getCart);
 
   return (
     <>

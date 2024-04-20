@@ -8,23 +8,25 @@ const argsAddMango = {
     _id: "12948612847",
     name: "mango",
     price: 450,
+    inventory: 40
   },
   quantity: 10,
 };
 
-const argsAddTaco = { 
-  user: { _id: args.id},
+const argsAddTaco = {
+  user: { _id: args.id },
   food: {
     _id: "12948612849",
     name: "taco",
     price: 450,
+    inventory: 20
   },
   quantity: 5,
 };
 
-const argsUpdateMango = { 
+const argsUpdateMango = {
   id: args.id,
-  foodId: '12948612847',
+  foodId: "12948612847",
   quantity: 7,
 };
 

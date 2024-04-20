@@ -74,6 +74,7 @@ const typeDefs = `
     price: Float
     image: String
     quantity: Int
+    inventory: Int
   } 
 
   type Auth {
@@ -89,7 +90,9 @@ const typeDefs = `
     grandTotal: Money!
     abandoned: Boolean!
   }
-  
+
+  scalar JSON
+
   type CartItem {
     id: ID!
     name: String!
@@ -97,6 +100,7 @@ const typeDefs = `
     unitTotal: Money!
     lineTotal: Money!
     quantity: Int!
+    metadata: JSON
   }
 
   type Money {

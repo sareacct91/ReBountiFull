@@ -1,2 +1,3 @@
 export const UPDATE_USER = "UPDATE_USER";
 export const UPDATE_CART_ITEM = "UPDATE_CART_ITEM";
+export const ADD_CART_ITEM = "ADD_CART_ITEM";

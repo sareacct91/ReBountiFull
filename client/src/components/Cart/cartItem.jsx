@@ -1,11 +1,13 @@
 import { useMutation } from "@apollo/client";
-import { REMOVE_CART_ITEM } from "../../utils/mutations";
+import { REMOVE_CART_ITEM, UPDATE_INVENTORY } from "../../utils/mutations";
 import PropTypes from "prop-types";
 import { useState } from "react";
 
 export default function CartItem({ item }) {
   const [itemQuantity, setItemQuantity] = useState(item.quantity);
-  const [removeCartItem, {loading}] = useMutation(REMOVE_CART_ITEM);
+  const [removeCartItem, { loading }] = useMutation(REMOVE_CART_ITEM);
+  const [updateInventory, { error: updateError }] =
+    useMutation(UPDATE_INVENTORY);
 
   async function clickedRemoveItem() {
     try {
@@ -16,15 +18,43 @@ export default function CartItem({ item }) {
           },
         },
       });
-      console.log("removed data: ", removeItem);
+      console.log(
+        "cart after removing the item: ",
+        removeItem,
+        "removed food item: ",
+        item,
+        "removed food item's metadata: ",
+        item.metadata.inventory,
+      );
+      console.log(item.id, "matadata is the inventory: ", removeItem);
+      await updateInventoryNum(item.id);
     } catch (err) {
       console.error(err);
     }
   }
+  const updateInventoryNum = async (foodId) => {
+    try {
+      const { data: updateData } = await updateInventory({
+        variables: {
+          inventoryId: foodId,
+          inventory: item.metadata.inventory + item.quantity,
+        },
+      });
+      console.log("updateData: ", updateData);
+    } catch (updateError) {
+      console.error(updateError);
+    }
+  };
+
   const handleChange = (e) => {
     const q = parseInt(e.target.value);
     setItemQuantity(q);
   };
+  // limiting available quantity of food items
+  const maxSelectable = Math.min(
+    item.metadata.inventory + item.quantity - item.quantity,
+    item.quantity + 5,
+  );
 
   return (
     <>
@@ -39,7 +69,7 @@ export default function CartItem({ item }) {
               value={itemQuantity}
               onChange={handleChange}
             >
-              {[...Array(Math.max(1, item.quantity))].map((_, i) => (
+              {[...Array(Math.max(1, maxSelectable))].map((_, i) => (
                 <option key={i + 1} value={i + 1}>
                   {i + 1}
                 </option>

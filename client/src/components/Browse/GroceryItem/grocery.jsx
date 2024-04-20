@@ -15,7 +15,7 @@ export default function GroceryItem(grocery) {
     useMutation(UPDATE_INVENTORY);
 
   const handleButtonSubmit = async () => {
-    console.log(grocery);
+    console.log(grocery.inventory);
     try {
       const { data } = await addCartItem({
         variables: {
@@ -25,10 +25,13 @@ export default function GroceryItem(grocery) {
             price: parseFloat(grocery.price),
             image: grocery.image,
             quantity: quantity,
+            inventory: grocery.inventory - quantity
           },
         },
       });
-      console.log(data.addCartItem);
+      
+      console.log("addcartitem please work please",data.addCartItem);
+      
       console.log("grocery_id", grocery._id);
       const newId = _id;
       setFoodId(newId);
@@ -99,7 +102,7 @@ export default function GroceryItem(grocery) {
                     onChange={handleChange}
                     value={quantity}
                   >
-                    {/* limiting the max number of quantity that users can add */}
+                    {/* limiting the max number of quantity that users can add at a time*/}
                     {[...Array(Math.min(inventory, 10))].map((_, i) => (
                       <option key={i + 1} value={i + 1}>
                         {i + 1}

@@ -10,6 +10,7 @@ module.exports = {
             price: ${a.food.price}
             quantity: ${a.food.quantity || 1}
             images: ["${a.food.image}"]
+            metadata: {inventory: ${a.food.inventory}}
           }
         ) {
           id
@@ -19,6 +20,7 @@ module.exports = {
           abandoned
           items {
             id
+            metadata
             name
             quantity
             unitTotal {
@@ -57,6 +59,7 @@ module.exports = {
             id
             name
             quantity
+            metadata
             unitTotal {
               amount
               formatted

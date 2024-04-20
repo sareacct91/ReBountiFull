@@ -70,6 +70,7 @@ const resolvers = {
       };
 
       const cart = await queryCartQL(CartQueries.queryCart, variables);
+      console.log("Cart",cart.cart.items);
       return cart.cart;
     },
     getAllFood: async () => {
@@ -173,12 +174,15 @@ const resolvers = {
       const variables = {
         food,
         id: context.user._id,
+        metadata: {
+          inventory: food.inventory,
+        },
       };
       const result = await queryCartQL(CartMutation.addCartItem, variables);
       if (!result) {
         throw new Error("error fetching cart");
       }
-      console.log("RESULT: ITEM:PLEASE WORK", result);
+      console.log("RESULT: ITEM:PLEASE WORK", result.addItem.items);
       return result.addItem;
     },
     removeCartItem: async (_, { food }, context) => {
@@ -188,6 +192,7 @@ const resolvers = {
       const variables = {
         food,
         id: context.user._id,
+        metadata: {inventory:food.inventory}
       };
       const result = await queryCartQL(CartMutation.removeCartItem, variables);
       if (!result) {
