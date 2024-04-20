@@ -30,34 +30,42 @@ export default function Login() {
   }
   
   return (
-    <div className="flex w-full flex-col items-center justify-center bg-white">
-      <h1 className="py-10 text-black">Login</h1>
-      <form className="flex flex-col" onSubmit={handleFormSubmit}>
-        <input className="rounded-md border-2 bg-white px-2 text-black" 
-          value={user.email}
-          name="email"
-          onChange={inputChange}
-          type="text" 
-          placeholder="email@email.com"
-        />
-        <label htmlFor="username">username</label>
-        <input className="rounded-md border-2 bg-white px-2 text-black"
-          value={user.password}
-          name="password"
-          onChange={inputChange}
-          type="password" 
-          placeholder="********"
-        />
-        <label htmlFor="password">Password</label>
-        {/* todo: Link to reset password? */} 
-        <button className="bg-blue-600" type="submit">Enter</button>
-      </form>
+    <div className="flex h-screen w-full flex-col items-center justify-evenly bg-white">
+      <div className="border-2 border-gray-500 px-16 py-20 rounded-lg mt-28"> 
+        <h1 className=" text-black text-center pb-10">Login</h1>
+        <form className="flex flex-col" onSubmit={handleFormSubmit}>
+          <input
+            className="rounded-md border-2 bg-white px-2 text-black"
+            value={user.email}
+            name="email"
+            onChange={inputChange}
+            type="text"
+            placeholder="email@email.com"
+          />
+          <label htmlFor="username">username</label>
+          <input
+            className="rounded-md border-2 bg-white px-2 text-black"
+            value={user.password}
+            name="password"
+            onChange={inputChange}
+            type="password"
+            placeholder="********"
+          />
+          <label htmlFor="password">Password</label>
+          {/* todo: Link to reset password? */}
+          <button className="bg-blue-600" type="submit">
+            Enter
+          </button>
+        </form>
+      </div>
+
       <div className="my-10 flex max-w-xl flex-col rounded-lg border-8 border-double border-blue-500 bg-blue-300/40 p-5 font-semibold text-black">
-      <p className="">
-        ReBountiFull helpled my family when we didn't know where our next meal was coming from. It made a world of difference for my growing children.
-        <br />
-        - Mary, a single mom from San Jose
-      </p>
+        <p className="">
+          ReBountiFull helpled my family when we didn't know where our next meal
+          was coming from. It made a world of difference for my growing
+          children.
+          <br />- Mary, a single mom from San Jose
+        </p>
       </div>
     </div>
   );
