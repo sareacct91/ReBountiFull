@@ -1,9 +1,11 @@
+require("dotenv").config();
 const { GraphQLScalarType, Kind } = require("graphql");
 const { User, Food } = require("../model");
 const { signToken, AuthenticationError } = require("../utils/auth");
 const { queryCartQL, CartQueries, CartMutation } = require("../utils/cartQL");
 const { cartCheckout } = require("../utils/cartQL/mutations");
-const stripe = require("stripe")(process.env.STRIPE_TEST_KEY);
+const { Stripe } = require("stripe");
+const stripe = new Stripe(process.env.STRIPE_TEST_KEY);
 
 const dateScalar = new GraphQLScalarType({
   name: "Date",
@@ -112,30 +114,56 @@ const resolvers = {
         throw new Error("Failed to retrieve food items by preference");
       }
     },
-    cartCheckout: async (_, { cart }, context) => {
-      const url = new URL(context.headers.referer).origin; 
-
+    cartCheckout: async (_, { order }, context) => {
+      const url = new URL(context.headers.referer).origin;
+      
       try {
         if (!context?.user._id) {
-          throw AuthenticationError
-        } 
-
-        const updatedUser = await User.findByIdAndUpdate(
-          context.user._id, 
-          { $push: { 'history': cart} },
-          { new: true, runValidators: true }
-        );
-
-        if (!updatedUser) {
+          console.log('no id');
           throw AuthenticationError
         }
 
+        const userPromise = User.findByIdAndUpdate(
+          context.user._id,
+          { $push: { 'history': order } },
+          { new: true, runValidators: true },
+        );
 
+        const line_items = [];
+        for (const item of order.cart.items) {
+          line_items.push({
+            price_data: {
+              currency: "usd",
+              product_data: {
+                name: item.name,
+                images: item.images,
+              },
+              unit_amount: item.unitTotal.amount
+            },
+            quantity: item.quantity,
+          });
+        }
 
+        const stripePromise = stripe.checkout.sessions.create({
+          payment_method_types: ["card"],
+          line_items,
+          mode: "payment",
+          success_url: `${url}/success?session_id={CHECKOUT_SESSION_ID}`,
+          cancel_url: `${url}/`
+        });
+
+        const [updatedUser, session] = await Promise.all([userPromise, stripePromise]);
+
+        if (!updatedUser) {
+          console.log('no user found and update')
+          throw AuthenticationError
+        }
+
+        return { session: session.url };
       } catch (err) {
-        console.error(err); 
+        console.error(err);
+        return err
       }
-
     }
   },
 
@@ -221,7 +249,7 @@ const resolvers = {
       console.log(result);
       return result.removeItem;
     },
-    // updating inventory number of a food item 
+    // updating inventory number of a food item
     updateInventory: async (_, { id, inventory }) => {
       try {
         // Find the food item by ID and update its inventory
