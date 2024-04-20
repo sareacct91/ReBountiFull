@@ -5,9 +5,10 @@ import "./RangeSlider/inputSlider.css"
 import RangeSlider from "./RangeSlider";
 import ShoppingBagImg from "../../assets/images/shopping_bag.png";
 import CartItem from "./cartItem";
+import CheckoutButton from "./CheckoutButton";
 
 import { useEffect, useState } from "react";
-import { useMutation, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { QUERY_CART } from "../../utils/queries";
 
 export default function Cart() {
@@ -23,7 +24,8 @@ export default function Cart() {
   }, [data])
 
   if (loading || error || (data && !data?.getCart.totalItems)) {
-    console.log(error);
+    if (error) console.log(error);
+
     return (
       <div className="grid h-full min-h-[calc(100vh-192px-40px)] w-full auto-rows-min place-items-center bg-white text-black">
         <h1 className="flex flex-row">
@@ -66,11 +68,16 @@ export default function Cart() {
               <span className="underline">What you pay:</span>$
               {(sliderValue / 100).toFixed(2)}
             </p>
-            <RangeSlider value={sliderValue} setValue={setSliderValue} MAX={getCart.grandTotal.amount} />
+            <RangeSlider value={ sliderValue } setValue={setSliderValue} MAX={getCart.grandTotal.amount} />
             {/* <RangeSliderTest /> */}
           </div>
           <div className="flex w-full justify-center lg:justify-end">
-            <button className="bg-blue-600 text-white">check out</button>
+            <CheckoutButton className="bg-blue-600 text-white" 
+              cartData={ getCart }
+              payment_amount={ +sliderValue }
+            >
+              check out
+            </ CheckoutButton>
           </div>
         </div>
       </div>
