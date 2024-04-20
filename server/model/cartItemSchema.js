@@ -1,17 +1,19 @@
 const { Schema } = require("mongoose");
 const moneySchema = require("./moneySchema");
+const metadataSchema = require("./metadataSchema");
 
 const cartItemSchema = new Schema(
   {
     id: {
       type: Schema.Types.ObjectId,
-      ref: 'food'
+      ref: "food",
     },
     name: String,
     images: [String],
     unitTotal: moneySchema,
     lineTotal: moneySchema,
     quantity: Number,
+    metadata: metadataSchema,
   },
   {
     toJSON: {

@@ -1,13 +1,15 @@
-import { useMutation } from "@apollo/client";
-import { REMOVE_CART_ITEM, UPDATE_INVENTORY } from "../../utils/mutations";
+import { useMutation, useQuery } from "@apollo/client";
+import {
+  REMOVE_CART_ITEM,
+  UPDATE_INVENTORY,
+  UPDATE_CART_ITEM,
+} from "../../utils/mutations";
 import PropTypes from "prop-types";
-import { useState } from "react";
 
 export default function CartItem({ item }) {
-  const [itemQuantity, setItemQuantity] = useState(item.quantity);
   const [removeCartItem, { loading }] = useMutation(REMOVE_CART_ITEM);
-  const [updateInventory, { error: updateError }] =
-    useMutation(UPDATE_INVENTORY);
+  const [updateInventory] = useMutation(UPDATE_INVENTORY);
+  const [updatedCartItem] = useMutation(UPDATE_CART_ITEM);
 
   async function clickedRemoveItem() {
     try {
@@ -18,15 +20,7 @@ export default function CartItem({ item }) {
           },
         },
       });
-      console.log(
-        "cart after removing the item: ",
-        removeItem,
-        "removed food item: ",
-        item,
-        "removed food item's metadata: ",
-        item.metadata.inventory,
-      );
-      console.log(item.id, "matadata is the inventory: ", removeItem);
+      console.log(removeItem)
       await updateInventoryNum(item.id);
     } catch (err) {
       console.error(err);
@@ -40,26 +34,40 @@ export default function CartItem({ item }) {
           inventory: item.metadata.inventory + item.quantity,
         },
       });
-      console.log("updateData: ", updateData);
+      console.log(updateData)
     } catch (updateError) {
       console.error(updateError);
     }
   };
 
 
+  const updatingCart = async (newQ) =>  {
+    try {
+      const { data: updatedCartData } = await updatedCartItem({
+        variables: {
+          food: {
+            _id: item.id,
+            quantity: newQ,
+            inventory: item.metadata.inventory,
+          },
+        },
+      });
+      console.log(updatedCartData)
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
   // limiting available quantity of food items
   const maxSelectable = Math.min(
     item.quantity + 5,
-    itemQuantity + item.metadata.inventory
+    item.quantity + item.metadata.inventory,
   );
-    console.log(maxSelectable);
 
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
     const q = parseInt(e.target.value);
-    setItemQuantity(q);
+    await updatingCart(q);
   };
-
 
   return (
     <>
@@ -73,7 +81,7 @@ export default function CartItem({ item }) {
             <span>quantity</span>
             <select
               className="rounded-lg border border-gray-700 bg-transparent p-2 font-normal text-black"
-              value={itemQuantity} 
+              value={item.quantity}
               onChange={handleChange}
             >
               {[...Array(Math.max(1, maxSelectable))].map((_, i) => (
