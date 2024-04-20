@@ -131,7 +131,7 @@ const typeDefs = `
   }
 
   type Checkout {
-    session: ID
+    session: String!
   }
 
   type Query {
