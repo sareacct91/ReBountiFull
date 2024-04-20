@@ -1,4 +1,4 @@
-import { UPDATE_USER, UPDATE_CART_ITEM } from "./actions";
+import { UPDATE_USER, UPDATE_CART_ITEM} from "./actions";
 
 export const reducer = (state, action) => {
   switch (action.type) {
@@ -15,6 +15,7 @@ export const reducer = (state, action) => {
           ...state,
           cart: [action.updatedCart]
         };
+    
     default:
       return state;
   }

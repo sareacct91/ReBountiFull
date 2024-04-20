@@ -62,6 +62,7 @@ export const ADD_CART_ITEM = gql`
         id
         name
         images
+        metadata
         unitTotal {
           amount
           formatted
@@ -90,6 +91,7 @@ export const REMOVE_CART_ITEM = gql`
         id
         name
         images
+        metadata 
         unitTotal {
           amount
           formatted
@@ -102,6 +104,25 @@ export const REMOVE_CART_ITEM = gql`
       }
       totalItems
       totalUniqueItems
+    }
+  }
+`;
+
+// updating the inventory item
+export const UPDATE_INVENTORY = gql`
+  mutation UpdateInventory($inventoryId: ID!, $inventory: Int!) {
+    updateInventory(inventoryId: $inventoryId, inventory: $inventory) {
+      _id
+      name
+      price
+      inventory
+      category
+      image
+      vegan
+      vegetarian
+      gluten_free
+      dairy_free
+      nut_free
     }
   }
 `;

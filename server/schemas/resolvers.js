@@ -72,6 +72,7 @@ const resolvers = {
       };
 
       const cart = await queryCartQL(CartQueries.queryCart, variables);
+      console.log("Cart",cart.cart.items);
       return cart.cart;
     },
     getAllFood: async () => {
@@ -205,7 +206,6 @@ const resolvers = {
 
       throw AuthenticationError;
     },
-
     updateCartItem: async (_, { food }, context) => {
       if (!context.user?._id) {
         throw AuthenticationError;
@@ -227,11 +227,15 @@ const resolvers = {
       const variables = {
         food,
         id: context.user._id,
+        metadata: {
+          inventory: food.inventory,
+        },
       };
       const result = await queryCartQL(CartMutation.addCartItem, variables);
       if (!result) {
         throw new Error("error fetching cart");
       }
+      console.log("RESULT: ITEM:PLEASE WORK", result.addItem.items);
       return result.addItem;
     },
     removeCartItem: async (_, { food }, context) => {
@@ -241,6 +245,7 @@ const resolvers = {
       const variables = {
         food,
         id: context.user._id,
+        metadata: {inventory:food.inventory}
       };
       const result = await queryCartQL(CartMutation.removeCartItem, variables);
       if (!result) {
@@ -250,12 +255,12 @@ const resolvers = {
       return result.removeItem;
     },
     // updating inventory number of a food item
-    updateInventory: async (_, { id, inventory }) => {
+    updateInventory: async (_, { inventoryId, inventory }) => {
       try {
         // Find the food item by ID and update its inventory
-        const updatedFood = await Food.findByIdAndUpdate(
-          id,
-          { inventory },
+        const updatedFood = await Food.findOneAndUpdate(
+          { _id: inventoryId },
+          { $set: { inventory } },
           { new: true }
         );
         return updatedFood;

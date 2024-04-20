@@ -11,6 +11,7 @@ module.exports = {
             id
             name
             quantity
+            metadata
             unitTotal {
               amount
               formatted
@@ -27,6 +28,6 @@ module.exports = {
           }
         }
       }
-    `
+    `;
   } 
 }

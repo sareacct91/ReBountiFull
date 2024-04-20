@@ -116,6 +116,7 @@ export const QUERY_CART = gql`
         id
         name
         images
+        metadata
         unitTotal {
           amount
           formatted
