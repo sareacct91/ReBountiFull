@@ -1,11 +1,13 @@
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
+import Auth from "../../utils/auth";
 
 export default function Nav() {
   // pages
-  const pages = ["Cart", "Account", "Donate", "About Us", "Browse"];
+  const pages = ["Cart", "Account", "Donate", "About Us", "Browse", "Login"];
+  const needLogin = ["Cart", "Account", "Browse"];
   // assinging pathnames for each pages
-  const pathnames = ["cart", "account", "donate", "aboutus", "browse"];
+  const pathnames = ["cart", "account", "donate", "aboutus", "browse", "login"];
   const [showNavbar, setShowNavbar] = useState(false);
 
   const toggleNavbar = () => {
@@ -15,13 +17,27 @@ export default function Nav() {
   return (
     <>
       <nav className="top-0 flex justify-end">
-        <div className=" hidden w-full justify-between me-3 lg:flex">
+        <div className=" me-3 hidden w-full justify-between lg:flex">
           <ul className="flex flex-row">
-            {pages.map((page,i) => (
-              <li className="mx-2 text-white" key={page}>
-                <NavLink to={`/${pathnames[i]}`}>{page}</NavLink>
-              </li>
-            ))}
+            {pages.map((page,i) => {
+              if (needLogin.includes(page) && !Auth.loggedIn()) {
+                return (<></>);
+              }
+
+              if (page === "Login" && Auth.loggedIn()) {
+                return (
+                  <li className="mx-2 text-white" key={page}>
+                    <NavLink onClick={() => Auth.logout()} to={`/`}>Logout</NavLink>
+                  </li>
+                )
+              }
+
+              return (
+                <li className="mx-2 text-white" key={page}>
+                  <NavLink to={`/${pathnames[i]}`}>{page}</NavLink>
+                </li>
+              )
+            })}
           </ul>
         </div>
 
