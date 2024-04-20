@@ -3,7 +3,6 @@ import { useQuery } from "@apollo/client";
 import { useMemo, useState } from "react";
 import { QUERY_ALL_FOOD } from "../../utils/queries";
 import GroceryItem from "./GroceryItem/grocery.jsx";
-import RandomProducts from "./GroceryItem/randomgrocery.jsx";
 import Category from "./Category/category.jsx";
 import Preference from "./Preference/preference.jsx";
 
@@ -52,7 +51,6 @@ export default function Browse() {
           </div>
           <Category />
           <Preference />
-          <RandomProducts />
         </div>
       </div>
     );
@@ -76,7 +74,6 @@ export default function Browse() {
       </div>
       <Category />
       <Preference />
-      {!query && <RandomProducts />}
     </div>
   );
 }
