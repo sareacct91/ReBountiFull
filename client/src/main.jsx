@@ -22,7 +22,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <h1>funny message</h1>
+        element: <LandingPage />
       }, {
         path: 'aboutus',
         element:<AboutUs />
