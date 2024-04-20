@@ -1,7 +1,7 @@
 import { useLazyQuery } from "@apollo/client";
 import { CART_CHECKOUT } from "../../../utils/queries";
 import { useEffect } from "react";
-import { loadStripe } from "@stripe/stripe-js";
+// import { loadStripe } from "@stripe/stripe-js";
 
 
 export default function CheckoutButton({ cartData, payment_amount }) {
@@ -15,10 +15,9 @@ export default function CheckoutButton({ cartData, payment_amount }) {
 
   if (error) console.error(error);
 
-  async function onCheckout(e) {
+  async function onCheckout() {
     console.log('clicked checkout button');
     try {
-
       // clean up cart data to match the schema
       const cart = structuredClone(cartData); 
       delete cart.__typename; 
@@ -27,6 +26,7 @@ export default function CheckoutButton({ cartData, payment_amount }) {
         delete cart.items[i].__typename;
         delete cart.items[i].lineTotal.__typename;
         delete cart.items[i].unitTotal.__typename;
+        delete cart.items[i].metadata;
       }
 
       await getCheckout({
@@ -37,8 +37,6 @@ export default function CheckoutButton({ cartData, payment_amount }) {
           },
         },
       });
-
-      console.log(data)
 
     } catch (err) {
       console.error(err); 

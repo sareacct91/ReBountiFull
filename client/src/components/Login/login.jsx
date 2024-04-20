@@ -31,9 +31,9 @@ export default function Login() {
   
   return (
     <div className="flex w-full flex-col items-center justify-center bg-white">
-      <h1 className="text-black py-10">Login</h1>
+      <h1 className="py-10 text-black">Login</h1>
       <form className="flex flex-col" onSubmit={handleFormSubmit}>
-        <input className="bg-white border-2 rounded-md px-2" 
+        <input className="rounded-md border-2 bg-white px-2 text-black" 
           value={user.email}
           name="email"
           onChange={inputChange}
@@ -41,7 +41,7 @@ export default function Login() {
           placeholder="email@email.com"
         />
         <label htmlFor="username">username</label>
-        <input className="bg-white border-2 rounded-md px-2"
+        <input className="rounded-md border-2 bg-white px-2 text-black"
           value={user.password}
           name="password"
           onChange={inputChange}
@@ -52,7 +52,7 @@ export default function Login() {
         {/* todo: Link to reset password? */} 
         <button className="bg-blue-600" type="submit">Enter</button>
       </form>
-      <div className="flex flex-col font-semibold text-black max-w-xl my-10 p-5 rounded-lg bg-blue-300/40 border-double border-8 border-blue-500">
+      <div className="my-10 flex max-w-xl flex-col rounded-lg border-8 border-double border-blue-500 bg-blue-300/40 p-5 font-semibold text-black">
       <p className="">
         ReBountiFull helpled my family when we didn't know where our next meal was coming from. It made a world of difference for my growing children.
         <br />

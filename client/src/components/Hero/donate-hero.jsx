@@ -7,7 +7,7 @@ const DonateContent = () => (
     <h1 className="text-stroke font-bold drop-shadow-lg">
       Make a Difference Today!
     </h1>
-    <p className="my-10 rounded-lg bg-zinc-900 bg-opacity-70 text-2xl p-3 lg:p-10 lg:w-1/2">
+    <p className="my-10 rounded-lg bg-zinc-900 bg-opacity-70 p-3 text-2xl lg:w-1/2 lg:p-10">
       At ReBountiFull, we believe in
       <span className=" text-orange font-semibold">
         &nbsp;the power of collective action
@@ -18,10 +18,10 @@ const DonateContent = () => (
     <div className="w-full">
       {/* need to add path to these buttons don't forget */}
         <Link to="">
-        <button className="bg-orange text-white font-bold text-lg">Monetary Donation</button>
+        <button className="bg-orange text-lg font-bold text-white">Monetary Donation</button>
         </Link>
-        <Link to="">
-          <button className="mt-2 lg:mx-10 bg-orange text-white font-bold text-lg">Register Now</button>
+        <Link to="/signup">
+          <button className="bg-orange mt-2 text-lg font-bold text-white lg:mx-10">Register Now</button>
         </Link>
       </div>
     </div>

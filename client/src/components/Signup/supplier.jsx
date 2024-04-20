@@ -4,7 +4,7 @@ export default function Supplier() {
       <div className="bg-white p-10 text-black">
         <h1>Create your account to become a partner</h1>
         <form className="flex max-w-lg flex-col">
-          <label className="mr-3" for="name">
+          <label className="mr-3" htmlFor="name">
             Name:
           </label>
           <input
@@ -14,7 +14,7 @@ export default function Supplier() {
             placeholder="First & Last Name"
           />
           <br />
-          <label for="email">Email:</label>
+          <label htmlFor="email">Email:</label>
           <input
             className="rounded-md border-2 bg-white px-2 text-black"
             type="text"
@@ -22,7 +22,7 @@ export default function Supplier() {
             placeholder="Email@email.com"
           />
           <br />
-          <label for="password">Password:</label>
+          <label htmlFor="password">Password:</label>
           <input
             className="rounded-md border-2 bg-white px-2 text-black"
             type="text"
@@ -33,7 +33,7 @@ export default function Supplier() {
             Please create a password of at least 8 characters.
           </p>
           <br />
-          <label for="company">Company:</label>
+          <label htmlFor="company">Company:</label>
           <input
             className="rounded-md border-2 bg-white px-2 text-black"
             type="text"
@@ -41,7 +41,7 @@ export default function Supplier() {
             placeholder="Company Name"
           />
           <br />
-          <label for="supplier-giving">How would you like to give?</label>
+          <label htmlFor="supplier-giving">How would you like to give?</label>
           <select
             className="rounded-md border-2 bg-white px-2 text-black"
             name="types_of_giving"
@@ -53,7 +53,7 @@ export default function Supplier() {
           </select>
 
           <br />
-          <label for="company">How'd you hear about us?</label>
+          <label htmlFor="company">How'd you hear about us?</label>
           <input
             className="rounded-md border-2 bg-white px-2 text-black"
             type="text"
@@ -61,7 +61,7 @@ export default function Supplier() {
             placeholder="Ex: Facebook"
           />
           <br />
-          <label for="freeform">What is driving you to give?</label>
+          <label htmlFor="freeform">What is driving you to give?</label>
           <textarea
             className="rounded-md border-2 bg-white px-2 text-black"
             name="freeform"
