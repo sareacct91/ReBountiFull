@@ -74,6 +74,7 @@ const typeDefs = `
     price: Float
     image: String
     quantity: Int
+    inventory: Int
   } 
 
   type Auth {
@@ -89,6 +90,7 @@ const typeDefs = `
     grandTotal: Money!
   }
 
+  scalar JSON
   type CartItem {
     id: ID!
     name: String!
@@ -96,6 +98,7 @@ const typeDefs = `
     unitTotal: Money!
     lineTotal: Money!
     quantity: Int!
+    metadata: JSON
   }
 
   type Money {
@@ -154,7 +157,7 @@ const typeDefs = `
     addUser(userInput: UserInput!): Auth
     updateUser(username: String, email: String, password: String):Auth
     login(email: String!, password: String!): Auth
-    updateInventory(_id: ID!, inventory: Int!): Food!
+    updateInventory(inventoryId: ID!, inventory: Int!): Food!
     updateCartItem(food:FoodInput!): Cart
     addCartItem(food:FoodInput!): Cart
     removeCartItem(food:FoodInput!): Cart 

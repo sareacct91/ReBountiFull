@@ -5,7 +5,6 @@ import "./RangeSlider/inputSlider.css"
 import RangeSlider from "./RangeSlider";
 import ShoppingBagImg from "../../assets/images/shopping_bag.png";
 import CartItem from "./cartItem";
-
 import { useEffect, useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import { QUERY_CART } from "../../utils/queries";
@@ -38,7 +37,6 @@ export default function Cart() {
   }
 
   const { getCart } = data;
-  console.log(getCart);
 
   return (
     <>
@@ -66,7 +64,11 @@ export default function Cart() {
               <span className="underline">What you pay:</span>$
               {(sliderValue / 100).toFixed(2)}
             </p>
-            <RangeSlider value={sliderValue} setValue={setSliderValue} MAX={getCart.grandTotal.amount} />
+            <RangeSlider
+              value={sliderValue}
+              setValue={setSliderValue}
+              MAX={getCart.grandTotal.amount}
+            />
             {/* <RangeSliderTest /> */}
           </div>
           <div className="flex w-full justify-center lg:justify-end">
