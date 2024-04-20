@@ -50,6 +50,7 @@ export default function CartItem({ item }) {
     const q = parseInt(e.target.value);
     setItemQuantity(q);
   };
+
   // limiting available quantity of food items
   const maxSelectable = Math.min(
     item.metadata.inventory + item.quantity - item.quantity,
