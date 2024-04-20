@@ -126,3 +126,32 @@ export const UPDATE_INVENTORY = gql`
     }
   }
 `;
+
+export const UPDATE_CART_ITEM = gql`
+  mutation updateCartItem($food: FoodInput!) {
+    updateCartItem(food: $food) {
+      id
+      grandTotal {
+        amount
+        formatted
+      }
+      items {
+        id
+        name
+        images
+        metadata 
+        unitTotal {
+          amount
+          formatted
+        }
+        lineTotal {
+          amount
+          formatted
+        }
+        quantity
+      }
+      totalItems
+      totalUniqueItems
+    }
+  }
+`;

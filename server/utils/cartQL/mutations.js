@@ -84,9 +84,8 @@ module.exports = {
           input: {
             cartId: "${a.id}"
             id: "${a.food._id}"
-            name: "${a.food.name}"
-            price: ${a.food.price}
-            quantity: ${a.food.quantity || 1}
+            quantity: ${a.food.quantity}
+            metadata: {inventory: ${a.food.inventory}}
           }
         ) {
           id
@@ -97,6 +96,7 @@ module.exports = {
             id
             name
             quantity
+            metadata
             unitTotal {
               amount
               formatted

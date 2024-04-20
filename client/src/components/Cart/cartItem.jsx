@@ -1,13 +1,15 @@
-import { useMutation } from "@apollo/client";
-import { REMOVE_CART_ITEM, UPDATE_INVENTORY } from "../../utils/mutations";
+import { useMutation, useQuery } from "@apollo/client";
+import {
+  REMOVE_CART_ITEM,
+  UPDATE_INVENTORY,
+  UPDATE_CART_ITEM,
+} from "../../utils/mutations";
 import PropTypes from "prop-types";
-import { useState } from "react";
 
 export default function CartItem({ item }) {
-  const [itemQuantity, setItemQuantity] = useState(item.quantity);
   const [removeCartItem, { loading }] = useMutation(REMOVE_CART_ITEM);
-  const [updateInventory, { error: updateError }] =
-    useMutation(UPDATE_INVENTORY);
+  const [updateInventory] = useMutation(UPDATE_INVENTORY);
+  const [updatedCartItem] = useMutation(UPDATE_CART_ITEM);
 
   async function clickedRemoveItem() {
     try {
@@ -18,15 +20,7 @@ export default function CartItem({ item }) {
           },
         },
       });
-      console.log(
-        "cart after removing the item: ",
-        removeItem,
-        "removed food item: ",
-        item,
-        "removed food item's metadata: ",
-        item.metadata.inventory,
-      );
-      console.log(item.id, "matadata is the inventory: ", removeItem);
+      console.log(removeItem)
       await updateInventoryNum(item.id);
     } catch (err) {
       console.error(err);
@@ -40,26 +34,46 @@ export default function CartItem({ item }) {
           inventory: item.metadata.inventory + item.quantity,
         },
       });
-      console.log("updateData: ", updateData);
+      console.log(updateData)
     } catch (updateError) {
       console.error(updateError);
     }
   };
 
-  const handleChange = (e) => {
-    const q = parseInt(e.target.value);
-    setItemQuantity(q);
-  };
+
+  const updatingCart = async (newQ) =>  {
+    try {
+      const { data: updatedCartData } = await updatedCartItem({
+        variables: {
+          food: {
+            _id: item.id,
+            quantity: newQ,
+            inventory: item.metadata.inventory,
+          },
+        },
+      });
+      console.log(updatedCartData)
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
   // limiting available quantity of food items
   const maxSelectable = Math.min(
-    item.metadata.inventory + item.quantity - item.quantity,
     item.quantity + 5,
+    item.quantity + item.metadata.inventory,
   );
+
+  const handleChange = async (e) => {
+    const q = parseInt(e.target.value);
+    await updatingCart(q);
+  };
 
   return (
     <>
-      <div className={`${ loading ? "opacity-50 " : ""}flex flex-col items-center justify-between border-b border-black p-5 lg:flex-row lg:rounded-xl lg:border`}>
+      <div
+        className={`${loading ? "opacity-50 " : ""}flex flex-col items-center justify-between border-b border-black p-5 lg:flex-row lg:rounded-xl lg:border`}
+      >
         <img src={item.images[0]} alt={item.name} className="rounded-xl" />
         <div className="flex w-3/4 flex-col items-center sm:justify-center lg:w-1/2">
           <p>{item.name}</p>
@@ -67,12 +81,12 @@ export default function CartItem({ item }) {
             <span>quantity</span>
             <select
               className="rounded-lg border border-gray-700 bg-transparent p-2 font-normal text-black"
-              value={itemQuantity}
+              value={item.quantity}
               onChange={handleChange}
             >
               {[...Array(Math.max(1, maxSelectable))].map((_, i) => (
-                <option key={i} value={i}>
-                  {itemQuantity}
+                <option key={i + 1} value={i + 1}>
+                  {i + 1}
                 </option>
               ))}
             </select>

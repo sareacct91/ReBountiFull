@@ -14,7 +14,9 @@ const dateScalar = new GraphQLScalarType({
     if (value instanceof Date) {
       return value.getTime(); // Convert outgoing Date to integer for JSON
     }
-    throw Error("GraphQL Date Scalar serializer expected a `Date` objectsk_test_51P77UQ1ufoiv9vhHbQG68ZcWiXw7YFVp87YZ1EnS8MyRMyG8lSu365uhtM61Fwx5WVjls365VE789lYIb2SbQ6cW00m7bv72kJ");
+    throw Error(
+      "GraphQL Date Scalar serializer expected a `Date` objectsk_test_51P77UQ1ufoiv9vhHbQG68ZcWiXw7YFVp87YZ1EnS8MyRMyG8lSu365uhtM61Fwx5WVjls365VE789lYIb2SbQ6cW00m7bv72kJ"
+    );
   },
   parseValue(value) {
     if (typeof value === "number") {
@@ -72,7 +74,7 @@ const resolvers = {
       };
 
       const cart = await queryCartQL(CartQueries.queryCart, variables);
-      console.log("Cart",cart.cart.items);
+      console.log("Cart", cart.cart.items);
       return cart.cart;
     },
     getAllFood: async () => {
@@ -117,17 +119,17 @@ const resolvers = {
     },
     cartCheckout: async (_, { order }, context) => {
       const url = new URL(context.headers.referer).origin;
-      
+
       try {
         if (!context?.user._id) {
-          console.log('no id');
-          throw AuthenticationError
+          console.log("no id");
+          throw AuthenticationError;
         }
 
         const userPromise = User.findByIdAndUpdate(
           context.user._id,
-          { $push: { 'history': order } },
-          { new: true, runValidators: true },
+          { $push: { history: order } },
+          { new: true, runValidators: true }
         );
 
         const line_items = [];
@@ -139,7 +141,7 @@ const resolvers = {
                 name: item.name,
                 images: item.images,
               },
-              unit_amount: item.unitTotal.amount
+              unit_amount: item.unitTotal.amount,
             },
             quantity: item.quantity,
           });
@@ -150,22 +152,25 @@ const resolvers = {
           line_items,
           mode: "payment",
           success_url: `${url}/success?session_id={CHECKOUT_SESSION_ID}`,
-          cancel_url: `${url}/`
+          cancel_url: `${url}/`,
         });
 
-        const [updatedUser, session] = await Promise.all([userPromise, stripePromise]);
+        const [updatedUser, session] = await Promise.all([
+          userPromise,
+          stripePromise,
+        ]);
 
         if (!updatedUser) {
-          console.log('no user found and update')
-          throw AuthenticationError
+          console.log("no user found and update");
+          throw AuthenticationError;
         }
 
         return { session: session.url };
       } catch (err) {
         console.error(err);
-        return err
+        return err;
       }
-    }
+    },
   },
 
   Mutation: {
@@ -213,12 +218,24 @@ const resolvers = {
       const variables = {
         food,
         id: context.user._id,
+        metadata: {
+          inventory: food.inventory,
+        },
       };
-      const result = await queryCartQL(CartMutation.updateCartItem, variables);
-      if (!result) {
-        throw new Error("error fetching cart");
+      try {
+        console.log("food is ",variables.food);
+
+        const result = await queryCartQL(
+          CartMutation.updateCartItem,
+          variables
+        );
+        if (!result) {
+          throw new Error("error fetching cart");
+        }
+        return result.updateItem;
+      } catch (error) {
+        console.error(error);
       }
-      return result.updateItem;
     },
     addCartItem: async (_, { food }, context) => {
       if (!context.user?._id) {
@@ -245,7 +262,7 @@ const resolvers = {
       const variables = {
         food,
         id: context.user._id,
-        metadata: {inventory:food.inventory}
+        metadata: { inventory: food.inventory },
       };
       const result = await queryCartQL(CartMutation.removeCartItem, variables);
       if (!result) {
@@ -269,21 +286,21 @@ const resolvers = {
         throw new Error("Failed to update inventory");
       }
     },
-  //   cartCheckout: async (_, __, context) => {
-  //     if (!context.user?._id) {
-  //       throw AuthenticationError;
-  //     }
-  //     const variables = {
-  //       id: context.user._id,
-  //     };
-  //
-  //     const result = await queryCartQL(CartMutation.cartCheckout, variables);
-  //     if (!result) {
-  //       throw new Error("error fetching cart");
-  //     }
-  //     console.log(result);
-  //     return result.checkout;
-  //   },
+    //   cartCheckout: async (_, __, context) => {
+    //     if (!context.user?._id) {
+    //       throw AuthenticationError;
+    //     }
+    //     const variables = {
+    //       id: context.user._id,
+    //     };
+    //
+    //     const result = await queryCartQL(CartMutation.cartCheckout, variables);
+    //     if (!result) {
+    //       throw new Error("error fetching cart");
+    //     }
+    //     console.log(result);
+    //     return result.checkout;
+    //   },
   },
 };
 
