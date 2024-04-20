@@ -46,20 +46,26 @@ export default function CartItem({ item }) {
     }
   };
 
+
+
+  // limiting available quantity of food items
+  const maxSelectable = Math.min(
+    item.quantity + 5,
+    itemQuantity + item.metadata.inventory
+  );
+    console.log(maxSelectable);
+
   const handleChange = (e) => {
     const q = parseInt(e.target.value);
     setItemQuantity(q);
   };
 
-  // limiting available quantity of food items
-  const maxSelectable = Math.min(
-    item.metadata.inventory + item.quantity - item.quantity,
-    item.quantity + 5,
-  );
 
   return (
     <>
-      <div className={`${ loading ? "opacity-50 " : ""}flex flex-col items-center justify-between border-b border-black p-5 lg:flex-row lg:rounded-xl lg:border`}>
+      <div
+        className={`${loading ? "opacity-50 " : ""}flex flex-col items-center justify-between border-b border-black p-5 lg:flex-row lg:rounded-xl lg:border`}
+      >
         <img src={item.images[0]} alt={item.name} className="rounded-xl" />
         <div className="flex w-3/4 flex-col items-center sm:justify-center lg:w-1/2">
           <p>{item.name}</p>
@@ -67,12 +73,12 @@ export default function CartItem({ item }) {
             <span>quantity</span>
             <select
               className="rounded-lg border border-gray-700 bg-transparent p-2 font-normal text-black"
-              value={itemQuantity}
+              value={itemQuantity} 
               onChange={handleChange}
             >
               {[...Array(Math.max(1, maxSelectable))].map((_, i) => (
-                <option key={i} value={i}>
-                  {itemQuantity}
+                <option key={i + 1} value={i + 1}>
+                  {i + 1}
                 </option>
               ))}
             </select>
