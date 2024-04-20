@@ -3,7 +3,7 @@ const { User, Food } = require("../model");
 const { signToken, AuthenticationError } = require("../utils/auth");
 const { queryCartQL, CartQueries, CartMutation } = require("../utils/cartQL");
 const { cartCheckout } = require("../utils/cartQL/mutations");
-// const stripe = require("stripe")("sk_test_4eC39HqLyjWDarjtT1zdp7dc");
+const stripe = require("stripe")(process.env.STRIPE_TEST_KEY);
 
 const dateScalar = new GraphQLScalarType({
   name: "Date",
@@ -12,7 +12,7 @@ const dateScalar = new GraphQLScalarType({
     if (value instanceof Date) {
       return value.getTime(); // Convert outgoing Date to integer for JSON
     }
-    throw Error("GraphQL Date Scalar serializer expected a `Date` object");
+    throw Error("GraphQL Date Scalar serializer expected a `Date` objectsk_test_51P77UQ1ufoiv9vhHbQG68ZcWiXw7YFVp87YZ1EnS8MyRMyG8lSu365uhtM61Fwx5WVjls365VE789lYIb2SbQ6cW00m7bv72kJ");
   },
   parseValue(value) {
     if (typeof value === "number") {
@@ -113,6 +113,31 @@ const resolvers = {
         throw new Error("Failed to retrieve food items by preference");
       }
     },
+    cartCheckout: async (_, { cart }, context) => {
+      const url = new URL(context.headers.referer).origin; 
+
+      try {
+        if (!context?.user._id) {
+          throw AuthenticationError
+        } 
+
+        const updatedUser = await User.findByIdAndUpdate(
+          context.user._id, 
+          { $push: { 'history': cart} },
+          { new: true, runValidators: true }
+        );
+
+        if (!updatedUser) {
+          throw AuthenticationError
+        }
+
+
+
+      } catch (err) {
+        console.error(err); 
+      }
+
+    }
   },
 
   Mutation: {
@@ -216,21 +241,21 @@ const resolvers = {
         throw new Error("Failed to update inventory");
       }
     },
-    cartCheckout: async (_, __, context) => {
-      if (!context.user?._id) {
-        throw AuthenticationError;
-      }
-      const variables = {
-        id: context.user._id,
-      };
-
-      const result = await queryCartQL(CartMutation.cartCheckout, variables);
-      if (!result) {
-        throw new Error("error fetching cart");
-      }
-      console.log(result);
-      return result.checkout;
-    },
+  //   cartCheckout: async (_, __, context) => {
+  //     if (!context.user?._id) {
+  //       throw AuthenticationError;
+  //     }
+  //     const variables = {
+  //       id: context.user._id,
+  //     };
+  //
+  //     const result = await queryCartQL(CartMutation.cartCheckout, variables);
+  //     if (!result) {
+  //       throw new Error("error fetching cart");
+  //     }
+  //     console.log(result);
+  //     return result.checkout;
+  //   },
   },
 };
 

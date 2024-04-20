@@ -59,7 +59,7 @@ export default function CartItem({ item }) {
 
   return (
     <>
-      <div className="flex flex-col items-center justify-between border-b border-black p-5 lg:flex-row lg:rounded-xl lg:border">
+      <div className={`${ loading ? "opacity-50 " : ""}flex flex-col items-center justify-between border-b border-black p-5 lg:flex-row lg:rounded-xl lg:border`}>
         <img src={item.images[0]} alt={item.name} className="rounded-xl" />
         <div className="flex w-3/4 flex-col items-center sm:justify-center lg:w-1/2">
           <p>{item.name}</p>
@@ -71,8 +71,8 @@ export default function CartItem({ item }) {
               onChange={handleChange}
             >
               {[...Array(Math.max(1, maxSelectable))].map((_, i) => (
-                <option key={i + 1} value={i + 1}>
-                  {i + 1}
+                <option key={i} value={i}>
+                  {itemQuantity}
                 </option>
               ))}
             </select>

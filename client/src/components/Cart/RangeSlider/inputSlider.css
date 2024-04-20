@@ -5,9 +5,9 @@ input[type=range] {
   cursor: pointer;
 }
 
-input[type=rage] {
+/* input[type=rage] {
   color: red;
-}
+} */
 
 input[type=range]:focus {
   outline: none;
@@ -21,16 +21,21 @@ input[type=range]::-webkit-slider-runnable-track {
   border: 1px solid #1ad501aa;
 }
 input[type=range]::-webkit-slider-thumb {
-  box-shadow: 0px 0px 10px #00aa00;
-  border: 1px solid #83e584;
-  height: 23px;
-  width: 23px;
-  border-radius: 23px;
-  background: linear-gradient(to right, #42b0f4 0%, #10572f 50%, #f99017 100%);
+  /* Remove the background property */
+  background: none;
+  /* Set the background image */
+  background-image: url('https://img.icons8.com/emoji/48/avocado-emoji.png');
+  /* Set background size and position */
+  background-size: cover;
+  background-position: center;
+  /* Keep other styles */
+  height: 48px; /* Adjust height to match the image */
+  width: 48px; /* Adjust width to match the image */
   cursor: pointer;
   -webkit-appearance: none;
-  margin-top: -9px;
+  margin-top: -20px; /* Adjust the margin to center the thumb vertically */
 }
+
 input[type=range]:focus::-webkit-slider-runnable-track {
   /* background: linear-gradient(to right, #42b0f4 0%, #10572f 50%, #f99017 100%); */
 }
@@ -81,7 +86,6 @@ input[type=range]::-ms-thumb {
   width: 23px;
   border-radius: 23px;
   background: linear-gradient(to right, #42b0f4, #10572f, #f99017);;
-  cursor: pointer;
   cursor: pointer;
 }
 input[type=range]:focus::-ms-fill-lower {

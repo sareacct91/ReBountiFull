@@ -1,7 +1,7 @@
 const { Schema, model } = require('mongoose');
-const foodItemSchema = require('./FoodItemSchema');
+const cartSchema = require('./cartSchema');
 
-const historySchema = new Schema(
+const orderSchema = new Schema(
   {
     _id: Schema.Types.ObjectId,
     date: {
@@ -10,10 +10,8 @@ const historySchema = new Schema(
       default: Date.now,
       get: (v) => v.toLocaleString(),
     },
-    food_item: [foodItemSchema], 
-    grand_total: {
-      type: Number,
-    }
+    payment_amount: Number,
+    cart: cartSchema, 
   }, {
     toJSON: {
       virtuals: true,
@@ -22,4 +20,4 @@ const historySchema = new Schema(
   }
 );
 
-module.exports = historySchema;
+module.exports = orderSchema;

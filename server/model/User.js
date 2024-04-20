@@ -1,8 +1,7 @@
 const { Schema, model, Types } = require('mongoose');
 const bcrypt = require('bcrypt');
 const addressSchema = require('./AddressSchema');
-const historySchema = require('./HistorySchema');
-const foodItemSchema = require('./FoodItemSchema');
+const orderSchema = require('./orderSchema');
 
 
 const userSchema = new Schema(
@@ -42,11 +41,8 @@ const userSchema = new Schema(
       type: Number, 
       required: function() { return this.isClient; } 
     },
-    cart: { 
-      type: Schema.Types.ObjectId,
-    },
     history: { 
-      type: [historySchema], 
+      type: [orderSchema], 
     },
   }, {
     toJSON: {

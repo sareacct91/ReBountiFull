@@ -17,7 +17,6 @@ module.exports = {
           isEmpty
           totalItems
           totalUniqueItems
-          abandoned
           items {
             id
             metadata
@@ -54,7 +53,6 @@ module.exports = {
           isEmpty
           totalItems
           totalUniqueItems
-          abandoned
           items {
             id
             name
@@ -95,7 +93,6 @@ module.exports = {
           isEmpty
           totalItems
           totalUniqueItems
-          abandoned
           items {
             id
             name
