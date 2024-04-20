@@ -41,9 +41,7 @@ const userSchema = new Schema(
       type: Number, 
       required: function() { return this.isClient; } 
     },
-    history: { 
-      type: [orderSchema], 
-    },
+    history: [orderSchema], 
   }, {
     toJSON: {
       virtuals: true,
