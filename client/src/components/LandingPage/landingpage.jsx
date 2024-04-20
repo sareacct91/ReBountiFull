@@ -27,30 +27,30 @@ const cardContent = [
 export default function LandingPage() {
   return (
     <>
-      <div className="bg-white min-w-full flex flex-row flex-wrap lg:flex-nowrap m-auto px-5 justify-center">
+      <div className="m-auto flex min-w-full flex-row flex-wrap justify-center bg-white px-5 lg:flex-nowrap">
         {/* This is the How it works Div */}
         <div>
-          <h2 className="text-black text-4xl pt-10">How it works</h2>
+          <h2 className="pt-10 text-4xl text-black">How it works</h2>
           {cardContent.map((card) => { return Card(card); })}
         </div>
         {/* This marks the beginning of the Heroes Div */}
-        <div className="w-full flex flex-col sm:flex-row sm:justify-around lg:flex-col lg:max-w-sm lg:ms-6 lg:mt-20">
-          <div className="flex flex-col my-4 lg:items-center">
-            <h2 className="text-black text-4xl my-2">Our Heroes</h2>
+        <div className="flex w-full flex-col sm:flex-row sm:justify-around lg:ms-6 lg:mt-20 lg:max-w-sm lg:flex-col">
+          <div className="my-4 flex flex-col lg:items-center">
+            <h2 className="my-2 text-4xl text-black">Our Heroes</h2>
             {/* Can we code the heroes dynamically? Would be cool to demo names changing live while demo'ing */}
             <div className="text-black">
               <ol>
-                <li>Sarun S. - $100</li>
                 <li>Dani D. - $19</li>
                 <li>Sarah C. - $33</li>
                 <li>Stephen S. - $500</li>
                 <li>Lucy K. - $70</li>
+                <li>Sarun T. - $420.69</li>
               </ol>
             </div>
           </div>
           {/* This is the beginning of the Partners Div */}
-          <div className="flex flex-col justify-center my-3 lg:items-center">
-            <h2 className="text-black text-4xl mb-2">Our Partners</h2>
+          <div className="my-3 flex flex-col justify-center lg:items-center">
+            <h2 className="mb-2 text-4xl text-black">Our Partners</h2>
             {/* Need to resize this */}
             <img src="src/assets/images/Partners.jpg" alt="collection of logos of our partners" className="h-64 w-64" />
           </div>
