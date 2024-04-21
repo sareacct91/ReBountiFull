@@ -10,9 +10,9 @@ export default function GroceryItem(grocery) {
   const { _id, image, name, price, inventory } = grocery;
   const [foodId, setFoodId] = useState("");
   const [quantity, setQuantity] = useState(1);
-  const [addCartItem, { error }] = useMutation(ADD_CART_ITEM);
-  const [updateInventory] =
-    useMutation(UPDATE_INVENTORY);
+  const [addCartItem, { error, loading: addCartItemLoading }] =
+    useMutation(ADD_CART_ITEM);
+  const [updateInventory] = useMutation(UPDATE_INVENTORY);
 
   const handleButtonSubmit = async () => {
     console.log(grocery.inventory);
@@ -25,14 +25,15 @@ export default function GroceryItem(grocery) {
             price: parseFloat(grocery.price),
             image: grocery.image,
             quantity: quantity,
-            inventory: grocery.inventory - quantity
+            inventory: grocery.inventory - quantity,
           },
         },
       });
-      
-      console.log("addcartitem please work please",data.addCartItem);
-      console.log("total added items in the user's cart: ", data.addCartItem.items.length);
-      
+      console.log("addcartitem please work please", data.addCartItem);
+      console.log(
+        "total added items in the user's cart: ",
+        data.addCartItem.items.length,
+      );
       console.log("grocery_id", grocery._id);
       const newId = _id;
       setFoodId(newId);
@@ -64,13 +65,13 @@ export default function GroceryItem(grocery) {
     return (priceInCents / 100).toFixed(2);
   };
 
-  // function to handle the quantity selector 
+  // function to handle the quantity selector
   const handleChange = (e) => {
     const q = parseInt(e.target.value);
-    if ( q >= 0)  {
-      setQuantity(q)
+    if (q >= 0) {
+      setQuantity(q);
     } else {
-      setQuantity(0)
+      setQuantity(0);
     }
   };
 
@@ -80,7 +81,9 @@ export default function GroceryItem(grocery) {
 
   return (
     <div className="m-3">
-      <div className=" grid w-fit place-items-center text-center">
+      <div
+        className={`${addCartItemLoading ? "opacity-50" : ""} grid w-fit place-items-center text-center`}
+      >
         <img
           className="rounded border-4 border-gray-300 p-2"
           alt={name}
@@ -95,11 +98,11 @@ export default function GroceryItem(grocery) {
             <span className="text-lg font-bold text-green-600">
               ${formatPrice(price)}
             </span>
-            {inventory > 0 && quantity >= 0? (
+            {inventory > 0 && quantity >= 0 ? (
               <Link to={Auth.loggedIn() ? "" : "/login"}>
                 <div className="flex flex-row">
                   <select
-                    className="rounded-lg border border-gray-700 bg-transparent font-normal text-black p-2"
+                    className="rounded-lg border border-gray-700 bg-transparent p-2 font-normal text-black"
                     onChange={handleChange}
                     value={quantity}
                   >
