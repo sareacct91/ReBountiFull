@@ -12,12 +12,12 @@ export default function RandomProducts() {
   const randomFoodItems = selectRandomItems(getAllFood);
 
   return (
-    <div className="bg-white">
-      <p className="col-span-full mb-10 text-2xl font-semibold text-gray-800">
+    <div className="flex flex-col  bg-white px-5">
+      <p className="col-span-full mt-0 py-10 text-4xl text-black m-auto">
         Featured Selection
       </p>
-      <div className="grid items-center justify-center bg-white">
-        <div className="grid w-fit place-items-center sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5">
+      <div className="grid items-center justify-center bg-white pb-32">
+        <div className="grid w-fit place-items-center  sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5">
           {Object.values(randomFoodItems).map((food) => (
             <GroceryItem key={food._id} {...food} />
           ))}

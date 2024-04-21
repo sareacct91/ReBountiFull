@@ -1,4 +1,6 @@
 import Card from './cardComponent';
+import RandomProducts from "../Browse/GroceryItem/randomgrocery";
+
 
 const cardContent = [
   {
@@ -31,7 +33,9 @@ export default function LandingPage() {
         {/* This is the How it works Div */}
         <div>
           <h2 className="pt-10 text-4xl text-black">How it works</h2>
-          {cardContent.map((card) => { return Card(card); })}
+          {cardContent.map((card, i) => {
+           return <Card key={i} {...card} />
+          })}
         </div>
         {/* This marks the beginning of the Heroes Div */}
         <div className="flex w-full flex-col sm:flex-row sm:justify-around lg:ms-6 lg:mt-20 lg:max-w-sm lg:flex-col">
@@ -52,10 +56,17 @@ export default function LandingPage() {
           <div className="my-3 flex flex-col justify-center lg:items-center">
             <h2 className="mb-2 text-4xl text-black">Our Partners</h2>
             {/* Need to resize this */}
-            <img src="src/assets/images/Partners.jpg" alt="collection of logos of our partners" className="h-64 w-64" />
+            <img
+              src="src/assets/images/Partners.jpg"
+              alt="collection of logos of our partners"
+              className="h-64 w-64"
+            />
           </div>
         </div>
       </div>
+      <div className='m-auto'>
+        <RandomProducts />
+      </div>
     </>
-  )
+  );
 }
