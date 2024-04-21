@@ -8,6 +8,7 @@ const CartMutation = require("./mutations");
 async function queryCartQL(fnQuery, variables) {
   // console.log(fnQuery(variables));
   try {
+    const start = performance.now();
     const response = await fetch('https://api.cartql.com', {
       method: "POST",
       headers: {
@@ -30,6 +31,7 @@ async function queryCartQL(fnQuery, variables) {
       throw new Error('graphQL error');
     }
 
+    console.log('CartQL query/mutation', performance.now() - start);
     return data.data;
   } catch (err) {
     console.log(err);

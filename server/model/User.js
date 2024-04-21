@@ -47,6 +47,9 @@ const userSchema = new Schema(
       virtuals: true,
       getters: true,
     },
+    toObject: {
+      getters: true,
+    },
     versionKey: false,
   },
 );
@@ -63,9 +66,18 @@ userSchema.pre('save', async function(next) {
   if (this.isNew || this.isModified('password')) {
     this.password = await bcrypt.hash(this.password, 10);
   }
+  if (this.isNew) {
+    await model('cart').create({id: this._id});
+  }
   next();
 });
 
-const User = model('User', userSchema);
+userSchema.post('findOneAndDelete', async function(doc) {
+  if (doc) {
+    const cart = await model('cart').findOneAndDelete({id: doc._id});
+  }
+});
+
+const User = model('user', userSchema);
 
 module.exports = User;

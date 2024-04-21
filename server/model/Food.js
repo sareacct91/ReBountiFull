@@ -2,6 +2,7 @@ const { Schema, model } = require('mongoose');
 
 const foodSchema = new Schema(
   {
+
     name: {
       type: String,
       require: true,
@@ -32,6 +33,6 @@ const foodSchema = new Schema(
   }
 );
 
-const Food = model('Food', foodSchema);
+const Food = model('food', foodSchema);
 
 module.exports = Food;

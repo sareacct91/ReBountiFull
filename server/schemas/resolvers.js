@@ -1,9 +1,9 @@
 require("dotenv").config();
 const { GraphQLScalarType, Kind } = require("graphql");
-const { User, Food } = require("../model");
+const { User, Food, Cart } = require("../model");
 const { signToken, AuthenticationError } = require("../utils/auth");
 const { queryCartQL, CartQueries, CartMutation } = require("../utils/cartQL");
-const { cartCheckout } = require("../utils/cartQL/mutations");
+const cartOps = require("../utils/cartOps");
 const { Stripe } = require("stripe");
 const stripe = new Stripe(process.env.STRIPE_TEST_KEY);
 
@@ -44,20 +44,21 @@ const resolvers = {
         }
 
         let p1 = User.findById(context.user._id);
-        let p2 = queryCartQL(CartQueries.queryCart, { id: context.user._id });
+        // let p2 = queryCartQL(CartQueries.queryCart, { id: context.user._id });
+        let p2 = cartOps.getCart(context.user._id);
 
         let [user, cart] = await Promise.all([p1, p2]);
 
         if (!user) {
           throw AuthenticationError;
         }
-
         user = user.toJSON();
-        if (!cart?.cart) {
+
+        if (!cart) {
           throw new Error("error fetching cart");
         }
 
-        user.cart = cart.cart;
+        user.cart = cart;
         return user;
       } catch (err) {
         console.error(err);
@@ -68,14 +69,21 @@ const resolvers = {
       if (!context.user?._id) {
         throw AuthenticationError;
       }
+      console.log('\nresolvers getCart: \n')
 
-      const variables = {
-        id: context.user._id,
-      };
+      try {
+        // const variables = {
+        //   id: context.user._id,
+        // };
+        // const cart = await queryCartQL(CartQueries.queryCart, variables);
+        // console.log("Cart", cart.cart.items);
 
-      const cart = await queryCartQL(CartQueries.queryCart, variables);
-      console.log("Cart", cart.cart.items);
-      return cart.cart;
+        const cart = await cartOps.getCart(context.user._id);
+
+        return cart;
+      } catch (err) {
+        console.error(err);
+      }
     },
     getAllFood: async () => {
       return await Food.find();
@@ -85,6 +93,7 @@ const resolvers = {
       return await Food.findOne({ name: { $regex: new RegExp(name, "i") } });
     },
     getFoodByCategory: async (_, { category }) => {
+      console.log('\nresolvers getFoodByCategory: \n');
       try {
         // Search for food items by category, ignoring case
         const foodItems = await Food.find({
@@ -100,6 +109,7 @@ const resolvers = {
       _,
       { vegan, vegetarian, glutenFree, dairyFree, nutFree }
     ) => {
+      console.log('\nresolvers getFoodByPreference: \n');
       try {
         const filter = {};
         // variable example = { "dairyFree" : false }
@@ -215,6 +225,8 @@ const resolvers = {
       if (!context.user?._id) {
         throw AuthenticationError;
       }
+      console.log('\nresolvers updateCartItem: \n');
+
       const variables = {
         food,
         id: context.user._id,
@@ -222,17 +234,24 @@ const resolvers = {
           inventory: food.inventory,
         },
       };
-      try {
-        console.log("food is ",variables.food);
 
-        const result = await queryCartQL(
-          CartMutation.updateCartItem,
-          variables
-        );
-        if (!result) {
-          throw new Error("error fetching cart");
+      try {
+        // const result = await queryCartQL(
+        //   CartMutation.updateCartItem,
+        //   variables
+        // );
+        // if (!result) {
+        //   throw new Error("error fetching cart");
+        // }
+        // return result.updateItem;
+        
+        const cart = await cartOps.updateCartItem(variables);
+
+        if (cart.error) {
+          throw cart.error;
         }
-        return result.updateItem;
+
+        return cart;
       } catch (error) {
         console.error(error);
       }
@@ -241,38 +260,58 @@ const resolvers = {
       if (!context.user?._id) {
         throw AuthenticationError;
       }
-      const variables = {
-        food,
-        id: context.user._id,
-        metadata: {
-          inventory: food.inventory,
-        },
-      };
-      const result = await queryCartQL(CartMutation.addCartItem, variables);
-      if (!result) {
-        throw new Error("error fetching cart");
+      console.log('\nresolvers addCartItem: \n')
+
+      try {
+        const variables = {
+          food,
+          id: context.user._id,
+          metadata: {
+            inventory: food.inventory,
+          },
+        };
+        // const cart = await queryCartQL(CartMutation.addCartItem, variables);
+        const cart = await cartOps.addCartItem(variables);
+
+        if (cart.error) {
+          throw cart.error;
+        }
+        // console.log("RESULT: ITEM:PLEASE WORK", result.addItem.items);
+
+        // return cart.addCartItem;
+        return cart
+      } catch (err) {
+        console.error(err);
       }
-      console.log("RESULT: ITEM:PLEASE WORK", result.addItem.items);
-      return result.addItem;
     },
     removeCartItem: async (_, { food }, context) => {
       if (!context.user?._id) {
         throw AuthenticationError;
       }
+      console.log('\nresolvers removeCartItem: \n');
       const variables = {
         food,
         id: context.user._id,
         metadata: { inventory: food.inventory },
       };
-      const result = await queryCartQL(CartMutation.removeCartItem, variables);
-      if (!result) {
-        throw new Error("error fetching cart");
+      // const result = await queryCartQL(CartMutation.removeCartItem, variables);
+      // if (!result) {
+      //   throw new Error("error fetching cart");
+      // }
+      // console.log(result);
+      // return result.removeItem;
+
+      const cart = await cartOps.removeCartItem(variables);
+
+      if (cart.error) {
+        throw cart.error
       }
-      console.log(result);
-      return result.removeItem;
+      console.log(cart);
+      
+      return cart
     },
-    // updating inventory number of a food item
     updateInventory: async (_, { inventoryId, inventory }) => {
+      console.log('\nresolvers updateInventory: \n');
       try {
         // Find the food item by ID and update its inventory
         const updatedFood = await Food.findOneAndUpdate(
@@ -286,21 +325,6 @@ const resolvers = {
         throw new Error("Failed to update inventory");
       }
     },
-    //   cartCheckout: async (_, __, context) => {
-    //     if (!context.user?._id) {
-    //       throw AuthenticationError;
-    //     }
-    //     const variables = {
-    //       id: context.user._id,
-    //     };
-    //
-    //     const result = await queryCartQL(CartMutation.cartCheckout, variables);
-    //     if (!result) {
-    //       throw new Error("error fetching cart");
-    //     }
-    //     console.log(result);
-    //     return result.checkout;
-    //   },
   },
 };
 
