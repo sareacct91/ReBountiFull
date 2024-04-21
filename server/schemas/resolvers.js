@@ -69,7 +69,7 @@ const resolvers = {
       if (!context.user?._id) {
         throw AuthenticationError;
       }
-      console.log('resolvers getCart: \n')
+      console.log('\nresolvers getCart: \n')
 
       try {
         // const variables = {
@@ -79,7 +79,6 @@ const resolvers = {
         // console.log("Cart", cart.cart.items);
 
         const cart = await cartOps.getCart(context.user._id);
-        // console.log('resolvers getCart return: ', cart);
 
         return cart;
       } catch (err) {
@@ -94,6 +93,7 @@ const resolvers = {
       return await Food.findOne({ name: { $regex: new RegExp(name, "i") } });
     },
     getFoodByCategory: async (_, { category }) => {
+      console.log('\nresolvers getFoodByCategory: \n');
       try {
         // Search for food items by category, ignoring case
         const foodItems = await Food.find({
@@ -109,6 +109,7 @@ const resolvers = {
       _,
       { vegan, vegetarian, glutenFree, dairyFree, nutFree }
     ) => {
+      console.log('\nresolvers getFoodByPreference: \n');
       try {
         const filter = {};
         // variable example = { "dairyFree" : false }
@@ -224,6 +225,8 @@ const resolvers = {
       if (!context.user?._id) {
         throw AuthenticationError;
       }
+      console.log('\nresolvers updateCartItem: \n');
+
       const variables = {
         food,
         id: context.user._id,
@@ -231,17 +234,24 @@ const resolvers = {
           inventory: food.inventory,
         },
       };
-      try {
-        console.log("food is ",variables.food);
 
-        const result = await queryCartQL(
-          CartMutation.updateCartItem,
-          variables
-        );
-        if (!result) {
-          throw new Error("error fetching cart");
+      try {
+        // const result = await queryCartQL(
+        //   CartMutation.updateCartItem,
+        //   variables
+        // );
+        // if (!result) {
+        //   throw new Error("error fetching cart");
+        // }
+        // return result.updateItem;
+        
+        const cart = await cartOps.updateCartItem(variables);
+
+        if (cart.error) {
+          throw cart.error;
         }
-        return result.updateItem;
+
+        return cart;
       } catch (error) {
         console.error(error);
       }
@@ -250,6 +260,7 @@ const resolvers = {
       if (!context.user?._id) {
         throw AuthenticationError;
       }
+      console.log('\nresolvers addCartItem: \n')
 
       try {
         const variables = {
@@ -277,6 +288,7 @@ const resolvers = {
       if (!context.user?._id) {
         throw AuthenticationError;
       }
+      console.log('\nresolvers removeCartItem: \n');
       const variables = {
         food,
         id: context.user._id,
@@ -299,6 +311,7 @@ const resolvers = {
       return cart
     },
     updateInventory: async (_, { inventoryId, inventory }) => {
+      console.log('\nresolvers updateInventory: \n');
       try {
         // Find the food item by ID and update its inventory
         const updatedFood = await Food.findOneAndUpdate(

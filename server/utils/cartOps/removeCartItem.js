@@ -2,7 +2,7 @@ const { Cart } = require("../../model");
 const shapeCartData = require("./shapeCartData");
 
 async function removeCartItem({ food, id }) {
-  console.log('\ncartOps removeCartItem: \n');
+  // console.log('\ncartOps removeCartItem: \n');
   try {
     let cart = await Cart.findOneAndUpdate(
       { id },

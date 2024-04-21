@@ -2,7 +2,7 @@ const { Cart } = require("../../model");
 const shapeCartData = require("./shapeCartData");
 
 async function addCartItem({ food, id }) {
-  console.log('\ncartOps addCartItem: \n')
+  // console.log('\ncartOps addCartItem: \n')
   try {
     let cart = await Cart.findOneAndUpdate(
       { id, 'items.id': food._id},
