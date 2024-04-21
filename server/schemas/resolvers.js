@@ -1,9 +1,9 @@
 require("dotenv").config();
 const { GraphQLScalarType, Kind } = require("graphql");
-const { User, Food } = require("../model");
+const { User, Food, Cart } = require("../model");
 const { signToken, AuthenticationError } = require("../utils/auth");
 const { queryCartQL, CartQueries, CartMutation } = require("../utils/cartQL");
-const { cartCheckout } = require("../utils/cartQL/mutations");
+const cartOps = require("../utils/cartOps");
 const { Stripe } = require("stripe");
 const stripe = new Stripe(process.env.STRIPE_TEST_KEY);
 
@@ -44,20 +44,21 @@ const resolvers = {
         }
 
         let p1 = User.findById(context.user._id);
-        let p2 = queryCartQL(CartQueries.queryCart, { id: context.user._id });
+        // let p2 = queryCartQL(CartQueries.queryCart, { id: context.user._id });
+        let p2 = cartOps.getCart(context.user._id);
 
         let [user, cart] = await Promise.all([p1, p2]);
 
         if (!user) {
           throw AuthenticationError;
         }
-
         user = user.toJSON();
-        if (!cart?.cart) {
+
+        if (!cart) {
           throw new Error("error fetching cart");
         }
 
-        user.cart = cart.cart;
+        user.cart = cart;
         return user;
       } catch (err) {
         console.error(err);
@@ -68,14 +69,25 @@ const resolvers = {
       if (!context.user?._id) {
         throw AuthenticationError;
       }
+      console.log('resolvers getCart: \n')
+      const start = performance.now();
 
-      const variables = {
-        id: context.user._id,
-      };
 
-      const cart = await queryCartQL(CartQueries.queryCart, variables);
-      console.log("Cart", cart.cart.items);
-      return cart.cart;
+      try {
+        // const variables = {
+        //   id: context.user._id,
+        // };
+        // const cart = await queryCartQL(CartQueries.queryCart, variables);
+        // console.log("Cart", cart.cart.items);
+
+        const cart = await cartOps.getCart(context.user._id);
+
+        // console.log('resolvers getCart return: ', cart);
+        console.log(`getCart time:  ${(performance.now() - start).toFixed(2)}ms`);
+        return cart;
+      } catch (err) {
+        console.error(err);
+      }
     },
     getAllFood: async () => {
       return await Food.find();
@@ -147,6 +159,7 @@ const resolvers = {
           });
         }
 
+        const start = performance.now();
         const stripePromise = stripe.checkout.sessions.create({
           payment_method_types: ["card"],
           line_items,
@@ -159,6 +172,10 @@ const resolvers = {
           userPromise,
           stripePromise,
         ]);
+
+        console.log(`after promise: ${(performance.now() - start).toFixed(2)}ms`)
+
+
 
         if (!updatedUser) {
           console.log("no user found and update");
@@ -241,19 +258,30 @@ const resolvers = {
       if (!context.user?._id) {
         throw AuthenticationError;
       }
-      const variables = {
-        food,
-        id: context.user._id,
-        metadata: {
-          inventory: food.inventory,
-        },
-      };
-      const result = await queryCartQL(CartMutation.addCartItem, variables);
-      if (!result) {
-        throw new Error("error fetching cart");
+      const start = performance.now();
+
+      try {
+        const variables = {
+          food,
+          id: context.user._id,
+          metadata: {
+            inventory: food.inventory,
+          },
+        };
+        // const cart = await queryCartQL(CartMutation.addCartItem, variables);
+        const cart = await cartOps.addCartItem(variables);
+
+        if (cart.error) {
+          throw cart.error; 
+        }
+        // console.log("RESULT: ITEM:PLEASE WORK", result.addItem.items);
+
+        console.log(`addCartItem time:  ${(performance.now() - start).toFixed(2)}ms`);
+        // return cart.addCartItem;
+        return cart 
+      } catch (err) {
+        console.error(err);  
       }
-      console.log("RESULT: ITEM:PLEASE WORK", result.addItem.items);
-      return result.addItem;
     },
     removeCartItem: async (_, { food }, context) => {
       if (!context.user?._id) {
@@ -273,6 +301,7 @@ const resolvers = {
     },
     // updating inventory number of a food item
     updateInventory: async (_, { inventoryId, inventory }) => {
+      const start = performance.now();
       try {
         // Find the food item by ID and update its inventory
         const updatedFood = await Food.findOneAndUpdate(
@@ -280,27 +309,13 @@ const resolvers = {
           { $set: { inventory } },
           { new: true }
         );
+        console.log(`updateInventory time:  ${(performance.now() - start).toFixed(2)}ms`);
         return updatedFood;
       } catch (error) {
         console.error("error!: ", error);
         throw new Error("Failed to update inventory");
       }
     },
-    //   cartCheckout: async (_, __, context) => {
-    //     if (!context.user?._id) {
-    //       throw AuthenticationError;
-    //     }
-    //     const variables = {
-    //       id: context.user._id,
-    //     };
-    //
-    //     const result = await queryCartQL(CartMutation.cartCheckout, variables);
-    //     if (!result) {
-    //       throw new Error("error fetching cart");
-    //     }
-    //     console.log(result);
-    //     return result.checkout;
-    //   },
   },
 };
 
