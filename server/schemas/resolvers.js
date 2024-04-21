@@ -70,8 +70,6 @@ const resolvers = {
         throw AuthenticationError;
       }
       console.log('resolvers getCart: \n')
-      const start = performance.now();
-
 
       try {
         // const variables = {
@@ -81,9 +79,8 @@ const resolvers = {
         // console.log("Cart", cart.cart.items);
 
         const cart = await cartOps.getCart(context.user._id);
-
         // console.log('resolvers getCart return: ', cart);
-        console.log(`getCart time:  ${(performance.now() - start).toFixed(2)}ms`);
+
         return cart;
       } catch (err) {
         console.error(err);
@@ -159,7 +156,6 @@ const resolvers = {
           });
         }
 
-        const start = performance.now();
         const stripePromise = stripe.checkout.sessions.create({
           payment_method_types: ["card"],
           line_items,
@@ -172,10 +168,6 @@ const resolvers = {
           userPromise,
           stripePromise,
         ]);
-
-        console.log(`after promise: ${(performance.now() - start).toFixed(2)}ms`)
-
-
 
         if (!updatedUser) {
           console.log("no user found and update");
@@ -258,7 +250,6 @@ const resolvers = {
       if (!context.user?._id) {
         throw AuthenticationError;
       }
-      const start = performance.now();
 
       try {
         const variables = {
@@ -272,15 +263,14 @@ const resolvers = {
         const cart = await cartOps.addCartItem(variables);
 
         if (cart.error) {
-          throw cart.error; 
+          throw cart.error;
         }
         // console.log("RESULT: ITEM:PLEASE WORK", result.addItem.items);
 
-        console.log(`addCartItem time:  ${(performance.now() - start).toFixed(2)}ms`);
         // return cart.addCartItem;
-        return cart 
+        return cart
       } catch (err) {
-        console.error(err);  
+        console.error(err);
       }
     },
     removeCartItem: async (_, { food }, context) => {
@@ -292,16 +282,23 @@ const resolvers = {
         id: context.user._id,
         metadata: { inventory: food.inventory },
       };
-      const result = await queryCartQL(CartMutation.removeCartItem, variables);
-      if (!result) {
-        throw new Error("error fetching cart");
+      // const result = await queryCartQL(CartMutation.removeCartItem, variables);
+      // if (!result) {
+      //   throw new Error("error fetching cart");
+      // }
+      // console.log(result);
+      // return result.removeItem;
+
+      const cart = await cartOps.removeCartItem(variables);
+
+      if (cart.error) {
+        throw cart.error
       }
-      console.log(result);
-      return result.removeItem;
+      console.log(cart);
+      
+      return cart
     },
-    // updating inventory number of a food item
     updateInventory: async (_, { inventoryId, inventory }) => {
-      const start = performance.now();
       try {
         // Find the food item by ID and update its inventory
         const updatedFood = await Food.findOneAndUpdate(
@@ -309,7 +306,6 @@ const resolvers = {
           { $set: { inventory } },
           { new: true }
         );
-        console.log(`updateInventory time:  ${(performance.now() - start).toFixed(2)}ms`);
         return updatedFood;
       } catch (error) {
         console.error("error!: ", error);
