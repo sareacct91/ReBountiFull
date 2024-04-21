@@ -1,5 +1,4 @@
 const { Schema } = require("mongoose");
-const moneySchema = require("./moneySchema");
 const metadataSchema = require("./metadataSchema");
 
 const cartItemSchema = new Schema(
@@ -8,18 +7,21 @@ const cartItemSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "food",
     },
-    name: String,
-    images: [String],
-    unitTotal: moneySchema,
-    lineTotal: moneySchema,
-    quantity: Number,
-    metadata: metadataSchema,
+    quantity: {
+      type: Number,
+      default: 1,
+      require: true,
+    },
   },
   {
     toJSON: {
       virtuals: true,
       getters: true,
     },
+    toObject: {
+      getters: true,
+    },
+    _id: false,
   }
 );
 
