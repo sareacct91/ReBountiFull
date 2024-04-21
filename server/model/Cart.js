@@ -9,6 +9,7 @@ const cartSchema = new Schema(
       unique: true,
     },
     items: [cartItemSchema],
+    payment_amount: Number,
   },
   {
     virtuals: {
