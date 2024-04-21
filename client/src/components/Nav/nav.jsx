@@ -19,24 +19,26 @@ export default function Nav() {
       <nav className="top-0 flex justify-end">
         <div className=" me-3 hidden w-full justify-between lg:flex">
           <ul className="flex flex-row">
-            {pages.map((page,i) => {
+            {pages.map((page, i) => {
               if (needLogin.includes(page) && !Auth.loggedIn()) {
-                return (<></>);
+                return null; // Return null to skip rendering this link
               }
 
               if (page === "Login" && Auth.loggedIn()) {
                 return (
                   <li className="mx-2 text-white" key={page}>
-                    <NavLink onClick={() => Auth.logout()} to={`/`}>Logout</NavLink>
+                    <NavLink onClick={() => Auth.logout()} to={`/`}>
+                      Logout
+                    </NavLink>
                   </li>
-                )
+                );
               }
 
               return (
                 <li className="mx-2 text-white" key={page}>
                   <NavLink to={`/${pathnames[i]}`}>{page}</NavLink>
                 </li>
-              )
+              );
             })}
           </ul>
         </div>
@@ -44,7 +46,12 @@ export default function Nav() {
         {/* hamburger */}
         <div className="hamburger mr-10 lg:hidden">
           <label className="bar" htmlFor="check">
-            <input className="hidden" type="checkbox" id="check" onChange={toggleNavbar} />
+            <input
+              className="hidden"
+              type="checkbox"
+              id="check"
+              onChange={toggleNavbar}
+            />
             <span className="top"></span>
             <span className="middle"></span>
             <span className="bottom"></span>
@@ -54,11 +61,27 @@ export default function Nav() {
       {/* If showNavbar is true, render the navbar */}
       {showNavbar && (
         <div className="flex basis-full flex-col items-center lg:hidden">
-          {pages.map((page, i) => (
-            <li className="mx-2 list-none" key={page}>
-              <NavLink to={`/${pathnames[i]}`}>{page}</NavLink>
-            </li>
-          ))}
+          {pages.map((page, i) => {
+            if (needLogin.includes(page) && !Auth.loggedIn()) {
+              return null; 
+            }
+
+            if (page === "Login" && Auth.loggedIn()) {
+              return (
+                <li className="mb-2 text-white list-none" key={page}>
+                  <NavLink onClick={() => Auth.logout()} to={`/`}>
+                    Logout
+                  </NavLink>
+                </li>
+              );
+            }
+
+            return (
+              <li className="mx-2 list-none" key={page}>
+                <NavLink to={`/${pathnames[i]}`}>{page}</NavLink>
+              </li>
+            );
+          })}
         </div>
       )}
     </>

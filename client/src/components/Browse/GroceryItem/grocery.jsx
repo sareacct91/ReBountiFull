@@ -11,7 +11,7 @@ export default function GroceryItem(grocery) {
   const [foodId, setFoodId] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [addCartItem, { error }] = useMutation(ADD_CART_ITEM);
-  const [updateInventory, { error: updateError }] =
+  const [updateInventory] =
     useMutation(UPDATE_INVENTORY);
 
   const handleButtonSubmit = async () => {
@@ -31,6 +31,7 @@ export default function GroceryItem(grocery) {
       });
       
       console.log("addcartitem please work please",data.addCartItem);
+      console.log("total added items in the user's cart: ", data.addCartItem.items.length);
       
       console.log("grocery_id", grocery._id);
       const newId = _id;

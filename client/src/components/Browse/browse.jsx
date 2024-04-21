@@ -19,9 +19,6 @@ export default function Browse() {
     });
   }, [data, query]);
 
-  console.log("filteredItems: ", filteredItems);
-  filteredItems.map((i) => console.log(i.name));
-
   // when loading, return loading message and the random items
   if (loading)
     return (
