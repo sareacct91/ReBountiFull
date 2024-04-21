@@ -47,10 +47,12 @@ export default function Nav() {
   return (
     <>
       <nav
-        className={`top-0 justify-end ${scrolled ? "fixed -right-3 top-3" : ""}`}
+        className={`top-0 justify-end ${scrolled ? "fixed -right-3 top-3 z-50" : ""}`}
       >
         <div className=" me-3 hidden w-full justify-between lg:flex">
-          <ul className={`flex flex-row items-center ${scrolled ? "p-8 bg-gray-500 w-screen rounded-full" : ""}`}>
+          <ul
+            className={`flex flex-row items-center ${scrolled ? "w-screen rounded-full border-2 border-orange bg-black bg-opacity-90 p-8" : ""}`}
+          >
             {pages.map((page, i) => {
               if (needLogin.includes(page) && !Auth.loggedIn()) {
                 return null; // Return null to skip rendering this link
@@ -73,7 +75,7 @@ export default function Nav() {
                   >
                     <NavLink to={`/cart`}>
                       <p
-                        className={`fixed z-20 transform text-green-500 hover:text-white ${scrolled ? "-translate-y-5" : "-translate-x-6 -translate-y-4"}`}
+                        className={`fixed z-20 transform text-green-500 hover:text-white ${scrolled ? "-translate-x-1 -translate-y-5" : "-translate-x-6 -translate-y-4"}`}
                       >
                         {totalItems}
                       </p>
