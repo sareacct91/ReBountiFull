@@ -3,7 +3,7 @@ import { useState } from "react";
 import { LOGIN_USER } from "../../utils/mutations";
 import Auth from "../../utils/auth";
 import { Link } from "react-router-dom";
-import Signup from "../Signup/signup";
+// import Signup from "../Signup/signup";
 
 export default function Login() {
   const [user, setUser] = useState({
@@ -32,10 +32,11 @@ export default function Login() {
   }
   
   return (
-    <div className="flex h-screen w-full flex-col items-center justify-evenly bg-white">
+    <div className="flex h-screen w-full flex-col items-center justify-evenly bg-white text-black">
       <div className="border-2 border-gray-500 px-16 py-16 rounded-lg"> 
-        <h1 className=" text-black text-center pb-10">Login</h1>
+        <h1 className="text-center pb-10">Login</h1>
         <form className="flex flex-col" onSubmit={handleFormSubmit}>
+          <label htmlFor="email">Email:</label>
           <input
             className="rounded-md border-2 bg-white px-2 text-black"
             value={user.email}
@@ -43,8 +44,8 @@ export default function Login() {
             onChange={inputChange}
             type="text"
             placeholder="email@email.com"
-          />
-          <label htmlFor="username">username</label>
+          />          
+          <label htmlFor="password" className="mt-2">Password:</label>
           <input
             className="rounded-md border-2 bg-white px-2 text-black"
             value={user.password}
@@ -53,13 +54,13 @@ export default function Login() {
             type="password"
             placeholder="********"
           />
-          <label htmlFor="password">Password</label>
           {/* todo: Link to reset password? */}
-          <button className="bg-blue-600" type="submit">
+          { error && <p className="text-red-600 mt-2 text-sm">Invalid Username or Password</p>}
+          <button className="bg-blue-600 mt-3 text-white" type="submit">
             Enter
           </button>
           <Link to={'/signup'}>
-            <p className="text-black pt-10">Register for an Account</p>
+            <p className="text-black text-lg pt-10">Register for an Account</p>
           </Link>
         </form>
       </div>
