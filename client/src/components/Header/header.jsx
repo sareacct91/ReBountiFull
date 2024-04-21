@@ -32,7 +32,7 @@ const Header = () => {
 
   return (
     <Background imageUrl={background} position={position}>
-      <header className="sticky top-0 z-[20] flex w-full flex-wrap items-center justify-between">
+      <header className="top-0 z-[20] flex w-full flex-wrap items-center justify-between">
         <div className="flex justify-center">
           <div>
             <Link to="/">
