@@ -27,7 +27,6 @@ export default function Browse() {
     return (
       <>
         <p>Loading...</p>
-        <RandomProducts></RandomProducts>
       </>
     );
   
