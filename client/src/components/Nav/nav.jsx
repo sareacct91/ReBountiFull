@@ -60,7 +60,7 @@ export default function Nav() {
 
               if (page === "Login" && Auth.loggedIn()) {
                 return (
-                  <li className="mx-2 text-white" key={page}>
+                  <li className="mx-2 text-white drop-shadow-[0_3.2px_3.2px_rgba(0,0,0,0.8)]" key={page}>
                     <NavLink onClick={() => Auth.logout()} to={`/`}>
                       Logout
                     </NavLink>
@@ -70,7 +70,7 @@ export default function Nav() {
               if (page === "Cart" && Auth.loggedIn()) {
                 return (
                   <li
-                    className="mx-2 flex items-center pt-1 text-white"
+                    className="mx-2 flex items-center pt-1 text-white drop-shadow-[0_3.2px_3.2px_rgba(0,0,0,0.8)]"
                     key={page}
                   >
                     <NavLink to={`/cart`}>
@@ -90,7 +90,7 @@ export default function Nav() {
 
               return (
                 <li
-                  className={` text-white ${scrolled ? "mx-8" : "mx-2"}`}
+                  className={` text-white ${scrolled ? "mx-8" : "mx-2 drop-shadow-[0_3.2px_3.2px_rgba(0,0,0,0.8)]"}`}
                   key={page}
                 >
                   <NavLink to={`/${pathnames[i]}`}>{page}</NavLink>
@@ -125,7 +125,7 @@ export default function Nav() {
 
             if (page === "Login" && Auth.loggedIn()) {
               return (
-                <li className="mb-2 list-none text-white" key={page}>
+                <li className="mb-2 list-none text-white drop-shadow-[0_3.2px_3.2px_rgba(0,0,0,0.8)]" key={page}>
                   <NavLink onClick={() => Auth.logout()} to={`/`}>
                     Logout
                   </NavLink>
@@ -134,7 +134,7 @@ export default function Nav() {
             }
 
             return (
-              <li className="mx-2 list-none" key={page}>
+              <li className="mx-2 list-none drop-shadow-[0_3.2px_3.2px_rgba(0,0,0,0.8)]" key={page}>
                 <NavLink to={`/${pathnames[i]}`}>{page}</NavLink>
               </li>
             );
