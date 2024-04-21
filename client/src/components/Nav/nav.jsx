@@ -47,11 +47,11 @@ export default function Nav() {
   return (
     <>
       <nav
-        className={`top-0 justify-end ${scrolled ? "fixed -right-3 top-3 z-50" : ""}`}
+        className={`top-0 justify-end ${scrolled ? "fixed -right-3 top-3 z-50 w-max" : ""}`}
       >
         <div className=" me-3 hidden w-full justify-between lg:flex">
           <ul
-            className={`flex flex-row items-center ${scrolled ? "w-screen rounded-full border-2 border-orange bg-black bg-opacity-90 p-8" : ""}`}
+            className={`flex flex-row items-center ${scrolled ? "w-max h-10 rounded-full border-2 border-orange bg-black bg-opacity-90 p-8" : ""}`}
           >
             {pages.map((page, i) => {
               if (needLogin.includes(page) && !Auth.loggedIn()) {
@@ -101,7 +101,7 @@ export default function Nav() {
         </div>
 
         {/* hamburger */}
-        <div className="hamburger mr-10 lg:hidden">
+        <div className="hamburger mr-10 drop-shadow-[0_3.2px_3.2px_rgba(0,0,0,0.8)] lg:hidden">
           <label className="bar" htmlFor="check">
             <input
               className="hidden"
