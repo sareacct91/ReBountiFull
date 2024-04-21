@@ -15,14 +15,14 @@ connection.once('open', async () => {
       await Promise.allSettled((await connection.db.listCollections().toArray()).map((e) => e.name).map((e) => connection.dropCollection(e)));
     }
 
-    const p1 = userData.map(async user => {
-      user.password = await bcrypt.hash(user.password, 10);
-      return user;
-    });
-    const hashedUsers = await Promise.all(p1);
+    // const p1 = userData.map(async user => {
+    //   user.password = await bcrypt.hash(user.password, 10);
+    //   return user;
+    // });
+    // const hashedUsers = await Promise.all(p1);
     
     await Food.insertMany(foodData);
-    await User.insertMany(hashedUsers);
+    await User.create(userData);
 
     console.log('Food & User Data seeded!');
   } catch (err) {

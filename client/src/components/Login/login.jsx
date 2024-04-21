@@ -2,6 +2,8 @@ import { useMutation } from "@apollo/client";
 import { useState } from "react";
 import { LOGIN_USER } from "../../utils/mutations";
 import Auth from "../../utils/auth";
+import { Link } from "react-router-dom";
+import Signup from "../Signup/signup";
 
 export default function Login() {
   const [user, setUser] = useState({
@@ -31,7 +33,7 @@ export default function Login() {
   
   return (
     <div className="flex h-screen w-full flex-col items-center justify-evenly bg-white">
-      <div className="border-2 border-gray-500 px-16 py-20 rounded-lg mt-28"> 
+      <div className="border-2 border-gray-500 px-16 py-16 rounded-lg"> 
         <h1 className=" text-black text-center pb-10">Login</h1>
         <form className="flex flex-col" onSubmit={handleFormSubmit}>
           <input
@@ -56,10 +58,13 @@ export default function Login() {
           <button className="bg-blue-600" type="submit">
             Enter
           </button>
+          <Link to={'/signup'}>
+            <p className="text-black pt-10">Register for an Account</p>
+          </Link>
         </form>
       </div>
 
-      <div className="my-10 flex max-w-xl flex-col rounded-lg border-8 border-double border-blue-500 bg-blue-300/40 p-5 font-semibold text-black">
+      <div className="flex max-w-xl flex-col rounded-lg border-8 border-double border-blue-500 bg-blue-300/40 p-5 font-semibold text-black">
         <p className="">
           ReBountiFull helpled my family when we didn't know where our next meal
           was coming from. It made a world of difference for my growing
