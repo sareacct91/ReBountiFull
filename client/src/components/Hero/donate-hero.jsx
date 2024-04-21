@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import Auth from "../../utils/auth";
 
 // hero content for the homepage
 const DonateContent = () => (
@@ -22,9 +23,11 @@ const DonateContent = () => (
         <Link to="">
         <button className="bg-orange text-lg font-bold text-white">Monetary Donation</button>
         </Link>
+        { !Auth.loggedIn() &&
         <Link to="/signup">
           <button className="bg-orange mt-2 text-lg font-bold text-white lg:mx-10">Register to Become a Supplier</button>
         </Link>
+        }
       </div>
     </div>
 );
