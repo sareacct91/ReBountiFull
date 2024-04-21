@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import {
   REMOVE_CART_ITEM,
   UPDATE_INVENTORY,
@@ -53,6 +53,7 @@ export default function CartItem({ item }) {
         },
       });
       console.log(updatedCartData)
+      await updateInventoryNum(item.id);
     } catch (err) {
       console.error(err);
     }

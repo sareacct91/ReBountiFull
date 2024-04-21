@@ -6,7 +6,6 @@ import RangeSlider from "./RangeSlider";
 import ShoppingBagImg from "../../assets/images/shopping_bag.png";
 import CartItem from "./cartItem";
 import CheckoutButton from "./CheckoutButton";
-
 import { useEffect, useState } from "react";
 import { useQuery } from "@apollo/client";
 import { QUERY_CART } from "../../utils/queries";

@@ -33,8 +33,8 @@ export default function LandingPage() {
         {/* This is the How it works Div */}
         <div>
           <h2 className="pt-10 text-4xl text-black">How it works</h2>
-          {cardContent.map((card) => {
-            return Card(card);
+          {cardContent.map((card, i) => {
+           return <Card key={i} {...card} />
           })}
         </div>
         {/* This marks the beginning of the Heroes Div */}
