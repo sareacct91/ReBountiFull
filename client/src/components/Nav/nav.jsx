@@ -8,10 +8,10 @@ import Auth from "../../utils/auth";
 
 export default function Nav() {
   // pages
-  const pages = ["Cart", "Browse", "Donate", "About Us", "Account", "Login"];
-  const needLogin = ["Cart", "Browse", "Account"];
+  const pages = ["Cart", "Account", "Donate", "About Us", "Browse", "Login"];
+  const needLogin = ["Cart", "Account", "Browse"];
   // assinging pathnames for each pages
-  const pathnames = ["cart", "browse", "donate", "aboutus", "account", "login"];
+  const pathnames = ["cart", "account", "donate", "aboutus", "browse", "login"];
   const [showNavbar, setShowNavbar] = useState(false);
   const [totalItems, setTotalItems] = useState(0);
   const { loading, error, data } = useQuery(QUERY_CART);
@@ -47,13 +47,11 @@ export default function Nav() {
   return (
     <>
       <nav
-        className={`top-0 justify-end ${scrolled ? "fixed -right-3 top-3 z-50 w-max" : ""}`}
+        className={`top-0 justify-end ${scrolled ? "fixed -right-3 top-3 z-50" : ""}`}
       >
         <div className=" me-3 hidden w-full justify-between lg:flex">
           <ul
-            className={`flex flex-row items-center ${scrolled ? 
-              "w-max h-10 rounded-full border-2 border-orange linear-gradient(to right, blue 0%, green ${percentage / 2}%, orange ${percentage}%, white ${percentage}%, white 100%) bg-opacity-90 p-8" 
-            : ""}`}
+            className={`flex flex-row items-center ${scrolled ? "rounded-full border-2 border-orange bg-black bg-opacity-90 p-8" : ""}`}
           >
             {pages.map((page, i) => {
               if (needLogin.includes(page) && !Auth.loggedIn()) {
@@ -62,7 +60,7 @@ export default function Nav() {
 
               if (page === "Login" && Auth.loggedIn()) {
                 return (
-                  <li className="mx-2 text-white drop-shadow-[0_3.2px_3.2px_rgba(0,0,0,0.8)]" key={page}>
+                  <li className="mx-2 text-white" key={page}>
                     <NavLink onClick={() => Auth.logout()} to={`/`}>
                       Logout
                     </NavLink>
@@ -72,7 +70,7 @@ export default function Nav() {
               if (page === "Cart" && Auth.loggedIn()) {
                 return (
                   <li
-                    className="ms-2 me-5 flex items-center pt-1 text-white drop-shadow-[0_3.2px_3.2px_rgba(0,0,0,0.8)]"
+                    className="mx-2 flex items-center pt-1 text-white"
                     key={page}
                   >
                     <NavLink to={`/cart`}>
@@ -92,7 +90,7 @@ export default function Nav() {
 
               return (
                 <li
-                  className={` text-white ${scrolled ? "mx-8" : "mx-2 drop-shadow-[0_3.2px_3.2px_rgba(0,0,0,0.8)]"}`}
+                  className={` text-white ${scrolled ? "mx-8" : "mx-2"}`}
                   key={page}
                 >
                   <NavLink to={`/${pathnames[i]}`}>{page}</NavLink>
@@ -103,7 +101,7 @@ export default function Nav() {
         </div>
 
         {/* hamburger */}
-        <div className="hamburger mr-10 drop-shadow-[0_3.2px_3.2px_rgba(0,0,0,0.8)] lg:hidden">
+        <div className="hamburger mr-10 lg:hidden">
           <label className="bar" htmlFor="check">
             <input
               className="hidden"
@@ -127,7 +125,7 @@ export default function Nav() {
 
             if (page === "Login" && Auth.loggedIn()) {
               return (
-                <li className="mb-2 list-none text-white drop-shadow-[0_3.2px_3.2px_rgba(0,0,0,0.8)]" key={page}>
+                <li className="mb-2 list-none text-white" key={page}>
                   <NavLink onClick={() => Auth.logout()} to={`/`}>
                     Logout
                   </NavLink>
@@ -136,7 +134,7 @@ export default function Nav() {
             }
 
             return (
-              <li className="mx-2 list-none drop-shadow-[0_3.2px_3.2px_rgba(0,0,0,0.8)]" key={page}>
+              <li className="mx-2 list-none" key={page}>
                 <NavLink to={`/${pathnames[i]}`}>{page}</NavLink>
               </li>
             );
