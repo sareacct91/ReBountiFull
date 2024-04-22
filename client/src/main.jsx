@@ -13,6 +13,7 @@ import Client from './components/Signup/client.jsx';
 import Supplier from './components/Signup/supplier.jsx';
 import Cart from './components/Cart/cart.jsx'
 import Success from '../pages/success.jsx'
+import Account from '../pages/account.jsx'
 
 
 const router = createBrowserRouter([
@@ -43,8 +44,8 @@ const router = createBrowserRouter([
         path: 'donate',
         element:<LandingPage/>
       }, {
-        path: 'checkout',
-        element:<></>
+        path: 'account',
+        element: <Account />
       }, {
         path: 'browse',
         element:<Browse />

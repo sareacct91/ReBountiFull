@@ -1,4 +1,4 @@
-const { Cart } = require("../../model");
+const { Cart } = require("../../Model");
 const shapeCartData = require("./shapeCartData");
 
 async function getCart(id) {
@@ -7,11 +7,11 @@ async function getCart(id) {
       {id},
       "-_id",
       {
-        new: true, 
+        new: true,
         populate: {
           path: 'items.id',
           select: '_id name price inventory image'
-        } 
+        }
       }
     );
 
@@ -22,8 +22,8 @@ async function getCart(id) {
     return shapeCartData(cartData.toObject());
   } catch (err) {
     console.error(err)
-    return { error: err }; 
+    return { error: err };
   }
 };
 
-module.exports = getCart;  
+module.exports = getCart;
