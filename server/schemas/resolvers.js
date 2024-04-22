@@ -5,7 +5,6 @@ const { signToken, AuthenticationError } = require("../utils/auth");
 const { queryCartQL, CartQueries, CartMutation } = require("../utils/cartQL");
 const cartOps = require("../utils/cartOps");
 const { Stripe } = require("stripe");
-const { updateOne } = require("../Model/models/User");
 const stripe = new Stripe(process.env.STRIPE_TEST_KEY);
 
 const dateScalar = new GraphQLScalarType({
@@ -373,24 +372,27 @@ const resolvers = {
 
         // save order to user and rest the cart
         user.history.push({ stripeId, cart });
-        cart.payment_amount = 0;
+        await user.save();
 
-        const myCart = await Cart.findOne({id: userId});
+        const myCart = await Cart.findOneAndUpdate(
+          { id: userId },
+          {
+            $set: {
+              payment_amount: 0,
+              items: [],
+            }
+          },
+          {
+            new: true,
+            runValidators: true,
+          }
+        );
 
         if (!myCart) {
-          throw new Error("Can't find cart");
+          throw new Error("Couldn't reset cart");
         }
 
-        myCart.payment_amount = 0;
-        myCart.items = [];
-
-        const [resUser, resCart] = await Promise.allSettled([user.save(), myCart.save()]);
-
-        if (resUser.status === "rejected" && resCart.status === 'rejected') {
-          throw new Error("Something went wrong during user/cart save");
-        }
-
-        return resUser.value;
+        return user
       } catch (err) {
         console.error(err);
         return err;
