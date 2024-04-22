@@ -11,6 +11,7 @@ const cartSchema = new Schema(
     totalItems: Number,
     totalUniqueItems: Number,
     grandTotal: moneySchema,
+    payment_amount: Number,
     items: [cartItemSchema],
   },
   {

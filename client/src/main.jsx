@@ -12,6 +12,7 @@ import AboutUs from './components/AboutUS/aboutus.jsx';
 import Client from './components/Signup/client.jsx';
 import Supplier from './components/Signup/supplier.jsx';
 import Cart from './components/Cart/cart.jsx'
+import Success from '../pages/success.jsx'
 
 
 const router = createBrowserRouter([
@@ -53,6 +54,9 @@ const router = createBrowserRouter([
       }, {
         path: 'cart',
         element:<Cart />
+      }, {
+        path: 'success',
+        element:<Success/>
       },
     ],
   },

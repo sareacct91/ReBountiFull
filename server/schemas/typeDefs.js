@@ -17,14 +17,14 @@ const typeDefs = `
     city: String!
     state: String!
     zip: Int!
-  } 
+  }
 
   input AddressInput {
     street: String!
     city: String!
     state: String!
     zip: Int!
-  } 
+  }
 
   type User {
     _id: ID!
@@ -39,11 +39,12 @@ const typeDefs = `
     cart: Cart
     household_size: Int
     history: [History!]!
-  }    
+
+  }
 
   input UserInput {
     username: String!
-    email: String! 
+    email: String!
     password: String!
     address: AddressInput!
     isSupplier: Boolean!
@@ -52,7 +53,7 @@ const typeDefs = `
     first_name: String
     last_name: String
     household_size: Int
-  }    
+  }
 
   type Food {
     _id: ID!
@@ -66,7 +67,7 @@ const typeDefs = `
     gluten_free: Boolean!
     dairy_free: Boolean!
     nut_free: Boolean!
-  } 
+  }
 
   input FoodInput {
     _id: ID!
@@ -75,7 +76,7 @@ const typeDefs = `
     image: String
     quantity: Int
     inventory: Int
-  } 
+  }
 
   type Auth {
     token: ID!
@@ -160,7 +161,8 @@ const typeDefs = `
     updateInventory(inventoryId: ID!, inventory: Int!): Food!
     updateCartItem(food:FoodInput!): Cart
     addCartItem(food:FoodInput!): Cart
-    removeCartItem(food:FoodInput!): Cart 
+    removeCartItem(food:FoodInput!): Cart
+    saveOrder(stripeId: ID!): User
   }
 `;
 
