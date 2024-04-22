@@ -155,3 +155,12 @@ export const UPDATE_CART_ITEM = gql`
     }
   }
 `;
+
+export const SAVE_ORDER = gql`
+  mutation saveOrder($stripeId: ID!) {
+    saveOrder(stripeId: $stripeId) {
+      _id
+      username
+    }
+  }
+`;
