@@ -42,7 +42,7 @@ export default function Login() {
             value={user.email}
             name="email"
             onChange={inputChange}
-            type="text"
+            type="email"
             placeholder="email@email.com"
           />          
           <label htmlFor="password" className="mt-2">Password:</label>

@@ -54,9 +54,7 @@ export default function Client() {
           <br />
         </form>
         <button className="bg-blue-600 text-white">Done</button>
-
       </div>
-      
     </>
   );
 }
