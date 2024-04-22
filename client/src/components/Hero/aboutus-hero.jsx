@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 // hero content for the about us
 const AboutUsContent = () => (
   <div className="p-8 md:w-4/6 lg:w-1/2">
-    <h1 className="text-stroke font-bold drop-shadow-lg">Our Mission</h1>
+    <h1 className="text-stroke font-bold drop-shadow-[0_3.2px_3.2px_rgba(0,0,0,0.8)]">Our Mission</h1>
     <p className="my-10 rounded-lg bg-zinc-900 bg-opacity-70 p-10 text-2xl">
       At ReBountiFull (<span className=" text-orange font-semibold">RBF</span>), we are driven by the belief that good, clean, and
       safe food should not go to waste while people in our community go hungry.
