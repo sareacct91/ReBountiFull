@@ -60,7 +60,7 @@ export default function Login() {
             Enter
           </button>
           <Link to={'/signup'}>
-            <p className="text-black text-lg pt-10">Register for an Account</p>
+            <p className="text-black text-lg pt-10 hover:text-orange">Register for an Account</p>
           </Link>
         </form>
       </div>
