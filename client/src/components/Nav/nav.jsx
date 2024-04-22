@@ -55,7 +55,7 @@ export default function Nav() {
   return (
     <>
       <nav
-        className={`top-0 justify-end ${scrolled ? "fixed -right-3 top-3 z-50 w-max" : ""}`}
+        className={`top-0 justify-end ${scrolled ? "fixed -right-3 top-3 z-50" : ""}`}
       >
         <div className="me-3 hidden w-full justify-between lg:flex">
           <ul
@@ -100,8 +100,8 @@ export default function Nav() {
 
               return (
                 <li
-                  className={` text-white ${scrolled ? "mx-8" : "mx-2 drop-shadow-[0_3.2px_3.2px_rgba(0,0,0,0.8)]"}`}
-                  key={page.page}
+                  className={` text-white hover:text-orange ${scrolled ? "mx-8" : "mx-2 drop-shadow-[0_3.2px_3.2px_rgba(0,0,0,0.8)]"}`}
+                  key={page}
                 >
                   <NavLink to={`/${page.path}`}>{page.page}</NavLink>
                 </li>
@@ -111,22 +111,27 @@ export default function Nav() {
         </div>
 
         {/* hamburger */}
-        <div className="hamburger mr-10 drop-shadow-[0_3.2px_3.2px_rgba(0,0,0,0.8)] lg:hidden">
-          <label className="bar" htmlFor="check">
+        <div
+          className={`hamburger m-10 lg:hidden ${scrolled ? "rounded-full border-2 border-orange bg-black p-4" : ""}`}
+        >
+          <label
+            className={`bar ${scrolled ? "bg-black" : ""}`}
+            htmlFor="check"
+          >
             <input
               className="hidden"
               type="checkbox"
               id="check"
               onChange={toggleNavbar}
             />
-            <span className="top"></span>
-            <span className="middle"></span>
-            <span className="bottom"></span>
+            <span className="top mx-0.5"></span>
+            <span className="middle mx-0.5"></span>
+            <span className="bottom mx-0.5"></span>
           </label>
         </div>
       </nav>
-      {/* If showNavbar is true, render the navbar */}
-      {showNavbar && (
+      {/* Render the navbar when showNavbar is true and not scrolled */}
+      {showNavbar && !scrolled && (
         <div className="flex basis-full flex-col items-center lg:hidden">
           {pages.map((page, i) => {
             if (needLogin.includes(page.page) && !Auth.loggedIn()) {
@@ -135,7 +140,10 @@ export default function Nav() {
 
             if (page.page === "Login" && Auth.loggedIn()) {
               return (
-                <li className="mb-2 list-none text-white drop-shadow-[0_3.2px_3.2px_rgba(0,0,0,0.8)]" key={page.page}>
+                <li
+                  className="mb-2 list-none text-white hover:text-orange drop-shadow-[0_3.2px_3.2px_rgba(0,0,0,0.8)]"
+                  key={page.page}
+                >
                   <NavLink onClick={() => Auth.logout()} to={`/`}>
                     Logout
                   </NavLink>
@@ -144,7 +152,40 @@ export default function Nav() {
             }
 
             return (
-              <li className="mx-2 list-none drop-shadow-[0_3.2px_3.2px_rgba(0,0,0,0.8)]" key={page.page}>
+              <li
+                className="mx-2 list-none text-white hover:text-orange"
+                key={page.page}
+              >
+                <NavLink to={`/${page.path}`}>{page.page}</NavLink>
+              </li>
+            );
+          })}
+        </div>
+      )}
+
+      {/* Render the navbar when showNavbar is true and scrolled */}
+      {showNavbar && scrolled && (
+        <div className="fixed right-16 top-36 flex flex-col items-center justify-end rounded-3xl bg-black p-10">
+          {pages.map((page, i) => {
+            if (needLogin.includes(page.page) && !Auth.loggedIn()) {
+              return null;
+            }
+
+            if (page.page === "Login" && Auth.loggedIn()) {
+              return (
+                <li
+                  className="my-2 list-none text-orange hover:text-orange drop-shadow-[0_3.2px_3.2px_rgba(0,0,0,0.8)]"
+                  key={page.page}
+                >
+                  <NavLink onClick={() => Auth.logout()} to={`/`}>
+                    Logout
+                  </NavLink>
+                </li>
+              );
+            }
+
+            return (
+              <li className="mx-2 list-none text-white hover:text-orange drop-shadow-[0_3.2px_3.2px_rgba(0,0,0,0.8)]" key={page.page}>
                 <NavLink to={`/${page.path}`}>{page.page}</NavLink>
               </li>
             );

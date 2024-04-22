@@ -13,37 +13,19 @@ export const LOGIN_USER = gql`
 `;
 
 export const ADD_USER = gql`
-  mutation addUser(
-    $username: String!
-    $email: String!
-    $password: String!
-    $address: AddressInput!
-    $isSupplier: Boolean!
-    $isClient: Boolean!
-    $businessName: String
-    $firstName: String
-    $lastName: String
-    $householdSize: Int
-  ) {
-    addUser(
-      username: $username
-      email: $email
-      password: $password
-      address: $address
-      isSupplier: $isSupplier
-      isClient: $isClient
-      businessName: $businessName
-      firstName: $firstName
-      lastName: $lastName
-      householdSize: $householdSize
-    ) {
+  mutation addUser($userInput: UserInput!) {
+    addUser(userInput: $userInput) {
       token
       user {
         _id
         username
+        email
         isSupplier
         isClient
-        businessName
+        business_name
+        first_name
+        last_name
+        household_size
       }
     }
   }
@@ -91,7 +73,7 @@ export const REMOVE_CART_ITEM = gql`
         id
         name
         images
-        metadata 
+        metadata
         unitTotal {
           amount
           formatted
@@ -139,7 +121,7 @@ export const UPDATE_CART_ITEM = gql`
         id
         name
         images
-        metadata 
+        metadata
         unitTotal {
           amount
           formatted
@@ -152,6 +134,15 @@ export const UPDATE_CART_ITEM = gql`
       }
       totalItems
       totalUniqueItems
+    }
+  }
+`;
+
+export const SAVE_ORDER = gql`
+  mutation saveOrder($stripeId: ID!) {
+    saveOrder(stripeId: $stripeId) {
+      _id
+      username
     }
   }
 `;

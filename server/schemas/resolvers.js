@@ -1,10 +1,11 @@
 require("dotenv").config();
 const { GraphQLScalarType, Kind } = require("graphql");
-const { User, Food, Cart } = require("../model");
+const { User, Food, Cart } = require("../Model");
 const { signToken, AuthenticationError } = require("../utils/auth");
 const { queryCartQL, CartQueries, CartMutation } = require("../utils/cartQL");
 const cartOps = require("../utils/cartOps");
 const { Stripe } = require("stripe");
+const { updateOne } = require("../Model/models/User");
 const stripe = new Stripe(process.env.STRIPE_TEST_KEY);
 
 const dateScalar = new GraphQLScalarType({
@@ -42,8 +43,13 @@ const resolvers = {
         if (!context.user?._id) {
           throw AuthenticationError;
         }
+        console.log('\nresolvers user: \n')
 
-        let p1 = User.findById(context.user._id);
+        let p1 = User.findById(
+          context.user._id,
+          "-password",
+        );
+
         // let p2 = queryCartQL(CartQueries.queryCart, { id: context.user._id });
         let p2 = cartOps.getCart(context.user._id);
 
@@ -52,13 +58,15 @@ const resolvers = {
         if (!user) {
           throw AuthenticationError;
         }
-        user = user.toJSON();
+        user = user.toObject();
 
         if (!cart) {
           throw new Error("error fetching cart");
         }
 
         user.cart = cart;
+
+        console.log(user);
         return user;
       } catch (err) {
         console.error(err);
@@ -69,7 +77,7 @@ const resolvers = {
       if (!context.user?._id) {
         throw AuthenticationError;
       }
-      console.log('\nresolvers getCart: \n')
+      console.log("\nresolvers getCart: \n");
 
       try {
         // const variables = {
@@ -93,7 +101,7 @@ const resolvers = {
       return await Food.findOne({ name: { $regex: new RegExp(name, "i") } });
     },
     getFoodByCategory: async (_, { category }) => {
-      console.log('\nresolvers getFoodByCategory: \n');
+      console.log("\nresolvers getFoodByCategory: \n");
       try {
         // Search for food items by category, ignoring case
         const foodItems = await Food.find({
@@ -109,7 +117,7 @@ const resolvers = {
       _,
       { vegan, vegetarian, glutenFree, dairyFree, nutFree }
     ) => {
-      console.log('\nresolvers getFoodByPreference: \n');
+      console.log("\nresolvers getFoodByPreference: \n");
       try {
         const filter = {};
         // variable example = { "dairyFree" : false }
@@ -136,11 +144,9 @@ const resolvers = {
           throw AuthenticationError;
         }
 
-        const userPromise = User.findByIdAndUpdate(
-          context.user._id,
-          { $push: { history: order } },
-          { new: true, runValidators: true }
-        );
+        const { payment_amount, cart: { totalItems } } = order;
+        const newItemPrice = Math.floor( payment_amount / totalItems );
+        let remainder = Math.floor(payment_amount % totalItems);
 
         const line_items = [];
         for (const item of order.cart.items) {
@@ -151,11 +157,27 @@ const resolvers = {
                 name: item.name,
                 images: item.images,
               },
-              unit_amount: item.unitTotal.amount,
+              unit_amount: newItemPrice,
             },
             quantity: item.quantity,
           });
         }
+        line_items.push({
+          price_data: {
+            currency: "usd",
+            product_data: {
+              name: "Remaining amount",
+            },
+            unit_amount: remainder,
+          },
+          quantity: 1,
+        });
+
+        const cartPromise = Cart.findOneAndUpdate(
+          { id: context.user._id },
+          { payment_amount },
+          { new: true, runValidators: true }
+        );
 
         const stripePromise = stripe.checkout.sessions.create({
           payment_method_types: ["card"],
@@ -165,15 +187,17 @@ const resolvers = {
           cancel_url: `${url}/`,
         });
 
-        const [updatedUser, session] = await Promise.all([
-          userPromise,
+        const [updatedCart, session] = await Promise.all([
+          cartPromise,
           stripePromise,
         ]);
 
-        if (!updatedUser) {
-          console.log("no user found and update");
+        if (!updatedCart) {
+          console.log("no cart found and update");
           throw AuthenticationError;
         }
+
+        console.log(updatedCart);
 
         return { session: session.url };
       } catch (err) {
@@ -184,7 +208,7 @@ const resolvers = {
   },
 
   Mutation: {
-    login: async (parent, { email, password }) => {
+    login: async (_, { email, password }) => {
       console.log(email, password);
       const user = await User.findOne({ email });
 
@@ -206,11 +230,14 @@ const resolvers = {
     },
 
     addUser: async (parent, { userInput }) => {
-      console.log(userInput);
-      const user = await User.create(userInput);
-      const token = signToken(user);
-
-      return { token, user };
+      try {
+        console.log(userInput);
+        const user = await User.create(userInput);
+        const token = signToken(user);
+        return { token, user };
+      } catch (error) {
+        console.error("error adding a user",error);
+      }
     },
     updateUser: async (parent, args, context) => {
       if (context.user) {
@@ -225,7 +252,7 @@ const resolvers = {
       if (!context.user?._id) {
         throw AuthenticationError;
       }
-      console.log('\nresolvers updateCartItem: \n');
+      console.log("\nresolvers updateCartItem: \n");
 
       const variables = {
         food,
@@ -244,7 +271,7 @@ const resolvers = {
         //   throw new Error("error fetching cart");
         // }
         // return result.updateItem;
-        
+
         const cart = await cartOps.updateCartItem(variables);
 
         if (cart.error) {
@@ -260,7 +287,7 @@ const resolvers = {
       if (!context.user?._id) {
         throw AuthenticationError;
       }
-      console.log('\nresolvers addCartItem: \n')
+      console.log("\nresolvers addCartItem: \n");
 
       try {
         const variables = {
@@ -279,7 +306,7 @@ const resolvers = {
         // console.log("RESULT: ITEM:PLEASE WORK", result.addItem.items);
 
         // return cart.addCartItem;
-        return cart
+        return cart;
       } catch (err) {
         console.error(err);
       }
@@ -288,7 +315,7 @@ const resolvers = {
       if (!context.user?._id) {
         throw AuthenticationError;
       }
-      console.log('\nresolvers removeCartItem: \n');
+      console.log("\nresolvers removeCartItem: \n");
       const variables = {
         food,
         id: context.user._id,
@@ -304,14 +331,15 @@ const resolvers = {
       const cart = await cartOps.removeCartItem(variables);
 
       if (cart.error) {
-        throw cart.error
+        throw cart.error;
       }
       console.log(cart);
-      
-      return cart
+
+      return cart;
+
     },
     updateInventory: async (_, { inventoryId, inventory }) => {
-      console.log('\nresolvers updateInventory: \n');
+      console.log("\nresolvers updateInventory: \n");
       try {
         // Find the food item by ID and update its inventory
         const updatedFood = await Food.findOneAndUpdate(
@@ -325,6 +353,41 @@ const resolvers = {
         throw new Error("Failed to update inventory");
       }
     },
+    saveOrder: async (_, { stripeId }, context) => {
+      console.log('\nresolvers saveHistory: \n');
+      if (!context.user?._id) {
+        throw AuthenticationError;
+      }
+      const userId = context.user._id;
+
+      console.log(stripeId);
+      try {
+        const cartPromise = cartOps.getCart(userId);
+        const userPromise = User.findById(userId);
+
+        const [cart, user] = await Promise.all([cartPromise, userPromise]);
+
+        if (!(cart && user)) {
+          throw new Error("something went wrong");
+        }
+
+        // save order to user and rest the cart
+        user.history.push({ stripeId, cart });
+        cart.payment_amount = 0;
+        cart.items = [];
+
+        const [resUser, resCart] = await Promise.allSettled([user.save(), cart.save()]);
+
+        if (resUser.status === "rejected" && resCart.status === 'rejected') {
+          throw new Error("Something went wrong during user/cart save");
+        }
+
+        return resUser.value;
+      } catch (err) {
+        console.error(err);
+        return err;
+      }
+    }
   },
 };
 

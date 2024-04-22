@@ -13,6 +13,9 @@ import Client from './components/Signup/client.jsx';
 import Supplier from './components/Signup/supplier.jsx';
 import Cart from './components/Cart/cart.jsx'
 import Donate from './components/Donate/donate.jsx'
+import Success from '../pages/success.jsx'
+import Account from '../pages/account.jsx'
+
 
 const router = createBrowserRouter([
   {
@@ -42,8 +45,8 @@ const router = createBrowserRouter([
         path: 'donate',
         element:<Donate />
       }, {
-        path: 'checkout',
-        element:<></>
+        path: 'account',
+        element: <Account />
       }, {
         path: 'browse',
         element:<Browse />
@@ -53,6 +56,9 @@ const router = createBrowserRouter([
       }, {
         path: 'cart',
         element:<Cart />
+      }, {
+        path: 'success',
+        element:<Success/>
       },
     ],
   },

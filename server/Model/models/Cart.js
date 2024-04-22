@@ -1,5 +1,4 @@
 const { Schema, model } = require("mongoose");
-const cartItemSchema = require("./cartItemSchema");
 
 const cartSchema = new Schema(
   {
@@ -8,7 +7,18 @@ const cartSchema = new Schema(
       ref: 'user',
       unique: true,
     },
-    items: [cartItemSchema],
+    payment_amount: Number,
+    items: [{
+      id: {
+        type: Schema.Types.ObjectId,
+        ref: 'food',
+      },
+      quantity: {
+        type: Number,
+        default: 1,
+        require: true,
+      },
+    }],
   },
   {
     virtuals: {
@@ -42,5 +52,6 @@ module.exports = Cart;
   //   id: ID!
   //   totalItems: Int!
   //   totalUniqueItems: Int!
+  //   payment_amount: Int
   //   items: [CartItem]!
   //   grandTotal: Money!

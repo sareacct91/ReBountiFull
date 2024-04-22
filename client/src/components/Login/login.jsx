@@ -32,7 +32,7 @@ export default function Login() {
   }
   
   return (
-    <div className="flex w-full flex-col items-center gap-5 bg-white text-black min-h-[calc(100vh-192px-40px)]">
+    <div className="flex w-full flex-col items-center gap-5 bg-white text-black min-h-[calc(100vh-192px-40px)] justify-evenly">
       <div className="border-2 border-gray-500 px-16 py-12 rounded-lg mt-5"> 
         <h1 className="text-center pb-10">Login</h1>
         <form className="flex flex-col" onSubmit={handleFormSubmit}>
@@ -60,7 +60,7 @@ export default function Login() {
             Enter
           </button>
           <Link to={'/signup'}>
-            <p className="text-black text-lg pt-10">Register for an Account</p>
+            <p className="text-black text-lg pt-10 hover:text-orange">Register for an Account</p>
           </Link>
         </form>
       </div>

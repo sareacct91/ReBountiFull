@@ -1,15 +1,9 @@
 const typeDefs = `
   scalar Date
 
-  type FoodItem {
-    food: Food!
-    amount: Int!
-  }
-
-  type History {
-    date: Date!
-    food_item: [FoodItem!]!
-    amount_paid: Float!
+  type Auth {
+    token: ID!
+    user: User!
   }
 
   type Address {
@@ -17,42 +11,42 @@ const typeDefs = `
     city: String!
     state: String!
     zip: Int!
-  } 
+  }
 
   input AddressInput {
     street: String!
     city: String!
     state: String!
     zip: Int!
-  } 
+  }
 
   type User {
     _id: ID!
     username: String!
     email: String!
-    address: Address!
+    address: Address
     isSupplier: Boolean!
     isClient: Boolean!
     business_name: String
     first_name: String
     last_name: String
-    cart: Cart
     household_size: Int
     history: [History!]!
-  }    
+    fullname: String
+  }
 
   input UserInput {
     username: String!
-    email: String! 
+    email: String!
     password: String!
-    address: AddressInput!
+    address: AddressInput
     isSupplier: Boolean!
     isClient: Boolean!
     business_name: String
     first_name: String
     last_name: String
     household_size: Int
-  }    
+  }
 
   type Food {
     _id: ID!
@@ -66,7 +60,7 @@ const typeDefs = `
     gluten_free: Boolean!
     dairy_free: Boolean!
     nut_free: Boolean!
-  } 
+  }
 
   input FoodInput {
     _id: ID!
@@ -75,19 +69,21 @@ const typeDefs = `
     image: String
     quantity: Int
     inventory: Int
-  } 
+  }
 
-  type Auth {
-    token: ID!
-    user: User!
+  type History {
+    date: Date!
+    stripeId: String!
+    payment_amount: Int!
+    cart: Cart!
   }
 
   type Cart {
     id: ID!
     totalItems: Int!
     totalUniqueItems: Int!
-    items: [CartItem]!
     grandTotal: Money!
+    items: [CartItem]!
   }
 
   scalar JSON
@@ -160,7 +156,8 @@ const typeDefs = `
     updateInventory(inventoryId: ID!, inventory: Int!): Food!
     updateCartItem(food:FoodInput!): Cart
     addCartItem(food:FoodInput!): Cart
-    removeCartItem(food:FoodInput!): Cart 
+    removeCartItem(food:FoodInput!): Cart
+    saveOrder(stripeId: ID!): User
   }
 `;
 

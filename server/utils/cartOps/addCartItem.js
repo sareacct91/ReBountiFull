@@ -1,4 +1,4 @@
-const { Cart } = require("../../model");
+const { Cart } = require("../../Model");
 const shapeCartData = require("./shapeCartData");
 
 async function addCartItem({ food, id }) {
@@ -7,14 +7,14 @@ async function addCartItem({ food, id }) {
     let cart = await Cart.findOneAndUpdate(
       { id, 'items.id': food._id},
       { $inc: { 'items.$.quantity': food.quantity} },
-      { 
-        new: true, 
-        runValidators: true, 
+      {
+        new: true,
+        runValidators: true,
         projection: '-_id',
         populate: {
           path: 'items.id',
           select: '_id name price inventory image'
-        } 
+        }
       }
     );
 
@@ -23,14 +23,14 @@ async function addCartItem({ food, id }) {
       cart = await Cart.findOneAndUpdate(
         { id },
         { $push: { items: { id: food._id, quantity: food.quantity } } },
-        { 
+        {
           new: true,
           runValidators: true,
           projection: '-_id',
           populate: {
             path: 'items.id',
             select: '_id name price inventory image'
-          } 
+          }
         }
       );
     }
@@ -42,7 +42,7 @@ async function addCartItem({ food, id }) {
     return shapeCartData(cart.toObject());
   } catch (err) {
     console.error(err);
-    return { error: err }; 
+    return { error: err };
   }
 };
 

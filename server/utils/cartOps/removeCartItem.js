@@ -1,4 +1,4 @@
-const { Cart } = require("../../model");
+const { Cart } = require("../../Model");
 const shapeCartData = require("./shapeCartData");
 
 async function removeCartItem({ food, id }) {
@@ -7,14 +7,14 @@ async function removeCartItem({ food, id }) {
     let cart = await Cart.findOneAndUpdate(
       { id },
       { $pull: { items: {id: food._id }}},
-      { 
-        new: true, 
-        runValidators: true, 
+      {
+        new: true,
+        runValidators: true,
         projection: '-_id',
         populate: {
           path: 'items.id',
           select: '_id name price inventory image'
-        } 
+        }
       }
     );
 
@@ -26,7 +26,7 @@ async function removeCartItem({ food, id }) {
   } catch (err) {
     console.error(err);
     return { error: err };
-  } 
+  }
 }
 
 

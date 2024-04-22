@@ -1,8 +1,7 @@
-const { Schema, model, Types } = require('mongoose');
+const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
-const addressSchema = require('./AddressSchema');
-const orderSchema = require('./orderSchema');
-
+const addressSchema = require('../schemas/AddressSchema');
+const historySchema = require('../schemas/historySchema');
 
 const userSchema = new Schema(
   {
@@ -26,22 +25,22 @@ const userSchema = new Schema(
     isSupplier: Boolean,
     isClient: Boolean,
     business_name: {
-      type: String, 
-      required: function() { return this.isSupplier; } 
+      type: String,
+      required: function() { return this.isSupplier; }
     },
     first_name: {
-      type: String, 
-      required: function() { return this.isClient; } 
+      type: String,
+      required: function() { return this.isClient; }
     },
     last_name: {
-      type: String, 
-      required: function() { return this.isClient; } 
+      type: String,
+      required: function() { return this.isClient; }
     },
-    household_size: { 
-      type: Number, 
-      required: function() { return this.isClient; } 
+    household_size: {
+      type: Number,
+      required: function() { return this.isClient; }
     },
-    history: [orderSchema], 
+    history: [historySchema],
   }, {
     toJSON: {
       virtuals: true,
