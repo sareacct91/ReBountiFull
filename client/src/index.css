@@ -149,3 +149,7 @@ input[type]:checked ~ span.middle {
   transform: translateX(-20px);
   opacity: 0;
 }
+
+.gradient {
+  background: linear-gradient(to right, #42b0f4 0%, #10572f 50%, #f99017 100%)
+}

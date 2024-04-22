@@ -8,10 +8,18 @@ import Auth from "../../utils/auth";
 
 export default function Nav() {
   // pages
-  const pages = ["Cart", "Browse", "Donate", "About Us", "Account", "Login"];
+  const pages = [
+    { page: "Cart", path: "cart" },
+    { page: "Browse", path: 'browse' },
+    { page: "Donate", path: 'donate' },
+    { page: "About Us", path: 'aboutus' },
+    { page: "Account", path: 'account' },
+    { page: "Login", path: 'login' }
+  ];
+  
   const needLogin = ["Cart", "Browse", "Account"];
   // assinging pathnames for each pages
-  const pathnames = ["cart", "browse", "donate", "aboutus", "account", "login"];
+  // const pathnames = ["cart", "browse", "donate", "aboutus", "account", "login"];
   const [showNavbar, setShowNavbar] = useState(false);
   const [totalItems, setTotalItems] = useState(0);
   const { loading, error, data } = useQuery(QUERY_CART);
@@ -21,7 +29,7 @@ export default function Nav() {
     setShowNavbar(!showNavbar);
   };
 
-  //updating the scrolled value based on the ertical scroll position of the window.
+  //updating the scrolled value based on the vertical scroll position of the window.
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop =
@@ -49,31 +57,31 @@ export default function Nav() {
       <nav
         className={`top-0 justify-end ${scrolled ? "fixed -right-3 top-3 z-50 w-max" : ""}`}
       >
-        <div className=" me-3 hidden w-full justify-between lg:flex">
+        <div className="me-3 hidden w-full justify-between lg:flex">
           <ul
             className={`flex flex-row items-center ${scrolled ? 
-              "w-max h-10 rounded-full border-2 border-orange linear-gradient(to right, blue 0%, green ${percentage / 2}%, orange ${percentage}%, white ${percentage}%, white 100%) bg-opacity-90 p-8" 
+              "w-max h-10 rounded-full border-2 border-orange bg-opacity-90 p-8 gradient" 
             : ""}`}
           >
             {pages.map((page, i) => {
-              if (needLogin.includes(page) && !Auth.loggedIn()) {
+              if (needLogin.includes(page.page) && !Auth.loggedIn()) {
                 return null; // Return null to skip rendering this link
               }
 
-              if (page === "Login" && Auth.loggedIn()) {
+              if (page.page === "Login" && Auth.loggedIn()) {
                 return (
-                  <li className="mx-2 text-white drop-shadow-[0_3.2px_3.2px_rgba(0,0,0,0.8)]" key={page}>
+                  <li className="mx-2 text-white drop-shadow-[0_3.2px_3.2px_rgba(0,0,0,0.8)]" key={page.page}>
                     <NavLink onClick={() => Auth.logout()} to={`/`}>
                       Logout
                     </NavLink>
                   </li>
                 );
               }
-              if (page === "Cart" && Auth.loggedIn()) {
+              if (page.page === "Cart" && Auth.loggedIn()) {
                 return (
                   <li
                     className="ms-2 me-5 flex items-center pt-1 text-white drop-shadow-[0_3.2px_3.2px_rgba(0,0,0,0.8)]"
-                    key={page}
+                    key={page.page}
                   >
                     <NavLink to={`/cart`}>
                       <p
@@ -93,9 +101,9 @@ export default function Nav() {
               return (
                 <li
                   className={` text-white ${scrolled ? "mx-8" : "mx-2 drop-shadow-[0_3.2px_3.2px_rgba(0,0,0,0.8)]"}`}
-                  key={page}
+                  key={page.page}
                 >
-                  <NavLink to={`/${pathnames[i]}`}>{page}</NavLink>
+                  <NavLink to={`/${page.path}`}>{page.page}</NavLink>
                 </li>
               );
             })}
@@ -121,13 +129,13 @@ export default function Nav() {
       {showNavbar && (
         <div className="flex basis-full flex-col items-center lg:hidden">
           {pages.map((page, i) => {
-            if (needLogin.includes(page) && !Auth.loggedIn()) {
+            if (needLogin.includes(page.page) && !Auth.loggedIn()) {
               return null;
             }
 
-            if (page === "Login" && Auth.loggedIn()) {
+            if (page.page === "Login" && Auth.loggedIn()) {
               return (
-                <li className="mb-2 list-none text-white drop-shadow-[0_3.2px_3.2px_rgba(0,0,0,0.8)]" key={page}>
+                <li className="mb-2 list-none text-white drop-shadow-[0_3.2px_3.2px_rgba(0,0,0,0.8)]" key={page.page}>
                   <NavLink onClick={() => Auth.logout()} to={`/`}>
                     Logout
                   </NavLink>
@@ -136,8 +144,8 @@ export default function Nav() {
             }
 
             return (
-              <li className="mx-2 list-none drop-shadow-[0_3.2px_3.2px_rgba(0,0,0,0.8)]" key={page}>
-                <NavLink to={`/${pathnames[i]}`}>{page}</NavLink>
+              <li className="mx-2 list-none drop-shadow-[0_3.2px_3.2px_rgba(0,0,0,0.8)]" key={page.page}>
+                <NavLink to={`/${page.path}`}>{page.page}</NavLink>
               </li>
             );
           })}
