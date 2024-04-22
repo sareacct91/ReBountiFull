@@ -374,9 +374,17 @@ const resolvers = {
         // save order to user and rest the cart
         user.history.push({ stripeId, cart });
         cart.payment_amount = 0;
-        cart.items = [];
 
-        const [resUser, resCart] = await Promise.allSettled([user.save(), cart.save()]);
+        const myCart = await Cart.findOne({id: userId});
+
+        if (!myCart) {
+          throw new Error("Can't find cart");
+        }
+
+        myCart.payment_amount = 0;
+        myCart.items = [];
+
+        const [resUser, resCart] = await Promise.allSettled([user.save(), myCart.save()]);
 
         if (resUser.status === "rejected" && resCart.status === 'rejected') {
           throw new Error("Something went wrong during user/cart save");

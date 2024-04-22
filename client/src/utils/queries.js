@@ -1,21 +1,55 @@
 import { gql } from "@apollo/client";
 
 export const QUERY_USER = gql`
-  query user {
-    user {
-      _id
-      username
-      email
-      address
-      isSupplier
-      isClient
-      business_name
-      household_size
-      cart
-      history
+query User {
+  user {
+    _id
+    username
+    email
+    address {
+      street
+      city
+      state
+      zip
     }
+    isSupplier
+    isClient
+    business_name
+    first_name
+    last_name
+    household_size
+    history {
+      date
+      stripeId
+      payment_amount
+      cart {
+        id
+        totalItems
+        totalUniqueItems
+        grandTotal {
+          amount
+          formatted
+        }
+        items {
+          id
+          name
+          images
+          unitTotal {
+            amount
+            formatted
+          }
+          lineTotal {
+            amount
+            formatted
+          }
+          quantity
+          metadata
+        }
+      }
+    }
+    fullname
   }
-`;
+}`;
 
 // query to get all of the food in the food collection
 export const QUERY_ALL_FOOD = gql`
