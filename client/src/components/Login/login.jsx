@@ -32,8 +32,8 @@ export default function Login() {
   }
   
   return (
-    <div className="flex h-screen w-full flex-col items-center justify-evenly bg-white text-black">
-      <div className="border-2 border-gray-500 px-16 py-16 rounded-lg"> 
+    <div className="flex w-full flex-col items-center gap-5 bg-white text-black min-h-[calc(100vh-192px-40px)]">
+      <div className="border-2 border-gray-500 px-16 py-12 rounded-lg mt-5"> 
         <h1 className="text-center pb-10">Login</h1>
         <form className="flex flex-col" onSubmit={handleFormSubmit}>
           <label htmlFor="email">Email:</label>
@@ -65,7 +65,7 @@ export default function Login() {
         </form>
       </div>
 
-      <div className="flex max-w-xl flex-col rounded-lg border-8 border-double border-blue-500 bg-blue-300/40 p-5 font-semibold text-black">
+      <div className="flex max-w-xl flex-col rounded-lg border-8 border-double border-blue-500 bg-blue-300/40 p-5 font-semibold text-black mx-2 mb-2">
         <p className="">
           ReBountiFull helpled my family when we didn't know where our next meal
           was coming from. It made a world of difference for my growing
