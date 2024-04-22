@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { ADD_USER } from "../../utils/mutations";
+import Auth from "../../utils/auth";
 
 export default function Supplier() {
   // States for registration
@@ -11,6 +12,7 @@ export default function Supplier() {
   const [businessName, setBusinessName] = useState("");
   const [source, setSource] = useState("");
   const [freeform, setFreeform] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   // States for checking the errors
   const [submitted, setSubmitted] = useState(false);
@@ -52,12 +54,12 @@ export default function Supplier() {
   const handleSource = (e) => {
     setSource(e.target.value);
     setSubmitted(false);
-  }
+  };
 
-  const handleFreeform = (e)  => {
+  const handleFreeform = (e) => {
     setFreeform(e.target.value);
     setSubmitted(false);
-  }
+  };
 
   // Handling the form submission
   const handleSubmit = async (e) => {
@@ -65,9 +67,8 @@ export default function Supplier() {
     if (username === "" || email === "" || password === "") {
       setError(true);
     } else {
-      console.log(username, email, password, businessName);
       try {
-        const addeduser = await addUser({
+        const addedUser = await addUser({
           variables: {
             userInput: {
               username,
@@ -83,13 +84,16 @@ export default function Supplier() {
             },
           },
         });
-        console.log(addeduser);
+
         setSubmitted(true);
         setError(false);
         setName("");
         setEmail("");
         setBusinessName("");
         setPassword("");
+        const token = addedUser.data.addUser.token;
+        console.log(addedUser);
+        Auth.login(token);
       } catch (error) {
         console.error(error);
       }
@@ -160,15 +164,24 @@ export default function Supplier() {
             <label htmlFor="password">Password:</label>
             <input
               className="rounded-md border-2 bg-white px-2 text-black"
-              type="text"
+              type={showPassword ? "text" : "password"}
               name="password"
               placeholder="********"
               value={password}
               onChange={handlePassword}
             />
-            <p className="ml-1 text-sm">
-            
-            </p>
+            <div>
+              <label htmlFor="check" className=" font-normal text-sm">Show Password</label>
+              <input
+                id="check"
+                type="checkbox"
+                value={showPassword}
+                className="mx-2"
+                onChange={() => setShowPassword((prev) => !prev)}
+              />
+            </div>
+
+            <p className="ml-1 text-sm"></p>
             <br />
             <label htmlFor="company">Business Name:</label>
             <input

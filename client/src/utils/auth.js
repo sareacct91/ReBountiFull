@@ -1,4 +1,4 @@
-import { jwtDecode } from 'jwt-decode';
+import { jwtDecode } from "jwt-decode";
 
 class AuthService {
   // get user data
@@ -10,7 +10,7 @@ class AuthService {
   loggedIn() {
     // Checks if there is a saved token and it's still valid
     const token = this.getToken();
-    if (token === 'undefined') {
+    if (token === "undefined") {
       return false;
     }
     return !!token && !this.#isTokenExpired(token); // handwaiving here
@@ -32,20 +32,21 @@ class AuthService {
 
   getToken() {
     // Retrieves the user token from localStorage
-    return localStorage.getItem('id_token');
+    return localStorage.getItem("id_token");
   }
-
   login(idToken) {
     // Saves user token to localStorage
-    localStorage.setItem('id_token', idToken);
-    window.location.assign('/');
+    localStorage.setItem("id_token", idToken);
+    setTimeout(() => {
+      window.location.href = "/"; 
+    }, 1000);
   }
 
   logout() {
     // Clear user token and profile data from localStorage
-    localStorage.removeItem('id_token');
+    localStorage.removeItem("id_token");
     // this will reload the page and reset the state of the application
-    window.location.assign('/');
+    window.location.assign("/");
   }
 }
 
