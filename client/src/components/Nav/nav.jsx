@@ -8,10 +8,18 @@ import Auth from "../../utils/auth";
 
 export default function Nav() {
   // pages
-  const pages = ["Cart", "Account", "Donate", "About Us", "Browse", "Login"];
-  const needLogin = ["Cart", "Account", "Browse"];
+  const pages = [
+    { page: "Cart", path: "cart" },
+    { page: "Browse", path: 'browse' },
+    { page: "Donate", path: 'donate' },
+    { page: "About Us", path: 'aboutus' },
+    { page: "Account", path: 'account' },
+    { page: "Login", path: 'login' }
+  ];
+
+  const needLogin = ["Cart", "Browse", "Account"];
   // assinging pathnames for each pages
-  const pathnames = ["cart", "account", "donate", "aboutus", "browse", "login"];
+  // const pathnames = ["cart", "browse", "donate", "aboutus", "account", "login"];
   const [showNavbar, setShowNavbar] = useState(false);
   const [totalItems, setTotalItems] = useState(0);
   const { loading, error, data } = useQuery(QUERY_CART);
@@ -21,7 +29,7 @@ export default function Nav() {
     setShowNavbar(!showNavbar);
   };
 
-  //updating the scrolled value based on the ertical scroll position of the window.
+  //updating the scrolled value based on the vertical scroll position of the window.
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop =
@@ -43,35 +51,38 @@ export default function Nav() {
       console.log("total items after setting : ", getCart.totalItems);
     }
   }, [data]);
-  
+
   return (
     <>
       <nav
         className={`top-0 justify-end ${scrolled ? "fixed -right-3 top-3 z-50" : ""}`}
       >
-        <div className=" me-3 hidden w-full justify-between lg:flex">
+        <div className="me-3 hidden w-full justify-between lg:flex">
           <ul
-            className={`flex flex-row items-center ${scrolled ? "rounded-full border-2 border-orange bg-black bg-opacity-90 p-8" : ""}`}
+            className={`flex flex-row items-center ${scrolled ?
+              "w-max h-10 rounded-full border-2 border-orange bg-opacity-90 p-8 gradient"
+              : ""}`}
           >
-            {pages.map((page, i) => {
-              if (needLogin.includes(page) && !Auth.loggedIn()) {
+            {pages.map((page) => {
+              if (needLogin.includes(page.page) && !Auth.loggedIn()) {
                 return null; // Return null to skip rendering this link
               }
 
-              if (page === "Login" && Auth.loggedIn()) {
+              if (page.page === "Login" && Auth.loggedIn()) {
                 return (
-                  <li className="mx-2 text-white" key={page}>
+                  <li className="mx-2 text-white drop-shadow-[0_3.2px_3.2px_rgba(0,0,0,0.8)]" key={page.page}>
                     <NavLink onClick={() => Auth.logout()} to={`/`}>
                       Logout
                     </NavLink>
                   </li>
                 );
               }
-              if (page === "Cart" && Auth.loggedIn()) {
+
+              if (page.page === "Cart" && Auth.loggedIn()) {
                 return (
                   <li
-                    className="mx-2 flex items-center pt-1 text-white"
-                    key={page}
+                    className="ms-2 me-5 flex items-center pt-1 text-white drop-shadow-[0_3.2px_3.2px_rgba(0,0,0,0.8)]"
+                    key={page.page}
                   >
                     <NavLink to={`/cart`}>
                       <p
@@ -90,10 +101,10 @@ export default function Nav() {
 
               return (
                 <li
-                  className={` text-white hover:text-orange ${scrolled ? "mx-8" : "mx-2"}`}
-                  key={page}
+                  className={` text-white hover:text-orange ${scrolled ? "mx-8" : "mx-2 drop-shadow-[0_3.2px_3.2px_rgba(0,0,0,0.8)]"}`}
+                  key={page.page}
                 >
-                  <NavLink to={`/${pathnames[i]}`}>{page}</NavLink>
+                  <NavLink to={`/${page.path}`}>{page.page}</NavLink>
                 </li>
               );
             })}
@@ -123,16 +134,16 @@ export default function Nav() {
       {/* Render the navbar when showNavbar is true and not scrolled */}
       {showNavbar && !scrolled && (
         <div className="flex basis-full flex-col items-center lg:hidden">
-          {pages.map((page, i) => {
-            if (needLogin.includes(page) && !Auth.loggedIn()) {
+          {pages.map((page) => {
+            if (needLogin.includes(page.page) && !Auth.loggedIn()) {
               return null;
             }
 
-            if (page === "Login" && Auth.loggedIn()) {
+            if (page.page === "Login" && Auth.loggedIn()) {
               return (
                 <li
-                  className="mb-2 list-none text-white hover:text-orange"
-                  key={page}
+                  className="mb-2 list-none text-white hover:text-orange drop-shadow-[0_3.2px_3.2px_rgba(0,0,0,0.8)]"
+                  key={page.page}
                 >
                   <NavLink onClick={() => Auth.logout()} to={`/`}>
                     Logout
@@ -144,9 +155,9 @@ export default function Nav() {
             return (
               <li
                 className="mx-2 list-none text-white hover:text-orange"
-                key={page}
+                key={page.page}
               >
-                <NavLink to={`/${pathnames[i]}`}>{page}</NavLink>
+                <NavLink to={`/${page.path}`}>{page.page}</NavLink>
               </li>
             );
           })}
@@ -157,15 +168,15 @@ export default function Nav() {
       {showNavbar && scrolled && (
         <div className="fixed right-16 top-36 flex flex-col items-center justify-end rounded-3xl bg-black p-10">
           {pages.map((page, i) => {
-            if (needLogin.includes(page) && !Auth.loggedIn()) {
+            if (needLogin.includes(page.page) && !Auth.loggedIn()) {
               return null;
             }
 
-            if (page === "Login" && Auth.loggedIn()) {
+            if (page.page === "Login" && Auth.loggedIn()) {
               return (
                 <li
-                  className="my-2 list-none text-orange hover:text-orange"
-                  key={page}
+                  className="my-2 list-none text-orange hover:text-orange drop-shadow-[0_3.2px_3.2px_rgba(0,0,0,0.8)]"
+                  key={page.page}
                 >
                   <NavLink onClick={() => Auth.logout()} to={`/`}>
                     Logout
@@ -175,11 +186,8 @@ export default function Nav() {
             }
 
             return (
-              <li
-                className="my-2 list-none text-orange hover:text-orange"
-                key={page}
-              >
-                <NavLink to={`/${pathnames[i]}`}>{page}</NavLink>
+              <li className="mx-2 list-none text-white hover:text-orange drop-shadow-[0_3.2px_3.2px_rgba(0,0,0,0.8)]" key={page.page}>
+                <NavLink to={`/${page.path}`}>{page.page}</NavLink>
               </li>
             );
           })}

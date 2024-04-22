@@ -20,12 +20,9 @@ const DonateContent = () => (
     </p>
     <div className="w-full">
       {/* need to add path to these buttons don't forget */}
-        <Link to="">
-        <button className="bg-orange text-lg font-bold text-white">Monetary Donation</button>
-        </Link>
         { !Auth.loggedIn() &&
         <Link to="/signup">
-          <button className="bg-orange mt-2 text-lg font-bold text-white lg:mx-10">Register to Become a Supplier</button>
+          <button className="bg-orange text-lg font-bold text-white lg:mx-2">Register to Become a Supplier</button>
         </Link>
         }
       </div>

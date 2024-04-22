@@ -12,6 +12,7 @@ import AboutUs from './components/AboutUS/aboutus.jsx';
 import Client from './components/Signup/client.jsx';
 import Supplier from './components/Signup/supplier.jsx';
 import Cart from './components/Cart/cart.jsx'
+import Donate from './components/Donate/donate.jsx'
 import Success from '../pages/success.jsx'
 import Account from '../pages/account.jsx'
 
@@ -42,7 +43,7 @@ const router = createBrowserRouter([
         element:<Supplier />
       }, {
         path: 'donate',
-        element:<LandingPage/>
+        element:<Donate />
       }, {
         path: 'account',
         element: <Account />
