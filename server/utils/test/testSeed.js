@@ -1,18 +1,18 @@
 const connection = require("../../config/connection");
 const foodData = require("../../seeds/food.json")
 const userData = require("../../seeds/user.json")
-const { User, Food } = require('../../model');
+const { User, Food } = require('../../Model');
 
 async function reSeed(req, res) {
   try {
     const collectionExists = await connection.db.listCollections().toArray();
-    
-    if (collectionExists.length) {    
+
+    if (collectionExists.length) {
       // await connection.dropCollection("foods");
       // await connection.dropCollection("users");
       await Promise.allSettled((await connection.db.listCollections().toArray()).map((e) => e.name).map((e) => connection.dropCollection(e)));
     }
-    
+
     await Food.insertMany(foodData);
     await User.create(userData);
 
@@ -27,7 +27,7 @@ async function reSeed(req, res) {
 };
 
 async function createOneUser(req, res) {
-  const testUser = 
+  const testUser =
     {
       "username": "Foo",
       "email": "foo@email.com",
@@ -59,7 +59,7 @@ async function createOneUser(req, res) {
     })
 
   } catch (err) {
-    console.error(err); 
+    console.error(err);
     res.status(500).json({msg: err})
   }
 };
