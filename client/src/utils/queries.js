@@ -21,11 +21,11 @@ query User {
     history {
       date
       stripeId
-      payment_amount
       cart {
         id
         totalItems
         totalUniqueItems
+        payment_amount 
         grandTotal {
           amount
           formatted
