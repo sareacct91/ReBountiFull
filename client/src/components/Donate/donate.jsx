@@ -35,21 +35,21 @@ export default function Client() {
             <label htmlFor="firstName">First Name:</label>
             <input type="text" id="firstName" name="firstName" required
               value={formData.firstName} onChange={handleChange}
-              className='mb-3 ms-2 w-56'
+              className='mb-3 ms-2 w-56 ps-1'
             />
           </div>
           <div>
             <label htmlFor="lastName">Last Name:</label>
             <input type="text" id="lastName" name="lastName" required
               value={formData.lastName} onChange={handleChange}
-              className='mb-3 ms-2 w-56'
+              className='mb-3 ms-2 w-56 ps-1'
             />
           </div>
           <div>
           <label htmlFor="email">Email:</label>
           <input type="email" id="email" name="email" required
             value={formData.email} onChange={handleChange}
-            className='mb-3 ms-2 w-60'
+            className='mb-3 ms-2 w-60 ps-1'
           />
         </div>
         </div>
@@ -58,28 +58,28 @@ export default function Client() {
             <label htmlFor="streetAddress">Address:</label>
             <input type="text" id="streetAddress" name="streetAddress" required
               value={formData.streetAddress} onChange={handleChange}
-              className='mb-3 ms-2 w-64 px-3'
+              className='mb-3 ms-2 w-64 ps-1'
             />
           </div>
           <div className='lg:ms-3'>
             <label htmlFor="city">City:</label>
             <input type="text" id="city" name="city" required
               value={formData.city} onChange={handleChange}
-              className='mb-3 ms-2'
+              className='mb-3 ms-2 ps-1'
             />
           </div>
           <div className='lg:ms-3'>
             <label htmlFor="state">State:</label>
             <input type="text" id="state" name="state" required
               value={formData.state} onChange={handleChange}
-              className='mb-3 ms-2 w-8'
+              className='mb-3 ms-2 w-8 ps-1'
             />
           </div>
           <div className='lg:ms-3'>
             <label htmlFor="zip">Zip/Postal Code:</label>
             <input type="text" id="zip" name="zip" required
               value={formData.zip} onChange={handleChange}
-              className='mb-3 ms-2 w-20'
+              className='mb-3 ms-2 w-20 ps-1'
             />
           </div>
         </div>
@@ -87,10 +87,10 @@ export default function Client() {
           <label htmlFor="donation">Enter Donation Amount in Whole Dollars:</label>
           <input type="text" id="donation" name="donation" required
             value={formData.donation} onChange={handleChange}
-            className='mb-3 lg:ms-2'
+            className='mb-3 lg:ms-2 ps-1'
           />
         </div>
-        <button type="submit" className='bg-green-600 mt-2 lg:mt-0 h-8'>Donate!</button>
+        <button type="submit" className='bg-green-600 mt-2 text-lg lg:mt-0 h-10'>Donate!</button>
       </form>
     </div>
   );
