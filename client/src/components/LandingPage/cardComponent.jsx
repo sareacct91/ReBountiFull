@@ -1,4 +1,6 @@
+
 export default function Card(props) {
+  console.log(props);
 return (
   <div className="my-3 min-h-40 rounded-xl bg-green-400 p-3">
     <h3 className="mb-1 text-2xl text-black">{props.h3}</h3>
