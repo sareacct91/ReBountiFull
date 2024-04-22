@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 export default function Client() {
   const [formData, setFormData] = useState({
@@ -17,13 +17,19 @@ export default function Client() {
     setFormData((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+
+  //   << call Stripe to accept donation >>
+  // }
 
   return (
-    <>
-      <h2>Thank you for choosing to Donate!</h2>
-      <p>Please fill out the form below to complete your monetary donation through Stripe.</p>
-      <form action="submit" >
+    <div className='mx-auto w-[95%] flex flex-col my-3'>
+      <h2 className='text-2xl mb-2'>Thank you for choosing to Donate!</h2>
+      <p className='mb-2'>Please fill out the form below to complete your monetary donation through Stripe.</p>
+      <form action="submit" className='flex flex-row flex-wrap'
+        // onSubmit={handleSubmit}
+      >
         <div>
           <label htmlFor="firstName">First Name:</label>
           <input type="text" id="firstName" name="firstName" required
@@ -74,6 +80,6 @@ export default function Client() {
         </div>
         <button type="submit">Donate!</button>
       </form>
-    </>
+    </div>
   );
 }

@@ -16,7 +16,7 @@ export default function Nav() {
     { page: "Account", path: 'account' },
     { page: "Login", path: 'login' }
   ];
-  
+
   const needLogin = ["Cart", "Browse", "Account"];
   // assinging pathnames for each pages
   // const pathnames = ["cart", "browse", "donate", "aboutus", "account", "login"];
@@ -51,7 +51,7 @@ export default function Nav() {
       console.log("total items after setting : ", getCart.totalItems);
     }
   }, [data]);
-  
+
   return (
     <>
       <nav
@@ -59,11 +59,11 @@ export default function Nav() {
       >
         <div className="me-3 hidden w-full justify-between lg:flex">
           <ul
-            className={`flex flex-row items-center ${scrolled ? 
-              "w-max h-10 rounded-full border-2 border-orange bg-opacity-90 p-8 gradient" 
-            : ""}`}
+            className={`flex flex-row items-center ${scrolled ?
+              "w-max h-10 rounded-full border-2 border-orange bg-opacity-90 p-8 gradient"
+              : ""}`}
           >
-            {pages.map((page, i) => {
+            {pages.map((page) => {
               if (needLogin.includes(page.page) && !Auth.loggedIn()) {
                 return null; // Return null to skip rendering this link
               }
@@ -77,6 +77,7 @@ export default function Nav() {
                   </li>
                 );
               }
+
               if (page.page === "Cart" && Auth.loggedIn()) {
                 return (
                   <li
@@ -101,7 +102,7 @@ export default function Nav() {
               return (
                 <li
                   className={` text-white hover:text-orange ${scrolled ? "mx-8" : "mx-2 drop-shadow-[0_3.2px_3.2px_rgba(0,0,0,0.8)]"}`}
-                  key={page}
+                  key={page.page}
                 >
                   <NavLink to={`/${page.path}`}>{page.page}</NavLink>
                 </li>
@@ -133,7 +134,7 @@ export default function Nav() {
       {/* Render the navbar when showNavbar is true and not scrolled */}
       {showNavbar && !scrolled && (
         <div className="flex basis-full flex-col items-center lg:hidden">
-          {pages.map((page, i) => {
+          {pages.map((page) => {
             if (needLogin.includes(page.page) && !Auth.loggedIn()) {
               return null;
             }
