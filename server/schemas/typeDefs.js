@@ -74,8 +74,16 @@ const typeDefs = `
   type History {
     date: Date!
     stripeId: String!
+    cart: CartHistory!
+  }
+
+  type CartHistory {
+    id: ID!
+    totalItems: Int!
+    totalUniqueItems: Int!
     payment_amount: Int!
-    cart: Cart!
+    grandTotal: Money!
+    items: [CartItem]!
   }
 
   type Cart {

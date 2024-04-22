@@ -7,7 +7,7 @@ const historySchema = new Schema(
       type: Date,
       require: true,
       default: Date.now,
-      get: (v) => v.toLocaleString(),
+      // get: (v) => v.toLocaleString(),
     },
     stripeId: String,
     cart: {
