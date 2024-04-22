@@ -1,11 +1,11 @@
 require("dotenv").config();
 const { GraphQLScalarType, Kind } = require("graphql");
-const { User, Food, Cart } = require("../model");
+const { User, Food, Cart } = require("../Model");
 const { signToken, AuthenticationError } = require("../utils/auth");
 const { queryCartQL, CartQueries, CartMutation } = require("../utils/cartQL");
 const cartOps = require("../utils/cartOps");
 const { Stripe } = require("stripe");
-const { updateOne } = require("../model/User");
+const { updateOne } = require("../Model/models/User");
 const stripe = new Stripe(process.env.STRIPE_TEST_KEY);
 
 const dateScalar = new GraphQLScalarType({
@@ -43,8 +43,13 @@ const resolvers = {
         if (!context.user?._id) {
           throw AuthenticationError;
         }
+        console.log('\nresolvers user: \n')
 
-        let p1 = User.findById(context.user._id);
+        let p1 = User.findById(
+          context.user._id,
+          "-password",
+        );
+
         // let p2 = queryCartQL(CartQueries.queryCart, { id: context.user._id });
         let p2 = cartOps.getCart(context.user._id);
 
@@ -60,6 +65,8 @@ const resolvers = {
         }
 
         user.cart = cart;
+
+        console.log(user);
         return user;
       } catch (err) {
         console.error(err);
@@ -351,7 +358,7 @@ const resolvers = {
 
       console.log(stripeId);
       try {
-        const cartPromise = Cart.findOne({ id: userId }); 
+        const cartPromise = cartOps.getCart(userId);
         const userPromise = User.findById(userId);
 
         const [cart, user] = await Promise.all([cartPromise, userPromise]);
@@ -366,14 +373,14 @@ const resolvers = {
         cart.items = [];
 
         const [resUser, resCart] = await Promise.allSettled([user.save(), cart.save()]);
-        
+
         if (resUser.status === "rejected" && resCart.status === 'rejected') {
           throw new Error("Something went wrong during user/cart save");
         }
 
         return resUser.value;
       } catch (err) {
-        console.error(err); 
+        console.error(err);
         return err;
       }
     }
