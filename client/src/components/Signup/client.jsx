@@ -36,7 +36,6 @@ export default function Client() {
     setSubmitted(false);
   };
 
-
   // Handling the source input change
   const handleSource = (e) => {
     setSource(e.target.value);
@@ -116,7 +115,7 @@ export default function Client() {
       <div className="flex h-screen flex-col items-center justify-evenly bg-white p-10 text-black">
         <div className="flex flex-col items-center justify-center">
           <h1 className="text-center">
-            Create your account to become a partner
+            Create your account to start shopping
           </h1>
           <div>
             {successMessage()}
@@ -168,10 +167,6 @@ export default function Client() {
                 onChange={() => setShowPassword((prev) => !prev)}
               />
             </div>
-
-            <p className="ml-1 text-sm"></p>
-            
-            <br />
             <label htmlFor="company">How'd you hear about us?</label>
             <input
               className="rounded-md border-2 bg-white px-2 text-black"
