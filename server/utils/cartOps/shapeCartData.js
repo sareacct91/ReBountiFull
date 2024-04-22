@@ -41,7 +41,7 @@ function shapeCartData(cartData) {
   };
   cartData.totalUniqueItems = cartData.items.length;
 
-  console.log(inspect(cartData, {depth: null}))
+  // console.log(inspect(cartData, {depth: null}))
   return cartData;
 }
 

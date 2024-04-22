@@ -9,7 +9,7 @@ const orderSchema = new Schema(
       default: Date.now,
       get: (v) => v.toLocaleString(),
     },
-    payment_amount: Number,
+    stripeId: String,
     cart: cartSchema, 
   }, {
     toJSON: {
