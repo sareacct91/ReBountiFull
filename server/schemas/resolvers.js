@@ -70,7 +70,7 @@ const resolvers = {
       if (!context.user?._id) {
         throw AuthenticationError;
       }
-      console.log('\nresolvers getCart: \n')
+      console.log("\nresolvers getCart: \n");
 
       try {
         // const variables = {
@@ -94,7 +94,7 @@ const resolvers = {
       return await Food.findOne({ name: { $regex: new RegExp(name, "i") } });
     },
     getFoodByCategory: async (_, { category }) => {
-      console.log('\nresolvers getFoodByCategory: \n');
+      console.log("\nresolvers getFoodByCategory: \n");
       try {
         // Search for food items by category, ignoring case
         const foodItems = await Food.find({
@@ -110,7 +110,7 @@ const resolvers = {
       _,
       { vegan, vegetarian, glutenFree, dairyFree, nutFree }
     ) => {
-      console.log('\nresolvers getFoodByPreference: \n');
+      console.log("\nresolvers getFoodByPreference: \n");
       try {
         const filter = {};
         // variable example = { "dairyFree" : false }
@@ -222,12 +222,15 @@ const resolvers = {
       return { token, user };
     },
 
-    addUser: async (_, { userInput }) => {
-      console.log(userInput);
-      const user = await User.create(userInput);
-      const token = signToken(user);
-
-      return { token, user };
+    addUser: async (parent, { userInput }) => {
+      try {
+        console.log(userInput);
+        const user = await User.create(userInput);
+        const token = signToken(user);
+        return { token, user };
+      } catch (error) {
+        console.error("error adding a user",error);
+      }
     },
     updateUser: async (parent, args, context) => {
       if (context.user) {
@@ -242,7 +245,7 @@ const resolvers = {
       if (!context.user?._id) {
         throw AuthenticationError;
       }
-      console.log('\nresolvers updateCartItem: \n');
+      console.log("\nresolvers updateCartItem: \n");
 
       const variables = {
         food,
@@ -277,7 +280,7 @@ const resolvers = {
       if (!context.user?._id) {
         throw AuthenticationError;
       }
-      console.log('\nresolvers addCartItem: \n')
+      console.log("\nresolvers addCartItem: \n");
 
       try {
         const variables = {
@@ -296,7 +299,7 @@ const resolvers = {
         // console.log("RESULT: ITEM:PLEASE WORK", result.addItem.items);
 
         // return cart.addCartItem;
-        return cart
+        return cart;
       } catch (err) {
         console.error(err);
       }
@@ -305,7 +308,7 @@ const resolvers = {
       if (!context.user?._id) {
         throw AuthenticationError;
       }
-      console.log('\nresolvers removeCartItem: \n');
+      console.log("\nresolvers removeCartItem: \n");
       const variables = {
         food,
         id: context.user._id,
@@ -321,14 +324,15 @@ const resolvers = {
       const cart = await cartOps.removeCartItem(variables);
 
       if (cart.error) {
-        throw cart.error
+        throw cart.error;
       }
       console.log(cart);
 
-      return cart
+      return cart;
+
     },
     updateInventory: async (_, { inventoryId, inventory }) => {
-      console.log('\nresolvers updateInventory: \n');
+      console.log("\nresolvers updateInventory: \n");
       try {
         // Find the food item by ID and update its inventory
         const updatedFood = await Food.findOneAndUpdate(

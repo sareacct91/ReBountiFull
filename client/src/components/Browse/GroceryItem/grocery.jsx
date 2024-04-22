@@ -17,6 +17,9 @@ export default function GroceryItem(grocery) {
   const handleButtonSubmit = async () => {
     console.log(grocery.inventory);
     try {
+      const newId = _id;
+      setFoodId(newId);
+      await updateInventoryNum(newId);
       const { data } = await addCartItem({
         variables: {
           food: {
@@ -35,11 +38,8 @@ export default function GroceryItem(grocery) {
         data.addCartItem.items.length,
       );
       console.log("grocery_id", grocery._id);
-      const newId = _id;
-      setFoodId(newId);
       console.log("deconstructed id: ", _id, newId);
       console.log("food id for the second time!!", foodId);
-      await updateInventoryNum(newId);
     } catch (err) {
       console.error(err);
     }
@@ -47,6 +47,7 @@ export default function GroceryItem(grocery) {
 
   const updateInventoryNum = async (newId) => {
     try {
+      console.log(quantity);
       const { data: updateData } = await updateInventory({
         variables: {
           inventoryId: newId,

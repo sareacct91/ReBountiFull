@@ -46,7 +46,7 @@ const typeDefs = `
     username: String!
     email: String!
     password: String!
-    address: AddressInput!
+    address: AddressInput
     isSupplier: Boolean!
     isClient: Boolean!
     business_name: String
