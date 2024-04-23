@@ -5,7 +5,9 @@ import Auth from "../../utils/auth";
 
 export default function Client() {
   // States for registration
-  const [username, setName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [source, setSource] = useState("");
@@ -19,8 +21,20 @@ export default function Client() {
   const [addUser, { loading, error: addUserError }] = useMutation(ADD_USER);
 
   // Handling the name change
-  const handleName = (e) => {
-    setName(e.target.value);
+  const handleFirstName = (e) => {
+    setFirstName(e.target.value);
+    setSubmitted(false);
+  };
+
+  // Handling the name change
+  const handleLastName = (e) => {
+    setLastName(e.target.value);
+    setSubmitted(false);
+  };
+
+  // Handling the name change
+  const handleUserName = (e) => {
+    setUserName(e.target.value);
     setSubmitted(false);
   };
 
@@ -64,8 +78,8 @@ export default function Client() {
               isSupplier: false,
               isClient: true,
               business_name: "",
-              first_name: "",
-              last_name: "",
+              first_name: firstName,
+              last_name: lastName,
               household_size: 0,
             },
           },
@@ -73,7 +87,9 @@ export default function Client() {
 
         setSubmitted(true);
         setError(false);
-        setName("");
+        setUserName("");
+        setFirstName("");
+        setLastName("");
         setEmail("");
         setPassword("");
         const token = addedUser.data.addUser.token;
@@ -124,8 +140,32 @@ export default function Client() {
         </div>
         <div className="my-10 rounded-lg border-2 border-black p-10">
           <form className="flex max-w-lg flex-col">
+            <label className="mr-3" htmlFor="firstName">
+              First name:
+            </label>
+            <input
+              className="rounded-md border-2 bg-white px-2 text-black"
+              type="text"
+              name="firstName"
+              placeholder="First Name"
+              value={firstName}
+              onChange={handleFirstName}
+            />
+            <br />
+            <label className="mr-3" htmlFor="lastName">
+              Last name:
+            </label>
+            <input
+              className="rounded-md border-2 bg-white px-2 text-black"
+              type="text"
+              name="lastName"
+              placeholder="Last Name"
+              value={lastName}
+              onChange={handleLastName}
+            />
+            <br />
             <label className="mr-3" htmlFor="name">
-              Name:
+              Username:
             </label>
             <input
               className="rounded-md border-2 bg-white px-2 text-black"
@@ -133,7 +173,7 @@ export default function Client() {
               name="name"
               placeholder="First & Last Name"
               value={username}
-              onChange={handleName}
+              onChange={handleUserName}
             />
             <br />
             <label htmlFor="email">Email:</label>
@@ -177,16 +217,6 @@ export default function Client() {
               onChange={handleSource}
             />
             <br />
-            <label htmlFor="freeform">What is driving you to give?</label>
-            <textarea
-              className="rounded-md border-2 bg-white px-2 text-black"
-              name="freeform"
-              rows="4"
-              cols="50"
-              placeholder="Enter text here"
-              value={freeform}
-              onChange={handleFreeform}
-            ></textarea>
             <button
               className="mt-10 bg-blue-600 text-white"
               type="submit"
