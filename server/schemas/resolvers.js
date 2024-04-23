@@ -44,28 +44,16 @@ const resolvers = {
         }
         console.log('\nresolvers user: \n')
 
-        let p1 = User.findById(
+        let user = await User.findById(
           context.user._id,
           "-password",
         );
 
-        // let p2 = queryCartQL(CartQueries.queryCart, { id: context.user._id });
-        let p2 = cartOps.getCart(context.user._id);
-
-        let [user, cart] = await Promise.all([p1, p2]);
-
         if (!user) {
           throw AuthenticationError;
         }
-        user = user.toObject();
 
-        if (!cart) {
-          throw new Error("error fetching cart");
-        }
-
-        user.cart = cart;
-
-        console.log(user);
+        console.log('user query', require('util').inspect(user, {depth: null}));
         return user;
       } catch (err) {
         console.error(err);

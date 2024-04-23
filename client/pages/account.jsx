@@ -14,6 +14,8 @@ export default function Account() {
     )
   }
 
+  console.log(data);
+
   const { user } = data;
   const {
     business_name,
@@ -26,13 +28,13 @@ export default function Account() {
     username,
   } = user;
 
-  console.log("HISTORY", history);
+  // console.log("HISTORY", history);
 
   return (
-    <div className="flex flex-col min-h-[calc(100vh-192px-40px)] bg-white text-black gap-5">
+    <div className="flex min-h-[calc(100vh-192px-40px)] flex-col gap-5 bg-white text-black">
       <div className="mt-5 flex flex-col">
         <h1 className="pb-10 text-center">{fullname}'s Account</h1>
-        <div className="mx-auto w-1/2 flex flex-col h-max gap-2">
+        <div className="mx-auto flex h-max w-1/2 flex-col gap-2">
           <p className="w-max"><span className="font-bold">Username:</span> {username}</p>
           <p className="w-max"><span className="font-bold">Email:</span> {email}</p>
           { isClient && <p className="w-max"><span className="font-bold">Household Size: </span>{household_size}</p> }
@@ -40,7 +42,7 @@ export default function Account() {
         </div>
       </div>
 
-      <div className="flex flex-col mx-auto w-1/2">
+      <div className="mx-auto flex w-1/2 flex-col">
         <h3 className="text-lg font-bold">Purchase History:</h3>
         <div>
           <ul>
