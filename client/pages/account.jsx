@@ -45,9 +45,9 @@ export default function Account() {
         <h3 className="text-lg font-bold">Purchase History:</h3>
         <div>
           <ul>
-            {history.map((e) => {
+            {history.map((e,i) => {
               return (
-                <History key={e.stripeId} {...e} />
+                <History key={i} {...e} />
               )
             }
             )}
