@@ -1,63 +1,89 @@
-import { useState } from 'react';
+import { useLazyQuery } from '@apollo/client';
+import { useEffect, useState } from 'react';
+import { SUBMIT_DONATION } from '../../utils/queries';
 
 export default function Client() {
   const [formData, setFormData] = useState({
-    fistName: "",
+    firstName: "",
     lastName: "",
     address: "",
     city: "",
     state: "",
     zip: "",
     email: "",
-    donation: ""
+    donation: ""  
   })
+
+  const [submitDonation, { data, loading ,error }] = useLazyQuery(SUBMIT_DONATION);
+
+  useEffect(() => {
+    if (data) {
+      window.location.assign(data.donation.session);
+    }
+  }, [data]);
+
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
 
-  //   << call Stripe to accept donation >>
-  // }
+  if (error) {
+    console.log(error)
+    return <h1>ERROR</h1>
+  }
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const amount = parseInt(formData.donation) * 100;
+
+    await submitDonation({ 
+      variables: { 
+        amount 
+      }
+    });
+  }
 
   return (
-    <div className='mx-auto w-[95%] flex flex-col mt-3 pt-2 min-h-[calc(100vh-388px-192px-40px)]'>
-      <h2 className='text-2xl mb-2'>Thank you for choosing to Donate!</h2>
+    <div className='mx-auto mt-3 flex min-h-[calc(100vh-388px-192px-40px)] w-[95%] flex-col pt-2'>
+      <h2 className='mb-2 text-2xl'>Thank you for choosing to Donate!</h2>
       <p className='mb-2'>Please fill out the form below to complete your monetary donation through Stripe.</p>
       <form action="submit" className='mt-4 pb-4'
-      // onSubmit={handleSubmit}
+        onSubmit={handleSubmit}
       >
-        <div className='lg:flex lg:flex-row lg:gap-5 lg:mb-3'>
+        <div className='lg:mb-3 lg:flex lg:flex-row lg:gap-5'>
           <div>
             <label htmlFor="firstName">First Name:</label>
             <input type="text" id="firstName" name="firstName" required
-              value={formData.firstName} onChange={handleChange}
+              value={formData.firstName} 
+              onChange={handleChange}
               className='mb-3 ms-2 w-56 ps-1'
             />
           </div>
           <div>
             <label htmlFor="lastName">Last Name:</label>
             <input type="text" id="lastName" name="lastName" required
-              value={formData.lastName} onChange={handleChange}
+              value={formData.lastName} 
+              onChange={handleChange}
               className='mb-3 ms-2 w-56 ps-1'
             />
           </div>
           <div>
           <label htmlFor="email">Email:</label>
           <input type="email" id="email" name="email" required
-            value={formData.email} onChange={handleChange}
-            className='mb-3 ms-2 w-60 ps-1'
+              value={formData.email} 
+              onChange={handleChange}
+              className='mb-3 ms-2 w-60 ps-1'
           />
         </div>
         </div>
         <div className='flex flex-col lg:flex-row'>
           <div>
-            <label htmlFor="streetAddress">Address:</label>
-            <input type="text" id="streetAddress" name="streetAddress" required
-              value={formData.streetAddress} onChange={handleChange}
+            <label htmlFor="address">Address:</label>
+            <input type="text" id="address" name="address" required
+              value={formData.address} onChange={handleChange}
               className='mb-3 ms-2 w-64 ps-1'
             />
           </div>
@@ -87,10 +113,10 @@ export default function Client() {
           <label htmlFor="donation">Enter Donation Amount in Whole Dollars:</label>
           <input type="text" id="donation" name="donation" required
             value={formData.donation} onChange={handleChange}
-            className='mb-3 lg:ms-2 ps-1'
+            className='mb-3 ps-1 lg:ms-2'
           />
         </div>
-        <button type="submit" className='bg-green-600 mt-2 text-lg lg:mt-0 h-10'>Donate!</button>
+        <button type="submit" className='mt-2 h-10 bg-green-600 text-lg lg:mt-0'>Donate!</button>
       </form>
     </div>
   );

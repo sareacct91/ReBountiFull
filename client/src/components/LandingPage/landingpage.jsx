@@ -1,25 +1,29 @@
 import Card from './cardComponent';
 import RandomProducts from "../Browse/GroceryItem/randomgrocery";
+import giveMoneyImg from "../../assets/images/give_money.png";
+import giveFoodImg from "../../assets/images/give_food.png";
+import giveHelpImg from "../../assets/images/give_help.png";
+import partnersImgs from "../../assets/images/Partners.jpg";
 
 
 const cardContent = [
   {
     h3: "Collecting Donations",
-    img: "src/assets/images/give_money.png",
+    img: giveMoneyImg,
     alt: "Image of someone donating money",
     li1: "Food donations from grocery stores and restaurants are collected by ReBountiFull volunteers.",
     li2: "Monetary donations from generous contributors are collected to fund operations."
   },
   {
     h3: "Stocking the Food",
-    img: "src/assets/images/give_food.png",
+    img: giveFoodImg,
     alt: "Image of hands giving food",
     li1: "Surplus food collected is made available on the ReBountiFull site at discounted prices.",
     li2: "Individuals around The Bay can purchase quality food items directly from our site."
   },
   {
     h3: "Less Waste, Less Hunger",
-    img: "src/assets/images/give_help.png",
+    img: giveHelpImg,
     alt: "Image of many hands touching in a team-huddle",
     li1: "Less waste from grocery stores and restaurants.",
     li2: "Less hunger in The Bay!"
@@ -57,7 +61,7 @@ export default function LandingPage() {
             <h2 className="mb-2 text-4xl text-black">Our Partners</h2>
             {/* Need to resize this */}
             <img
-              src="src/assets/images/Partners.jpg"
+              src={partnersImgs}
               alt="collection of logos of our partners"
               className="h-64 w-64"
             />
