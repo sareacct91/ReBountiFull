@@ -127,7 +127,7 @@ export default function Supplier() {
 
   return (
     <>
-      <div className="flex h-screen flex-col items-center justify-evenly bg-white p-10 text-black">
+      <div className="flex h-max flex-col items-center justify-evenly bg-white p-10 pb-2 text-black">
         <div className="flex flex-col items-center justify-center">
           <h1 className="text-center">
             Create your account to become a partner
