@@ -204,6 +204,42 @@ const resolvers = {
         return err;
       }
     },
+    donation: async (_, { amount }, context) => {
+      console.log("\nresolvers donation: \n");
+      const url = new URL(context.headers.referer).origin;
+
+      const line_items = [];
+      line_items.push({
+        price_data: {
+          currency: "usd",
+          product_data: {
+            name: "Donation",
+          },
+          unit_amount: amount,
+        },
+        quantity: 1,
+      });
+
+      try {
+        const session = await stripe.checkout.sessions.create({
+          payment_method_types: ["card"],
+          line_items,
+          mode: "payment",
+          success_url: `${url}/success?session_id={CHECKOUT_SESSION_ID}`,
+          cancel_url: `${url}/`,
+        });
+
+        if (!session) {
+          throw new Error("Something went wrong. Try again later");
+        }
+
+        return { session: session.url };
+        
+      } catch (err) {
+        console.error(err);
+        return err;
+      }
+    },
   },
 
   Mutation: {
