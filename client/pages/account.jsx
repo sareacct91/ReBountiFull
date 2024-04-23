@@ -23,15 +23,6 @@ export default function Account() {
           <p></p>
         </div>
       </div>
-
-      <div className="mx-2 mb-2 flex max-w-xl flex-col rounded-lg border-8 border-double border-blue-500 bg-blue-300/40 p-5 font-semibold text-black">
-        <p className="">
-          ReBountiFull helpled my family when we didn't know where our next meal
-          was coming from. It made a world of difference for my growing
-          children.
-          <br />- Mary, a single mom from San Jose
-        </p>
-      </div>
     </div>
   )
 }
