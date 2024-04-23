@@ -53,7 +53,7 @@ const resolvers = {
           throw AuthenticationError;
         }
 
-        console.log('user query', require('util').inspect(user, {depth: null}));
+        // console.log('user query', require('util').inspect(user, {depth: null}));
         return user;
       } catch (err) {
         console.error(err);
