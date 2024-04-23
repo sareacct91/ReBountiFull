@@ -2,6 +2,7 @@ import { useMutation } from "@apollo/client";
 import { useLocation } from "react-router-dom";
 import { SAVE_ORDER } from "../src/utils/mutations";
 import { useEffect } from "react";
+import Auth from "../src/utils/auth";
 
 export default function Success() {
 
@@ -14,9 +15,11 @@ export default function Success() {
     (async function() {
       const i = location.search.indexOf("=") + 1;
 
-      await saveOrderHistory({
-        variables: { stripeId: location.search.substring(i)}
-      })
+      if (Auth.loggedIn()) {
+        await saveOrderHistory({
+          variables: { stripeId: location.search.substring(i)}
+        })
+      }
 
       console.log('before timeout')
       setTimeout(() =>{
