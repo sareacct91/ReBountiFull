@@ -25,7 +25,7 @@ query User {
         id
         totalItems
         totalUniqueItems
-        payment_amount 
+        payment_amount
         grandTotal {
           amount
           formatted
@@ -172,3 +172,12 @@ export const CART_CHECKOUT = gql`
     }
   }
 `;
+
+export const SUBMIT_DONATION = gql`
+  query donation($amount: Int!) {
+    donation(amount: $amount) {
+      session
+    }
+  }
+`;
+
