@@ -26,6 +26,11 @@
 }
 
 /* Combined with flex-grow on the MAIN, the following makes footer stick to bottom of page */
+
+main {
+  background: white;
+}
+
 html {
   height: 100vh;
 }
