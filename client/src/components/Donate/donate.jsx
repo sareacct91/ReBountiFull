@@ -49,6 +49,7 @@ export default function Client() {
   return (
     <div className="mx-auto mt-3 flex min-h-[calc(100vh-388px-192px-40px)] w-full flex-col items-center justify-evenly bg-white pt-2 text-black gap-5 my-10">
       <h2 className="mb-2 text-4xl font-bold">Thank you for choosing to Donate!</h2>
+
       <div className='border border-black p-10 rounded-lg'>
         <p className="mb-2">
           Please fill out the form below to complete your monetary donation
@@ -59,7 +60,6 @@ export default function Client() {
             <div>
               <label htmlFor="firstName">First Name:</label>
               <input
-              
                 type="text"
                 id="firstName"
                 name="firstName"
