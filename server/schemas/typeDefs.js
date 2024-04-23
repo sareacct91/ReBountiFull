@@ -155,6 +155,7 @@ const typeDefs = `
       nutFree: Boolean
     ): [Food!]!
     cartCheckout(order: OrderInput!): Checkout!
+    donation(amount: Int!): Checkout! 
   }
 
   type Mutation {
