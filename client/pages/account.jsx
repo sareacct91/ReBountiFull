@@ -41,7 +41,6 @@ export default function Account() {
           { isSupplier && <p className="w-max"><span className="font-bold">Business Name: </span>{business_name}</p> }
         </div>
       </div>
-
       <div className="mx-auto flex w-1/2 flex-col">
         <h3 className="text-lg font-bold">Purchase History:</h3>
         <div>
